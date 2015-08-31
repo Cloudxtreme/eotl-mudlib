@@ -1,0 +1,35 @@
+NAME
+    extract_ansi - removes and preserves ansi from a string
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAnsi;
+    #include AcmeAnsiInc
+
+    varargs string extract_ansi( string str, mixed &ansi );
+ 
+DESCRIPTION
+    Removes all ansi escape sequences from a string, and returns the
+    new string.  An extra optional argument, ansi, may be passed by
+    reference to store the ansi that was extracted from str.  Any data 
+    in that variable will be destroyed, and the format of the new value 
+    will be as follows:
+ 
+      ({ idx1, ansi1, idx2, ansi2, ..., idxn, ansin })
+ 
+    where idx is an integer representing an index in str, and ansi
+    is a string holding the value of the ansi that was extracted at
+    that index.
+    
+EXAMPLE
+    str = RED "this " BLUE "is " GREEN "a " YELLOW "test." NOR1;
+    extract_ansi( str, &ansi );
+ 
+    str -> "this is a test."
+    ansi -> ({ 0, RED, 5, BLUE, 8, GREEN, 10, YELLOW, 15, NOR1 })
+ 
+SEE_ALSO
+    remove_ansi(A)
+ 
+LAST MODIFIED
+    980102 Devo

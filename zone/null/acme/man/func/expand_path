@@ -1,0 +1,28 @@
+NAME
+    expand_path - expands relative paths into absolute ones
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    string expand_path(string file, object who);
+ 
+DESCRIPTION
+    Returns the absolute filename of the possibly relative filename
+    described by file.  Relative paths will be resolved according to
+    who->query_pwd(), or dirname( file_name( this_object() ) ) if
+    'who' does not define query_pwd().  'who' defaults to this_object()
+    if not specified.  Home directories specified with '~' will also
+    be resolved according to 'who'.
+ 
+EXAMPLES
+    expand_path( "/zone/fantasy/../null/./eternal/" ) -> 
+      "/zone/null/eternal"
+    expand_path( "workroom.c", FINDP("devo") ) ->
+      "/usr/devo/workroom.c"
+    expand_path( "~/.logon", FINDP("zamboni") ) -> 
+      "/usr/zamboni/.logon"
+ 
+LAST MODIFIED
+    990701 Devo

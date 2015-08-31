@@ -1,0 +1,24 @@
+NAME
+    checked_item - [ with range rejecting
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed checked_item( mixed *arr, int i );
+ 
+DESCRIPTION
+    Same as arr[i], but won't give an error on illegal indices.
+ 
+EXAMPLE
+    checked_item( ({ 1, 2, 3 }), 1 )  ->  2
+    checked_item( ({ 1, 2, 3 }), -1 )  ->  0
+    checked_item( ({ 1, 2, 3 }), 4 )  ->  0
+    checked_item( 4, 2 ) -> 0
+ 
+SEE_ALSO
+    checked_range(A), checked_item_reverse(A), wrapped_item(A)
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,32 @@
+NAME
+    choose_variant - chooses among various weighted options
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCVar;
+    #include AcmeCVarInc
+
+    mixed choose_variant( mixed *choices );
+ 
+DESCRIPTION
+    Picks an option from an array of option-chance tuples ( ie.
+      ({ ({ opt1, chance1 }), ({ opt2, chance2 }), ... }) ).
+ 
+EXAMPLE
+    choose_variant( ({ "a", 90 }),    // 90% chance of "a"
+                    ({ "b", 10 }) )   // 10% chance of "b"
+                    -> "a" 
+ 
+    choose_variant( ({ "a", 20 }),    // 80% chance of "a"
+                    ({ "b", 5 }) )    // 20% chance of "b"
+                    -> "b" 
+ 
+BUGS
+    If the input array is not an array of bi-tuples, choose_variant() 
+    will error.
+ 
+SEE_ALSO
+    random(E)
+ 
+LAST MODIFIED
+    980102 Devo

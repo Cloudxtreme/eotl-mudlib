@@ -1,0 +1,22 @@
+NAME
+    third_quartile - calculate the third_quartile of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float third_quartile( float *sample );
+ 
+DESCRIPTION
+    Returns the third quartile in a sample.  This is actually just
+    an alias for the 75th percentile.
+ 
+EXAMPLE
+    third_quartile( ({ 1, 2, 3, 4, 5 }) ) -> 4
+ 
+SEE_ALSO
+    median(A), percentile(A), first_quartile(A), iqr(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

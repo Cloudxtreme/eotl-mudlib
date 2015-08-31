@@ -1,0 +1,24 @@
+NAME
+    file_exists - checks to see if a file exists
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    int file_exists(string file);
+ 
+DESCRIPTION
+    Tries to determine if a file exists.  Return values:
+      -1 : Maybe (No access to that directory)
+       0 : Definately no.
+       1 : Definately yes.
+ 
+EXAMPLE
+    file_exists("/secure/master.c") -> 1
+ 
+SEE_ALSO
+    exists(SE), file_size(E)
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,53 @@
+# This is an example config file.  
+# Most of the paths are made up.
+# Comments like this will be ignored by the Tadji parser.
+
+# See tadji_config for a more formal description of the configuration syntax.
+
+ADD ~/cmds/*.c               # All my commands
+BW ~bauhaus/bw/pub/_diff.c   # It will screw up my colors, but is handy
+ADD ~foul/commands/*.c       # More handy commands
+RM finger                    # I like the wizbody version better
+
+ADD ~aleron/stuff/*.c   # Mostly useful stuff, but..
+RM aleron_is_a_stud     # I really don't need this command..
+RENAME score Score      # I like having the old one too.
+
+ADD ~aleron/stuff/foo.c gronk    # I have another foo command already
+
+CONCEPT ~nguu/OOO/cmd/concept/*  # Most people don't know about this
+                                 # stuff, but it looked so cool I had
+                                 # to support it.
+
+# That should handle most of your needs, but you can do some more
+# complicated things too.
+
+
+# My handy-soul has a random command, but I want 
+# to use the one for the real soul.
+
+ADD /obj/soul/master_soul.c random do_feel
+
+
+# Here's an example of a custom command.
+# When the command "pmkill" is used, it will call
+#   "/usr/iffy/pacman/controller.c"->kill_the_player()
+
+ADD ~iffy/pacman/controller.c pmkill kill_the_player none
+
+
+# Quine has a bunch of command objects that follow the Acme calling
+# protocols, but not the naming conventions.  All the files are named
+# things like "reduce_cmd.c" and "think_cmd.c", but we'd want command
+# names to be "reduce" and "think".  Even stranger, the functions we
+# have to call are named "evaluate_reduce" and "evaluate_think". 
+# Don't ask me why.  This person is a real nutcase.  To get the
+# command names from the filenames, we use this pattern: %s_cmd.c To
+# make the function names from the command names, we use: evaluate_%s
+# We put this all together into a config line.  First is the ADD
+# directive, then the filespec that matches the command files we
+# want, the name pattern, the function pattern, and the calling
+# style.  Those commands better be good.
+
+ADD ~quine/c/*.c %s_cmd.c evaluate_%s Acme
+

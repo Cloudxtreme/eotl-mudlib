@@ -1,0 +1,25 @@
+NAME
+    wrapped_item - [ that wraps around the end of the array
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *wrapped_item( mixed *arr, int i );
+ 
+DESCRIPTION
+    Same as check_item(arr, i), but wraps around the ends of the 
+    array instead of rejecting.
+ 
+EXAMPLE
+    wrapped_item( ({ 1, 2, 3 }), 1 )  ->  2
+    wrapped_item( ({ 1, 2, 3 }), -1 )  ->  3
+    wrapped_item( ({ 1, 2, 3 }), 4 )  ->  2
+    wrapped_item( 4, 2 ) -> 0
+ 
+SEE_ALSO
+    checked_item(A)
+ 
+LAST MODIFIED
+    980102 Devo

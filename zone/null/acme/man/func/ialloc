@@ -1,0 +1,25 @@
+NAME
+    ialloc - allocates and initializes an array
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAlloc;
+    #include AcmeAllocInc
+
+    mixed *ialloc( int size, mixed init );
+ 
+DESCRIPTION
+    Returns an array of size elements, with all values initalized to
+    init.  If you want to pass an array as the init (ie:  ({ "test" }) ),
+    you need to pass it as a symbol (ie:  '({ "test" }) ).
+ 
+EXAMPLE
+    ialloc( 5, 3 )  ->  ({ 3, 3, 3, 3, 3 })
+    ialloc( 3, '({ 1, 2 }) )  ->  ({ ({ 1, 2 }), ({ 1, 2 }), ({ 1, 2 }) })
+    ialloc( 2, quote( ({ 3 }) ) ) -> ({ ({ 3 }), ({ 3 }) })
+ 
+SEE_ALSO
+    alloc(E), calloc(A)
+ 
+LAST MODIFIED
+    980102 Devo

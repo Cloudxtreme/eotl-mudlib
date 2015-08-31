@@ -1,0 +1,72 @@
+
+                        Acme Package Overview
+
+
+
+ The locations of the files associated with these packages can be
+ found in acme/inc/acme.h
+
+
+Non-Library Packages and Systems:
+
+    Tadji           A modular command routing tool.  Can use Acme,
+                    Concept, and BW commands, as well as arbitrary
+                    functions in any object.  Highly configurable.
+
+    Opie            Object Specification Routing System.  Allows tools
+                    to use powerful object reference expansion while
+                    giving the user the ability to specify a preferred
+                    system.  This is used all over the mud.
+
+    ClosureServer   An object which will bind function references and
+                    lambda expressions in a harmless environment so
+                    that objects can evaluate arbitrary untrusted
+                    expressions without putting themselves at risk.
+
+    Sentinel        An object to run various actions based on events.
+                    Actions can be an command written to the AcmeCmd
+                    specification.  Events are sentinel creation, player
+                    logon, reconnect, logout, disconnect, death, killing,
+                    and site logon.
+
+    HashServer      Computes one-way hashes and mediate a
+                    zero-knowledge proof.  Useful for some security
+                    applications.
+
+
+Library packages:
+
+    Action          Action/Verb reporting
+    Alloc           Memory allocation
+    Ancestry        Inheritance management
+    Args            Argument parsing
+    Array           Array handling
+    Breadth         Breadth-first searches and traversals of trees and graphs
+    BW              Removing bw-shield security
+    CallSecurity    A basic extensible security system 
+    Cmd             Handy things for AcmeCommands
+    Crypt           encryption / decryption package
+    CVar            Chooses among various weighted options
+    Error           Error reporting
+    File            Files handling
+    FindTarget      Simple & flexible Object Specification parser
+    ForceLoad       Force objects to be loaded
+    GetData         A standardized set of methods to get input from a user
+    GetOpts         Routines for handling command line options
+    Graph           Graph algorithms package
+    KQML            KQML message handling
+    Man             Manpage handling
+    Math            Number crunching
+    Menu            A package to create a standardized menuing system.
+    Method          A package to run methods (funcs or cls).
+    Misc            Random trash
+    OSpec           Object Specification parsing system
+    Output          Output handling
+    Room            Room handling
+    Shadow          Shadow handling
+    Stat            A package dealing with statistics from a sample.
+    String          String handling
+    Struct          A package to deal with structures (multilevel arrays).
+    User            Useful functions for dealing with users
+    VarSpace        A two-tiered mapping ( A 2-D VariableCode )
+

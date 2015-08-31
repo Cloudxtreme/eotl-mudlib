@@ -1,0 +1,23 @@
+NAME
+    cum_rel_freq - map the cumulative relative frequency of sample values
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    mapping cum_rel_freq( float *sample );
+ 
+DESCRIPTION
+    Returns a mapping of all the values in sample mapped to the
+    percentage of spots they and all the values below them took in 
+    sample.
+ 
+EXAMPLE
+    rel_freq( ({ 1, 3, 3 }) -> ([ 1 : 0.33333, 3 : 1 ])
+ 
+SEE_ALSO
+    freq(A), rel_freq(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

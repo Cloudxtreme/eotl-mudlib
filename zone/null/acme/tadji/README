@@ -1,0 +1,4 @@
+Extensive documentation resides in acme/man/tadji/.
+For a super-quick start, clone tool.c and type
+tadji list
+and then play with the commands it lists.  

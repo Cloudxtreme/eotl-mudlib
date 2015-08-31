@@ -1,0 +1,18 @@
+NAME
+    get_all_actions - filter actions based on optional adding objects
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    varargs mixed get_all_actions( object who, object *from );
+ 
+DESCRIPTION
+    Returns all the actions given to who by optional object from.
+ 
+SEE_ALSO
+    query_actions(E), get_actions_regexp(A), get_actions_literal(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

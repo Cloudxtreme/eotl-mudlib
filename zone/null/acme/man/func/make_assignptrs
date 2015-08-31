@@ -1,0 +1,45 @@
+NAME
+    make_assignptrs - makes a flat array of assignment pointers to a
+                      structure
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStruct;
+    #include AcmeStructInc
+
+    closure *make_assignptrs( mixed *array );
+
+DESCRIPTION
+    Returns a flat array of closures that can assign values into any
+    array of the same structure as the input array.  The traversal is
+    done depth-first.
+
+EXAMPLE
+      string  *foo;
+      string  *bar;
+      closure *ap;
+
+      foo = ({ ({ "a", "b" }), "c" });
+      bar = ({ ({ "x", "y" }), "z" });
+
+      ap = make_assignptrs( foo );
+
+    ap will be an 1-D array of size 3 where ap[0] is a closure to set
+    the value of some array[0][0], and ap[1] to set array[0][1] and
+    ap[2] to set array[1].
+
+    Thus,
+
+      funcall( ap[1], foo, "Hi there!" );
+      Funcall( ap[2], bar, "Good bye!" );
+
+    Will cause foo to become
+
+      ({ ({ "a", "Hi there!" }), "c" })
+
+    and bar to become
+
+      ({ ({ "x", "y" }), "Good bye!" })
+
+LAST MODIFIED
+    Aleron 960328

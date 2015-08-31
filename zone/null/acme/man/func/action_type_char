@@ -1,0 +1,24 @@
+NAME
+    action_type_char - returns a string based on an action type
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    string action_type_char( int type );
+    
+DESCRIPTION
+    Returns one of the following strings based on action type:
+      SENT_PLAIN       -  " "
+      SENT_SHORT_VERB  -  "S"
+      SENT_NO_SPACE    -  "X"
+      SENT_NO_VERB     -  "N"
+      SENT_MARKER      -  "M"
+      default          -  "?"
+ 
+SEE_ALSO
+    query_actions(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

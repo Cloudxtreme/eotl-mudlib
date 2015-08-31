@@ -1,0 +1,21 @@
+NAME
+    dirname - extracts the path from a full path
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    string dirname( string file );
+ 
+DESCRIPTION
+    Returns the presumed parent directory from file.
+ 
+EXAMPLE
+    dirname("/usr/devo/workroom.c") -> "/usr/devo/"
+ 
+SEE_ALSO
+    expand_path(A), basename(A)
+ 
+LAST MODIFIED                  
+    980102

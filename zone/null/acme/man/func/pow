@@ -1,0 +1,21 @@
+NAME
+    pow - calculate exponents (macro)
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+
+    #define pow( x, y )   exp( y * log( to_float( x ) ) )
+ 
+DESCRIPTION
+    Returns x to the y power.
+ 
+EXAMPLE
+    pow(3, 2) -> 9
+ 
+SEE_ALSO
+    operators(LPC), exp(E), log(E)
+ 
+LAST MODIFIED                               
+    980903 Morgaine

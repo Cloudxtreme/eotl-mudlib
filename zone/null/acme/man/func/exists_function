@@ -1,0 +1,20 @@
+NAME
+    exists_function - check to see if a function exists in an object
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFunction;
+    #include AcmeFunctionInc
+
+    string exists_function( mixed ob, string func );
+ 
+DESCRIPTION
+    This is the same as function_exists(), but with the arguments
+    reversed so it can be used in a closure (and it accepts filenames
+    too).
+ 
+SEE_ALSO
+    function_exists(E)
+ 
+LAST MODIFIED
+    980102 Devo

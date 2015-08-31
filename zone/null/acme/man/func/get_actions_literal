@@ -1,0 +1,19 @@
+NAME
+    get_actions_literal - filter actions based on literal verb comparison
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    varargs mixed get_actions_literal( object who, string verb, object *from );
+ 
+DESCRIPTION
+    Returns all the actions given to who by optional object from, that
+    match verb.
+ 
+SEE_ALSO
+    query_actions(E), get_actions_regexp(A), get_all_actions(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

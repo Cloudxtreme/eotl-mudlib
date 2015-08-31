@@ -1,0 +1,34 @@
+NAME
+    get_logger - request an AcmeLogger instance from AcmeLoggerFactory
+
+SYNOPSIS
+    #include <acme.h>
+
+    object logger = AcmeLoggerFactory->get_logger(THISO);
+    logger->warn("it's a trick, get an %s", "axe");
+
+DESCRIPTION
+    Returns an AcmeLogger instance configured for the specified category.
+    The get_logger() function takes one required and three optional 
+    arguments:
+
+      object get_logger(string|object category, object rel, int reconfig);
+
+    The category can be any meaningful string, and passing an object will
+    result in a category derived from that object's program name. The second
+    argument, rel, is an object relative to which the configuration should
+    be read. For example, if rel is /usr/devo/workroom, the search for 
+    configuration for that category will start at 
+    /usr/devo/.logger.properties. If omitted, rel will default to the 
+    previous object calling get_logger().
+
+    LoggerFactory will reuse loggers as long as they're actively being used,
+    and a loggers config will not change once its created. To re-read the
+    config, set the 'reconfig' flag to 1 and a new logger will be created 
+    with the current config.
+
+SEE_ALSO
+    /zone/null/acme/man/pkg/AcmeLogger
+
+LAST MODIFIED
+    20150811 Devo

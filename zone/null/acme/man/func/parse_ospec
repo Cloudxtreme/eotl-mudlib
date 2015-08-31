@@ -1,0 +1,23 @@
+NAME
+    parse_ospec - parse spec and return a list of objects
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeOSpec;
+    #include AcmeOSpecInc
+
+    object *parse_opsec( string ospec, object *prev, string priorities );
+ 
+DESCRIPTION
+    This is the top level parsing routine.  Returns a list of objects
+    described by ospec searched in order of priorities.  prev is a list 
+    of objects to use as context, or 0 to match any object.
+ 
+    See AcmeFindTarget documentation for a more indepth discussion on
+    priorities.
+ 
+SEE_ALSO
+    find_targets(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

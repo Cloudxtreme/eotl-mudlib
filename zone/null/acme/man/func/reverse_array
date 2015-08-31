@@ -1,0 +1,22 @@
+NAME
+    reverse_array - reverse the order of an array
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *reverse_array( mixed *arr );
+ 
+DESCRIPTION
+    Reverses the order of an array.  Since arrays are passed by 
+    reference, this changes the original.  Returns a pointer to
+    the array, just to be nice.
+ 
+EXAMPLE
+    reverse_array( ({ 1, 2, 3 }) )  ->  ({ 3, 2, 1 })
+ 
+SEE_ALSO
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,21 @@
+NAME
+    intersect_array - array AND
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed intersect_array( mixed *arr1, mixed *arr2 );
+ 
+DESCRIPTION
+    Returns a new array containing values found in both arr1 and arr2.
+ 
+EXAMPLE
+    intersect_array( ({ 1, 2, 3 }), ({ 2, 3, 4 }) ) -> ({ 2, 3 })
+ 
+SEE_ALSO
+    add_array(A), exclude_array(A)
+ 
+LAST MODIFIED
+    980102 Devo

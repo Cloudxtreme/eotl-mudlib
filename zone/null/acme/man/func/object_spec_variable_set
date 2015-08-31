@@ -1,0 +1,19 @@
+NAME
+    object_spec_variable_set - sets a variable for use in specs
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeOSpec;
+    #include AcmeOSpecInc
+
+    void object_spec_variable_set( mixed key, mixed value );
+ 
+DESCRIPTION
+    This sets key to be an ospec representing an object.  value
+    can be a single object or a list of objects.
+ 
+SEE_ALSO
+    vset(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

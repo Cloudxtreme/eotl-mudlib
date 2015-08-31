@@ -1,0 +1,20 @@
+NAME
+    get_exit - get the destination of a particular exit
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeRoom;
+    #include AcmeRoomInc
+
+    string get_exit( object room, string dir ) ;
+ 
+DESCRIPTION
+    Returns the destination of exit with direction dir in room,
+    or 0 if exit doesn't exist.
+ 
+SEE_ALSO
+    visible_directions(A), visible_exits(A), invisible_directions(A), 
+    invisible_exits(A), all_directions(A), all_exits(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

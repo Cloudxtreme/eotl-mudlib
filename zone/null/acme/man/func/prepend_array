@@ -1,0 +1,21 @@
+NAME
+    prepend_array - prepends something to each item in an array
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *prepend_array( mixed item, string *arr );
+ 
+DESCRIPTION
+    Does item + arr[n], for all n in arr, and returns the new array.
+ 
+EXAMPLE
+    prepend_array( "*", ({ "this", "is", "a", "test" }) )  ->
+      ({ "*this", "*is", "*a", "*test" })
+ 
+SEE_ALSO
+ 
+LAST MODIFIED
+    980102 Devo

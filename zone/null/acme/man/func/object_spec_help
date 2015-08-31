@@ -1,0 +1,19 @@
+NAME
+    object_spec_help - returns the name of the help file
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeOSpec;
+    #include AcmeOSpecInc
+
+    string object_spec_help();
+    
+DESCRIPTION
+    This returns the name of the file where AcmeOSpec ospec-help
+    is located.
+ 
+SEE_ALSO
+    parse_ospec(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,25 @@
+NAME
+    factorial - calculates factorials
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+ 
+    float factorial( int n );
+ 
+DESCRIPTION
+    Returns n!  Note this function returns a float instead of an int.
+    This is because it is easy for factorials to get very large very
+    fast, and a float won't usually overflow.  Also note that this
+    function caches the factorials it calculates, so it's actually
+    very fast after the initial factorial has been calculated.
+ 
+EXAMPLE
+    factorial( 3 ) -> 6.0
+ 
+SEE_ALSO
+    operators(C)
+ 
+LAST MODIFIED                               
+    980502 Devo

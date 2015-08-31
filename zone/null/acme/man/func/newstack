@@ -1,0 +1,18 @@
+NAME
+    newstack - create a new stack
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStack;
+    #include AcmeStackInc
+
+    StackHdl newstack();
+ 
+DESCRIPTION
+    Creates a new stack and returns a handle to the new stack.
+ 
+SEE_ALSO
+    emptystack(A), push(A), pop(A), top(A)
+ 
+LAST MODIFIED                               
+    980403 Aleron

@@ -1,0 +1,24 @@
+NAME
+    checked_range - [..] with range cropping
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed checked_range( mixed *arr, int i, int j );
+ 
+DESCRIPTION
+    Same as arr[i..j], but crops i and j if they are out of range.
+ 
+EXAMPLE
+   checked_range( ({ 1, 2, 3 }), 1, 2 )  ->  ({ 2, 3 })
+   checked_range( ({ 1, 2, 3 }), -1, 1 )  ->  ({ 1, 2 })
+   checked_range( ({ 1, 2, 3 }), 3, 5 )  ->  ({ 2 })
+   checked_range( ({ 1, 2, 3 }), 3, 1 )  ->  ({ })
+ 
+SEE_ALSO
+    checked_item(A), checked_item_reverse(A)
+ 
+LAST MODIFIED
+    980102 Devo

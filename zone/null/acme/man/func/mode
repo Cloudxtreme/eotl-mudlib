@@ -1,0 +1,22 @@
+NAME
+    mode - calculate the mode of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float mode( float *sample );
+ 
+DESCRIPTION
+    Returns the mode of a sample.  If there is more than one mode,
+    an arbitrary one is picked and returned.
+ 
+EXAMPLE
+    mode( ({ 1, 2, 2, 3 }) ) -> 2
+ 
+SEE_ALSO
+    mean(A), median(A), sum(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

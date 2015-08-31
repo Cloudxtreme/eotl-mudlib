@@ -1,0 +1,7 @@
+AcmeKQML is a package for parsing and constructing KQML messages.
+For more information on KQML, see http://www.cs.umbc.edu/kse/
+
+I don't really expect anyone (including me) to use this package.
+I only wrote it to see how hard it would be, and possibly as a prototype
+for something I'm doing at work.  -Zam
+

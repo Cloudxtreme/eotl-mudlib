@@ -1,0 +1,21 @@
+NAME
+    iqr - calculate the interquartile range of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float iqr( float *sample );
+ 
+DESCRIPTION
+    Returns the difference between the first and third quartiles.
+ 
+EXAMPLE
+    iqr( ({ 1, 2, 3, 4, 5 }) ) -> 2
+ 
+SEE_ALSO
+    percentile(A), first_quartile(A), third_quartile(A), median(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

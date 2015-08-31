@@ -1,0 +1,27 @@
+NAME
+    sec_query - return list of object, files, or uid approved for an 
+                operation
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    public mixed sec_query( string field, mixed operation );
+ 
+DESCRIPTION
+    Returns a list of things approved for the specified operation and
+    type.  Type of item is specified by field, and is currently one 
+     of these values:
+      SEC_UID       -  item is a uid
+      SEC_FILENAME  -  item is a filename
+      SEC_OBJECT    -  item is an object
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+ 
+SEE_ALSO
+    sec_add(A), sec_remove(A), sec_clear(A), sec_lock(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

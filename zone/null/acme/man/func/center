@@ -1,0 +1,24 @@
+NAME
+    center - centers a string or array of strings
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs mixed center( mixed str, int width );
+ 
+DESCRIPTION
+     Centers string str into a line of width columns long.  str can 
+     be a single string or an array of strings to center.  The 
+     centered string or array will be returned.  width defaults
+     to DEF_LINEWIDTH (probably 78).
+ 
+EXAMPLE
+    center( "test is a test.", 20 )  ->  "   test is a test."
+    
+SEE_ALSO
+    sprintf(E), indent(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

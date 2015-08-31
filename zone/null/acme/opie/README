@@ -1,0 +1,182 @@
+
+		OPIE -- Object Parser Interface Engine
+
+1. OVERVIEW
+
+  There are many tools which use, or should use, a non-trivial syntax
+  for specifying an object or group of objects with simple text string.
+
+  Common examples include the tracer (and the belt), the bw, AcmeSpec,
+  and the WizShell built into the body.  For instance, if a user
+  wanted to specify "the shadow of the table in this room", they would
+  express that as "table:-" in tracer syntax, as "s1.table" in bw
+  syntax, and as "table:s0" in AcmeSpec.
+
+  Most people prefer a particular syntax.  When they make a tool, they
+  have it use that syntax.  What OPIE provides is an easy way to add
+  powerful specification parsing to any tool, but in such a way that
+  the user can use whatever parsing system they want, while allowing
+  the tool to default to whatever system the author likes.
+
+
+       -------------------------------------------------------
+
+
+2. USING OPIE
+
+  If you have a favorite parsing engine, you can use setv to specify
+  it so all OPIE compliant tools let you use it.
+
+      setv opie <filename>   Where <filename> is the engine you like.
+                             Some popular engines are:
+
+      /zone/null/acme/opie/i/acme.c      AcmeSpec
+      /zone/null/acme/opie/i/tracer.c    expanded tracer / utility belt
+      /zone/null/acme/opie/i/bw.c        bw2
+
+  You can give any filename here and that object will be called to
+  parse the specification.  See section 4 for integrating OPIE into
+  your parsers.  (For existing tools it seemed simpler to just provide
+  the interfaces myself.)
+
+  That's all you need to know unless you plan on making tools that use
+  Opie or parsers that Opie should be able to use.
+
+
+       -------------------------------------------------------
+
+
+3. OPIE CLIENT TOOLS
+
+3.1 Common usage
+
+  To have your tool automatically be able to parse object specifications
+  in a user-customizable way:
+
+  call the following functions in the Opie server 
+  (which is "/zone/null/acme/opie/opie.c"):
+
+           opie(arg)         returns an array of objects
+           opie1(arg)        returns a single object
+
+           opie(arg, pr)     see section 3.2 (Priority Strings)
+           opie1(arg, pr)    see section 3.2 (Priority Strings)
+
+           help()            returns a help string
+         * set(key, value)   sets a variable in the object parser
+
+           * May not have any effect for some parsers
+             (Supported by AcmeSpec, but not by bw2 or tracer)
+
+  Rather than clutter your code with call_others, you may prefer to
+  put:
+
+        #include "/zone/null/acme/opie/client.h"
+           or
+        #include <acme.h>
+        #include OpieClient
+
+
+  in your code, then use the following macros:
+
+           opie(arg)
+           opie1(arg)
+           opie_p(arg, priority_string)
+           opie1_p(arg, priority_string)
+           opie_help()
+           opie_set(key, value)
+
+
+
+  You can also set a default parser for your tool.  
+  See section 4 for details.
+
+
+3.2 Priority Strings
+
+  Often, a player will use a single unqualified term like someone's
+  name, or the id of an item in their inventory.  A spec parser will
+  often find the right object, but if there's more than one
+  possibility, sometimes it will make the wrong choice.
+
+  Examples:
+    tell - looks for a player.
+    dest - might look for something in your inventory, or in your
+           environment, or a living thing, or a player, or something
+           with that filename, all in some reasonable order.
+
+    You wouldn't want "tell zamboni Opie is great!" to end up giving a
+    message to the ice-paving truck that happened to be in the room,
+    nor would most people want "dest wolf" to refer to a player named
+    "wolf" who happened to be logged in, when there's a big snarling
+    wolf in the room with you.  
+
+  Parsing systems can't guess everything, but there is a way you can
+  give them hints that should clear up most misunderstandings:
+
+    opie(arg, priority_string) and
+    opie1(arg, priority_string)
+
+   and their macro equivalents:
+
+    opie_p(arg, priority_string) and
+    opie1_p(arg, priority_string)
+
+  These do the same thing as the usual calls, but allow you to pass in
+  a priority string as defined in the AcmeFindTarget package.  See the
+  documentation of that package for details, and example2.c for an
+  example object that uses this.
+
+       -------------------------------------------------------
+
+
+4. TOOL SELECTION PRIORITY:
+
+   1) "opie" environment variable
+   2)  tool->query("opie")
+   3)  tool->query_opie()   (for those small tools that don't want to
+                             bother with variable code)
+   4)  global default
+
+   1,2,3 should return (or just be, in the case of #1) a filename
+         such as "/zone/null/acme/opie/i/bw.c".
+   Obviously, you don't need to worry about setting #4.
+
+
+       -------------------------------------------------------
+
+
+5. OPIE COMPLIANT PARSERS
+
+  To make your object specification parsing engine usable by OPIE
+  tools, simply define the following two functions:
+
+        object *evaluate_object_spec(string arg, object tool, string priority)
+
+        string object_spec_help()
+
+    if you support variables in your syntax and want to provide a way
+    for other objects to set them, you should also define: 
+
+        void object_spec_variable_set(mixed key, mixed value)
+
+
+ object *evaluate_object_spec(string arg, object tool, string priority)
+
+    arg      - the object specification
+    tool     - the client tool that made the call to the parser
+    priority - the AcmeFindTarget-compliant priority string     (optional)
+
+    Legal return values are 0, or an array of objects.
+
+ string object_spec_help()
+
+    Either return a filename where help can be found, or return the
+    help itself.  Opie will figure out which one it is.
+
+    Do NOT do any printf()s or write()s in this function.
+
+       -------------------------------------------------------
+
+System Created 26 June 1995 by Zamboni
+

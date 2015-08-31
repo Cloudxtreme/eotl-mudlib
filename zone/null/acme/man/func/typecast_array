@@ -1,0 +1,26 @@
+NAME
+    typecast_array - make every value in an a array a given type
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+ 
+    mixed *typecast_array( mixed *arr, int type );
+ 
+DESCRIPTION
+    This function iterates through the array and attempts to convert
+    all element to a given type.  The type is a runtime type as defined
+    in /inc/global/lpctypes.h.  If any values could not be converted
+    to the specified type (ie. mapping->int), the value is extracted
+    from the array.
+ 
+EXAMPLE
+    #include <lpctypes.h>
+    typecast_array( ({ "2", 3, 4.0, ({ 5 }) }), T_NUMBER ) -> ({ 2, 3, 4 })
+ 
+SEE_ALSO
+    to_string(E), to_int(E), to_float(E), to_object(E), to_array(E)
+ 
+LAST MODIFIED
+    980502 Devo

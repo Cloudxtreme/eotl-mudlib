@@ -1,0 +1,407 @@
+    ACME tadji information/FAQ/related topics
+ 
+    ******************************************************************
+ 
+    * What is the tadji?
+ 
+    The tadji is a simple ACME command router.  To explain what this
+    means probably requires a more verbose explanation:  The tadji
+    is an object that interprets commands you type at the prompt,
+    interprets them, and, based on information you've given it,
+    sends your command to another object, which usually carries out
+    some specific task, like destroying an object, or telling you
+    a person's statitistics.  It provides a standard by which these
+    other objects (generally called command objects or modules) may
+    be coded, and provides a user interface to them.  It allows you,
+    the user, to add and remove these command modules, and allows
+    you to specify what you wish to call them.
+ 
+    As an example, consider a 'dest' command, whose simple function
+    is to destroy an object.  You are not, per se, born with such a
+    command; that is to say, the mud does not provide one for you.
+    There are several ways by which you might go about getting one:
+    the wizard body, for example, has such a command.  If it didn't,
+    you might code an object, with a short and long description;
+    some id by which you could refer to it; an extra_init or init
+    function where you declared the action dest, and perhaps another,
+    if you were so bold, that gave you help on your command; and then,
+    only then, would you be able to code the actual 'dest' command.
+ 
+    'dest', of course, is not so much a problem because the wizard
+    body provides the functionality and recoding it isn't drastically
+    necessary.  But there are many functions that wizards don't get
+    through the body which are very useful, almost necessary.  For
+    instance, consider a command, 'view', that, provided with a
+    player's name as argument, showed the player's environment and
+    all other things in the room with him.  This command is not
+    provided, but obviously useful.  To obtain it, one might write an
+    scrying object, or use someone else's.  But there is a downside
+    to this approach, as aforementioned.  It 
+ 
+       A) Results in you having a seperate object for every command
+          you want.  One for view, one for dest, one for killpurge,
+          etc.  Thats a big inventory, and it takes up memory.
+       B) If you code your own, you have to, as aforestated, put in
+          a lot of random code that doesn't pertain to the command.
+          This is obviously a waste of effort.
+       C) Suppose you cloned Malifax's viewing object but you had
+          another object with a command having the same name.  You
+          would have to either change the name of your object, or
+          inherit/cp his and modify it.  This is silly.
+ 
+    There has to be a better way, and indeed there is.  The tadji
+    fixes all these problems: it is one object, with one description
+    and id.  It facilitates your ability to add, remove and rename
+    commands, execute them, get help on how to use them, etc.  It
+    provides a standard by which to interface with them (a protocol);
+    in fact, it even supports several protocols outside its own for
+    backwards compatibility, which allows you to use commands written 
+    for other objects.
+ 
+    ******************************************************************    
+ 
+    * That's all well and good, but I've seen objects like this before.
+      The BW and Concept come to mind.  What's the difference?
+ 
+    In a word, flexibility.  Both of these are exceptional pieces of
+    work, but the tadji is definitely more flexible than either of them.
+ 
+    The tadji allows its user to add and remove single commands, and
+    does not require that you add a complete directory of commands, as
+    the BW does.  It does not require that you name the command as
+    the coder of the command intended.  You could use Morgaine's view
+    command and call it scry, and it wouldn't break anything.
+ 
+    Ease of use.  You can just clone the tadji, you don't need a
+    special directory.
+ 
+    But the most important difference is that, with a tadji, you can
+    use commands written for either of those tools.  With the BW
+    or Concept, you can only use their respective commands.  Which
+    means that a BW user cannot use commands written for the tadji or
+    for the Concept.  If he wants to, he will be forced to either port 
+    the command over to the system his tool supports, or he will have
+    to clone the required tool.  Again, a waste of effort.  Why have
+    three objects when one is capable of doing what all three do, and
+    does it better?
+ 
+    Of course, if I tell you the tadji is technically superior to the
+    BW or Concept in every possible way, I probably won't be believed,
+    and besides, I would be lying.  The tadji is a simple command
+    router: and that is all it is.
+ 
+    That means that it performs a few simple tasks, mainly the ones
+    I've outlined, and no others.  The BW's command routing system,
+    for instance, may be inferior, but the tadji's security system
+    is inferior, because it doesn't have one.  And it never will.
+ 
+    It never will, because it wasn't coded to be a security system.
+    If you want security, you can always use simple security devices,
+    for many have been coded; or you could, if you had the aptitude
+    and were so inclined, code a command to provide security.
+ 
+    Many of you may have noticed that almost all the IC use the tadji.
+    That is because its better at routing commands, and IC don't
+    really need security; they generally don't mess with each other in 
+    ways security would help, and, because of their passtools,
+    have no fear of wizard interference.  Many wizards, on the flip
+    side, do feel they require security: they do not possess the
+    invulnerability that comes with an Archwizard's rank.  So security
+    is a viable concern.
+ 
+    ******************************************************************
+ 
+    * Wow, that sucks a lot.  If the tadji itself will never have
+      security, will there ever be a version of the tadji with security?
+ 
+    ACME will not produce one, but ACME designed the tadji specifically
+    so that it can be easily 'enhanced' by third party coders.  The
+    tadji was coded in a layered fashion, allowing it to be inherited
+    and subtly changed without too much hacking.  It is only a matter
+    of time before someone codes something like this; in fact, someone
+    already has.  It is called the ICAPP, produced by Devo; because the
+    author of this document does not use it himself, he is not qualified
+    to answer any questions about it: for this, enquire with its coder.
+ 
+    If ACME ever were to produce a security device, which is extremely
+    unlikely and therefore not worth betting on, it would probably be
+    a different object entirely.
+ 
+    ******************************************************************
+ 
+    * The tadji confuses me.  I see people have .tadji files in their
+      dir, but when I look at the file, it only remotely makes sense.
+      What does it do, and how is it interpreted?
+ 
+    The .tadji file (which need not be called .tadji, if the user
+    chooses to set his tadji variable to a different file) is a file
+    the tadji looks for when it is cloned.  If found, it
+    automatically parses it, interpreting each line as a configuration
+    command to the tadji.
+ 
+    Things such as command addition, removal, renaming, etc, are all
+    done from this file, though they can be individually executed from
+    the command line.  There is another file describing these
+    commands with more depth (help tadji_config) and an example of
+    a configuration file (help tadji_config_ex) but for simplicity's
+    sake the most basic commands are outlined here.
+ 
+    ADD <file> <name> <func> <style>
+       Adds a command.  <file> is the path of the command, which
+       must end in .c; <name>, what you want to call the command;
+       <func>, the function to call in <file> when you type <name> 
+       at the command prompt; <style> the way the tadji should pass
+       arguments to <func> in <file> when it executes.  There are
+       several styles:
+           acme            func( verb, argument )
+           bw              func( user, argument )
+           concept         func()
+           none            func()
+       The style also pertains to the way the help command finds
+       documentation for the command being added.
+ 
+       <file> is the only required argument.  It assumes you want
+       to add an ACME command, and assigns <name>, <func> and
+       <style> accordingly.
+ 
+       <file> may contain wildcards, for instance, /usr/devo/commerce/*.c.
+ 
+    ACME <file>
+       Does the same thing as ADD <file>: just adds a command that
+       uses the acme command protocol.
+ 
+    BW <file>
+       Adds a BW command.
+ 
+    CONCEPT <file>
+    COMMAND <file>
+       Adds a command from Nguu's Abstract Concept.  I don't believe
+       there are many of these around anymore.  The 'COMMAND' command
+       is there for backwards compatibility with the Concept's version
+       of the .tadji file, the .conrc.
+ 
+    PACKAGE <file>
+       Another Concept .conrc command.  Simply executes the config commands
+       in <file>; for instance,
+ 
+       PACKAGE /usr/morgaine/.tadji
+       BW /usr/zippo/pub/_dis.c
+ 
+       Would do all of the config commands outlined in /usr/morgaine/.tadji,
+       and then add dis from Zippo's public BW directory.
+ 
+       Rather like #include (in code).
+ 
+    RM <command name>
+       Removes the command.  Note that it takes the command's name, not
+       its path!
+ 
+    RENAME <command name> <new command name>
+       Renames a command called <command name> to <new command name>.
+ 
+    A more verbose description is of course available in the 'tadji_config'
+    help file.  Any file names are expanded relative to the directory the
+    config file is in, unless specified on the command line.
+ 
+    ******************************************************************
+ 
+    * You've said I can just clone the tadji.  If I clone it and I have
+      no commands, what can I do?  What commands does the tadji have
+      by default?
+ 
+    The tadji is modular to the extreme.  All the commands it has, save
+    one, are actually seperate command objects, even the four it comes
+    with.  They are added automatically by the tadji, but they are
+    modular all the same, and you can remove or rename them if you
+    like.  The only hardcoded command, really, is 'UNTADJI', which
+    destroys the tadji in the event something goes wrong.  Hopefully,
+    it should always work.
+ 
+    In actuality, the 'tadji' command is also hardcoded, for safety
+    reasons.  To be completely honnest, the author of this file hardly
+    understands why this was necessary, but he respects the tadji's
+    coder enough not to question it too much.  It is, in addition to
+    being hardcoded, added, so you can rename it (though typing 'tadji'
+    will always work.)  It is probably there to keep morons from
+    removing it.
+ 
+    The four commands it comes with, then, are:
+ 
+        tadji - This command is the basic tadji interface.  It allows
+                its user to specify config commands at the command line,
+                via 'tadji config', use another person's configuration
+                file, via 'tadji reset', and list the commands you
+                have, via 'tadji list'.  It is well documented.
+ 
+        tsec  - As previously stated, all these commands are external
+                objects.  Since 'tadji' can add, remove, rename, etc,
+                your commands, can any hacker go ahead and do this from
+                another object?  No.  The tadji uses AcmeCallSecurity,
+                and this is a user interface to it.  It isn't too
+                complex, if you understand AcmeCallSecurity; there is
+                a lot of documentation it.  But the command itself is
+                poorly documented, purposely.  When the time comes that
+                you will need to use it, you will understand it; until
+                then, just ignore it.
+ 
+        help  - Help provides a simple way of displaying the syntax and
+                documentation for a command.  It will even provide
+                documentation for itself: just type 'help help'.
+ 
+        tcmds - This is a very good command.  The author of this
+                document, being also the author of this command, is 
+                of course somewhat biased.  This command allows a user
+                to see what commands are available to him, not just the
+                ones he has.  It functions thanks to the ACME command
+                protocol; as a result, it does not document commands
+                designed for other tools, its only shortcoming.  It is
+                also well documented.
+ 
+    ******************************************************************
+ 
+    * What is OPIE?  What does it do?
+ 
+    OPIE is the ACME standard Object Parsing Interface Engine.  It is
+    not actually part of the tadji, rather a tool used by most coders
+    wishing to code commands for the tadji.
+ 
+    The deal is this: it was stated earlier that the purpose of the
+    tadji, really, is to provide a way users can code commands and
+    then provide a way to manage them.  Because we are operating on a
+    MUD, the majority of commands provide information on or manipulate
+    some object.  Therefore the coder frequently needs to convert the
+    <target object>, which is invariably a string the user types (ie,
+    "purge" in "dest purge") to an object the MUD can understand,
+    which might be /secure/wizard/body#23607 or the like.  There are
+    functions to do this, of course.  But they are extremely specific,
+    frequently only finding an interactive object by a given name,
+    or a living object by a given name, or what have you.
+ 
+    Whatsmore, "purge" in this case refers to just one object, but
+    frequently the user wants to refer to more than one, for instance:
+        dest /secure/player/body#*
+ 
+    In order to make it easier on coders, and to allow a standard (so
+    you, the user, needn't learn a new notation for every different
+    command), the concept of an OSPEC (Object SPECification) was 
+    developed.  Zamboni's Belt, an older wiztoy, something of a
+    precursor to the tadji in design (but sporting an amodular
+    interface), was the first mainstream application that used OSPECs
+    for its commands.
+ 
+    An OSPEC is, quite simply, a way to refer to objects without using 
+    their filenames.  From a coder's standpoint, the application
+    of an OSPEC is achieved through an algorithm (function) that converts
+    what you type (a string) into an object or series of objects the 
+    command's code can understand.  For instance, "e" may refer to your 
+    environment, or "i" to your inventory; the system is arbitrary, but 
+    it is consistent: a tool with an OSPEC is one where the user never 
+    has to relearn how to tell the command what he is refering to.
+ 
+    Of course, OSPECs are a very good idea.  As a result several tools,
+    most notably the BW, began to use them.  Some people (and especially
+    those at ACME) found the BW's ospec lacking in some functionality
+    they wanted; they didn't really like its syntax.  We wanted to be 
+    able to write our own ospecs, and have some way to use them without
+    changing the code of the commands that used them.
+ 
+    So OPIE was born.  OPIE allows someone to 'setv opie <file>', and
+    specify what OSPEC they want.  Most BW and tadji commands will
+    comply.  The check is done at a higher level, within the library
+    functions the people who code commands use to translate a string
+    into an object; so the coders of the commands need not support
+    OPIE themselves, as long as the functions they use do.  As a user,
+    you don't really need to know what OPIE is (though it is better to
+    know).  Just remember that when something is 'OPIE compliant' it
+    means it supports OPIE, and therefore whatever OSPEC you might
+    want to use.
+ 
+    ******************************************************************
+ 
+    * What happens if I don't set my OPIE environment variable?
+ 
+    Nothing, really.  Each tool has its own default, and if your
+    variable isn't set, the command falls back on the default of
+    the tool it was designed for.
+ 
+    This does present a problem with the tadji, though, because the
+    tadji defaults to the ACME OSPEC, and the BW the BW OSPEC.  As
+    a result, not setting your 'opie' environment variable will 
+    result in inconsistancies between commands; a BW command will
+    require BW syntax, and a tadji command ACME syntax.  It is
+    probably better to just set the opie environment variable.
+ 
+    ******************************************************************
+ 
+    * I'm a BW user, and I don't want to use ACME's default OSPEC, but
+      I do want to use the tadji.  What should I set my 'opie'
+      environment variable to if I want to use the BW's OSPEC?
+ 
+    setv opie /zone/null/acme/opie/i/bw.c
+ 
+    ******************************************************************
+ 
+    * What other OSPECs exist?
+ 
+    ACME only supports two others, namely the ACME OSPEC and the
+    Tracer OSPEC, which are fairly similar (the author of this
+    document believes the former was based on the latter).  ACME
+    'supports' them by including them in its OSPEC directory 
+    (/zone/null/acme/opie/i/).  If you are new to all of this, learn
+    the ACME ospec.  It is probably better than the BW ospec, and,
+    either way, it is still being maintained: the BW ospec is no 
+    longer a priority or even an issue to its coder.
+ 
+    ******************************************************************
+ 
+    * I want to use the tadji.  Could you give me a few simple 
+      steps to follow to get me on my way?
+ 
+    Sure, first do 'ed /usr/putyournamehere/.tadji', and place the
+    following lines:
+ 
+    ADD /usr/zamboni/cmds/*.c
+    ADD /usr/devo/commerce/*.c
+    ADD /usr/esquire/cmds/*.c
+    ADD /usr/morgaine/bin/tadji/*.c
+ 
+    These directories contain the majority of the commands for the
+    tadji at the time this document was written.  You may not want
+    all of them, or you may want the others that exist.  Use
+    'tcmds', one of the tadji's default commands, to find out what
+    exists.
+ 
+    Clone the tadji: do 'clone /zone/null/acme/tadji/tool'
+ 
+    That's it, you're ready to go.  Type 'tadji list' to see what
+    commands you have.  Type 'tcmds -y' to see what commands you
+    don't have.
+ 
+    ******************************************************************
+ 
+    * I just want to try the tadji, is there anyway simpler?
+ 
+    Yes.  clone /zone/null/acme/tadji/tool, and type:
+ 
+          tadji reset /usr/morgaine/.tadji
+ 
+    This will provide you with a tadji with lots of commands.  Look
+    at them.
+ 
+    ******************************************************************
+ 
+    * 'Abstract Concept' means something, and BW stands for 'Binford
+      Wiztoy'.  What on earth does 'tadji' mean?
+ 
+    From the source:
+ 
+    "tadji" is a Lojban word.  Lojban words typically don't
+    translate into English very well since the grammar is so
+    different.  The closest I can come is that it has to do with
+    something being a process/method/technique/approach/means for
+    doing something else.  I thought it was an appropriate name
+    for this package.                                 [971124 Zamboni]
+ 
+    ******************************************************************
+ 
+    980904 morgaine 

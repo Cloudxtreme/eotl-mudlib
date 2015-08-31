@@ -1,0 +1,19 @@
+NAME
+    force_load_array - forces each object in an array to load
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeForceLoad;
+    #include AcmeForceLoadInc
+
+    object *force_load( string *file );
+ 
+DESCRIPTION
+    Forces objects named by the elements of file to load.  Returns 
+    an array of the loaded objects.
+ 
+SEE_ALSO
+    call_other(E), clone_object(E), force_load_array(A)
+ 
+LAST MODIFIED
+    980102

@@ -1,0 +1,25 @@
+NAME
+    get_actions_transposed - transpose query_actions()
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    mixed get_actions_transposed( object who );
+    
+DESCRIPTION
+    Like query_actions(), but puts each action into its own array.
+ 
+EXAMPLE
+    get_actions_transposed(THISP)  ->  
+    ({
+      ({ "UNTADJI", 0, 126, zone/null/acme/tadji/tool#322, "panic"  }),
+      ({ "", 2, 2, zone/null/acme/tadji/tool#322, "route_action" })
+    })
+ 
+SEE_ALSO
+    query_actions(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

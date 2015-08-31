@@ -1,0 +1,8 @@
+/* To temporarily disable Opie, copy this file to client.h .
+ * Please also edit this comment, describing why you shut it down.
+ */
+#include "opie.h"
+#define opie(arg)       (write("Opie is down, sorry.\n"))
+#define opie_help()     (write("Opie is down, sorry.\n"))
+#define opie_set(k,v)   (write("Opie is down, sorry.\n"))
+#define opie_which()    (write("Opie is down, sorry.\n"))

@@ -1,0 +1,236 @@
+
+Examples are at the end of this help file.
+
+The main list is a comma separated list of sublists.  The result is an
+array containing the contents of all the sublists.
+
+Thus:   foo,bar,baz    would contain everything specified by each of
+the sublists foo, bar, and baz.
+
+When it's possible to nest an ospec (like in "!=foo" or "+bar"), you
+must enclose it in parentheses if it contains any commas or colons.
+Examples: 
+   w:!=(e:i,*fred)
+   w:!=me
+
+Each sublist is a colon separated list of the following:
+
+
+CONTEXT FREE
+
+    here       ENV(THISP)
+    me         THISP
+    @foo       find_living(foo)
+    *foo       find_player(foo)
+    $var       Contents of a variable. ($$ will give last object used)
+    $$         Results of last ospec
+    him,her    The last single living object of corresponding gender
+               you referenced.
+    it         The last single non-living or non-gendered thing you
+               referenced.
+    them       The last group of things you referenced.
+
+   As first term:
+    foo        something in you or near you, a player, 
+               a filename, including wildcards, or a filename
+
+   As first term:
+    l          All living objects  
+               (living as defined by call to set_living_name())
+    Otherwise, filters current list through living().
+
+   As first term, filters on all users.  Otherwise, filters current list.
+    u          All users
+    m          All mortals
+    w          All wizards (non-mortals)
+    u.foo      All users of level foo  (by number or name)
+    u.foo.bar  All users between levels foo & bar, inclusive
+
+   As first term it's context free (duh), but otherwise it does an
+   intersection (keeps everything you've already got that's also on
+   the list from the mapfile).
+    mapfile.filename.efun  An array containing efun(line) for each
+                           line in the file.  Unfortunately, the
+                           filename may not contain delimeter
+                           characters, including '.'.
+    mapfile.filename.OSPEC   Each line is processed as a separate ospec.
+                             That list is then applied as a filter if
+                             this is not the first element in the
+                             ospec.
+    mapfile.filename.FILTER  Same as OSPEC, but the provided ospec
+                             lines are treated as if they appeared
+                             here in this ospec.  (So, for example,
+                             "e" would yield the environments of the
+                             current set of objects, rather than your
+                             own environment.  When this appears as
+                             the first element, it behaves like OSPEC.
+
+TRANSFORMS
+
+  General
+
+    i          all_inventory(ob)
+    iN or #N   all_inventory(ob)[N]
+    I          deep_inventory(ob)
+    e          environment(ob)
+    E          all_environment(ob)
+    foo        present(foo,ob)
+
+    x.dir   Room through exit 'dir'
+    x.!     Rooms through all exits
+
+   map_objects
+    ->foo()    ob->foo()   (the -> is optional)
+    ->foo(arg1,arg2,...) just what you think.  The args can be any
+                         kind of VALUE.  See "Filtering" below.
+
+   map_array
+    #'foo        lambda( ({ 'o }), ({ #'foo, 'o }) )
+
+   Shadows
+    s        All shadows
+    s#       #th shadow from the bottom (starts at 0)
+    s-#      #th shadow from the top    (starts at 0)
+
+  Additions
+    +ospec   Instead of replacing the list with the transform
+             specified by <ospec>, add it to the list.
+             Example:     e:x.!    All rooms one exit away
+                          e:+x.!   This room and all rooms one exit away
+             Note that while  "e:+me"  is the same as    "e,me"
+                            "e:+me:i" is not the same as "e,me:i"
+             (The first one includes the room's contents as well as yours)
+
+
+  Reductions / Filtering
+
+  filter_objects  - Keeps each object for which this is true
+    f.VALUE
+    f.!.VALUE
+    f.>.VALUE.VALUE
+    f.<.VALUE.VALUE
+    f.>=.VALUE.VALUE
+    f.<=.VALUE.VALUE
+    f.==.VALUE.VALUE        (for arrays, compares contents recursively)
+    f.!=.VALUE.VALUE        (for arrays, compares contents recursively)
+    f.?.VALUE.VALUE.VALUE
+
+    where VALUE can be:
+
+    ->foo()      ob->foo()    (the -> is optional)
+    ->foo(arg1,arg2,...) ob->foo(arg1,arg2,...) where the args are
+                         VALUEs.
+    #'foo        lambda( ({ 'o }), ({ #'foo, 'o }) )
+    "A string"   Any literal string.  Use \" to include quotes.
+    some_number  Any string of digits will be parsed as a number
+    (ospec)      another object spec
+    [ospec]      The first object from that ospec
+    THISO        Each object in question
+    LIST         The entire list of objects previous to this operation
+
+   other filtering
+
+    [%d]       Item in current list
+    [%d..%d]   Range of items in current list
+    [%d..<%d]  Range, counting from the end   ( [0..<1] is entire list)
+    [%d..]     Range which extends to end of list  ( same as [%d..<1] )
+    !=         Remove all duplicates from the list
+    !=ospec    Remove anything in <ospec> from the list
+    ==ospec    Remove anything not in <ospec> from the list.
+
+
+    Some shortcuts for commonly used filters
+
+    id.foo     Keep if ob->id(foo)
+    prog.foo   Keep if program_name(ob) == foo
+    ip.foo     Keep all players logged in from site whose name matches
+               foo, where foo is a regular expression
+    prop.foo   True if ob->test_prop(foo)
+
+    <foo      Keep if OrdLevel(ob) < foo
+    >foo      Keep if OrdLevel(ob) > foo
+
+    m              Keep mortals
+    w              Keep wizards (non-mortals)
+    u.foo          Keep users of level foo  (by number or name)
+    u.foo.bar      Keep users between levels foo & bar, inclusive
+    level.foo      same as u.foo
+    level.foo.bar  same as u.foo.bar
+
+  Sorting
+
+    sort.whatever  All this works the same way as the f.whatever in
+                   Filtering.
+
+EXAMPLES
+
+ Commonly used things should be fairly simple, but more complex
+ specifications should be possible.
+
+ me                  Me
+ i                   Everything in my inventory
+ e:i                 Everything in the room
+ u:i:id.shield       All shields being carried by anyone
+ u:!=me:i:id.shield  All shields being carried by anyone except me
+ me:+s               Me and my shadows
+ u.mortal.frob:s     All shadows on all Mortals, Guests, and Frobs.
+ e:i:u:!=me          Everyone in the room but me
+
+ w:!=(e:i)           All wizards who are not in this room
+ w:!=(me,aleron)     All wizards except me and Aleron
+ ~/*:==(aleron:i)    Anything of mine that Aleron is carrying
+
+ $$,me               The last thing I specified and me
+
+ *blacklist:->query_bonus_array():+s  
+                     All of Blacklist's bonus objects and all their
+		     shadows
+ thing:->query("owner") the owner of the thing.  (yeah, I made it up)
+ thing:->get(spud,5,[me])  whatever thing->("spud", 5, THISP) is.
+ it:->get(spud,5,(u:!=me)) whatever it->("spud", 5, users()-({THISP})) is.
+
+ e:x.north           The room to the north of this one
+ e:x.!               All rooms this one leads to
+ e:+x.!              This room and all rooms it leads to
+ e:+x.!:+x.!         This room and all rooms it leads to and all the
+                     rooms they lead to
+ e:+x.!:+x.!:!=      Same thing, but with nothing in the list more
+                     than once
+
+ ~/workroom.c        My workroom
+ /zone/null/acme/*   All objects whose filenames start with /zone/null/acme/
+ foo/bar#*           All objects cloned from ./foo/bar.c
+ *.c                 All master objects from this directory (load 'em too)
+
+ 
+ m:f.==.query_gender()."female"    All the mortals claiming to be female
+ e:i:f.#'living                    All the living things in the room
+ e:i:l                             Same thing, but easier to type.
+ u:f.is_lame()                     All the lame users
+ u:f.==.#'environment.THISO        All users inside themselves.  ;)
+ i:f.?.#'living.[me].[e]:!=        Me, if I'm are carrying anything
+                                   living, and my environment, if you
+                                   are carrying anything not alive.
+                                   (Possibly both or neither)
+ e:+x.!:+x.!:!=:i:f.#'interactive  All players within two exits of here
+
+ e:i:sort.#'interactive            Everything in the room, players first.
+ e:i:sort-.#'interactive           Everything in the room, players last.
+ m:sort.->query_hp()               All players, strongest to weakest.
+ m:sort.>.->query_hp().50          All players, those with more than
+                                   50 hitpoints listed before those
+                                   with 50 or fewer, but not otherwise
+                                   sorted.
+
+ mapfile./usr/zamboni/etc/friends.find_player   Zamboni's logged in friends
+ mapfile.~/etc/friends.find_player              Your own logged in friends
+ mapfile.~/stuff.find_object                    Various named objects
+ i:mapfile.~/etc/friends.find_player            Friends in your inventory
+ i:mapfile.~/neatstuff.OSPEC         Stuff I have that's on my neatstuff list
+ i:mapfile.~/tests.FILTER            Stuff I have that passes at least
+                                     one of the ospec tests in my list
+
+ 
+
+Suggestions for additions and changes are welcome.  Send mail to Zamboni.
+

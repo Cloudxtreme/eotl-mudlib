@@ -1,0 +1,26 @@
+NAME
+    sec_check_command - check all objects for approval
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    static status sec_check_command( mixed operations );
+    
+DESCRIPTION
+    Determine whether the current action is being done securely (ie.
+    whether all object involved in the current invocation are trusted
+    to perform at least one of the specified operations).  operations
+    can be a single operation or a list of operations.  If a list is
+    supplied, object only has to match one of the listed operations.
+    Returns true if current invocation is thought to be secure.
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+ 
+SEE_ALSO
+    sec_query(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

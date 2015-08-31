@@ -1,0 +1,23 @@
+NAME
+    filter_by_hostname - filter a list of players by hostname regexp
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    object *filter_by_hostname( object *ulist, string pattern );
+ 
+DESCRIPTION
+    Filters a list of users, where query_ip_name(ulist[i]) matches
+    regexp pattern.
+ 
+EXAMPLE
+    filter_by_hostname( users(), "inow.com" )  lists all users
+      currently on from inow.com
+ 
+SEE_ALSO
+    query_ip_name(E), regexp(E), users(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

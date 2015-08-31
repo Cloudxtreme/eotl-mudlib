@@ -1,0 +1,21 @@
+NAME
+    to_octal - convert a decimal int to a string of octal digits
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+
+    string to_octal( int num );
+ 
+DESCRIPTION
+    Returns string in octal representing an integer value.
+ 
+EXAMPLE
+    to_octal(8) -> "10"
+ 
+SEE_ALSO
+    to_string(E), from_octal(A), to_binary(A), to_hex(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

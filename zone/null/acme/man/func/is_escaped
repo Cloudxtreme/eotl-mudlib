@@ -1,0 +1,22 @@
+NAME
+    is_escaped - tests to see if a character is escaped
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    status is_escaped( string str, int index );
+ 
+DESCRIPTION
+    Returns true if str[index] is escaped.
+ 
+EXAMPLE
+    is_escaped("test", 1)  ->  0
+    is_escaped("t\\est", 1)  ->  1
+ 
+SEE_ALSO
+    explode_unescaped(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

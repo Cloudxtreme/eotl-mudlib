@@ -1,0 +1,21 @@
+NAME
+    sec_is_member - check object for operation approval
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    static status sec_is_member( object ob, mixed operation );
+    
+DESCRIPTION
+    Returns true if ob is approved for operation.
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+ 
+SEE_ALSO
+    sec_query(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

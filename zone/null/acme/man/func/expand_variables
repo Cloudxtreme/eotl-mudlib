@@ -1,0 +1,39 @@
+NAME
+    expand_variables - expands variables in a string
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs mixed expand_variables( string str, mapping vars, int varchar,
+                                    mixed func, mixed args, int kill );
+ 
+DESCRIPTION
+    Expands the variables in str.  Variables are designated by a char
+    delimiter varchar, or a default of '$'.  The vars mapping has a
+    format of:
+ 
+      ([  string var1 : string val1,
+          string var2 : closure val2  ])
+ 
+    where the keys are the variables mapped to the values they hold.
+    If the value is a closure, it will be funcall'd before being
+    entered (allowing for auto-expanding values).
+ 
+    In addition to varchar, there are three more optional variables:
+      func  -  a closure or function to handle undefined variables
+      args  -  arguments that will be applied along with func
+      kill  -  if this is true and we come to a variable we don't know, 
+               return with an error code (-1) unless there was a) a func 
+               to call and b) the return value was false.
+ 
+EXAMPLE
+    expand_variables( "this is a $TEST.", ([ "TEST" : "test" ]) ) ->
+      "this is a test."
+ 
+SEE_ALSO
+    expand_unescape(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

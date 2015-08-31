@@ -1,0 +1,23 @@
+NAME
+    explode_args - separate space deliniated arguments, but keep
+                   quoted strings together
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArgs;
+    #include AcmeArgsInc
+
+    string *explode_args( string arg );
+ 
+DESCRIPTION
+    Separates space-deliniated arguments, but keeps quoted string
+    together.  Returns an array of separated arguments.
+ 
+EXAMPLE
+    explode_args("this \"is a\" test.") -> ({ "this", "is a", "test." })
+ 
+SEE_ALSO
+   explode(E), regexplode(E), explode_unescaped(A), explode_nested(A)
+ 
+LAST MODIFIED
+    980102 Devo

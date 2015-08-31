@@ -1,0 +1,29 @@
+NAME
+    sec_add - approve an object, file, or uid for an operation
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    public status sec_add( string field, mixed operation, mixed item );
+    
+DESCRIPTION
+    Adds approval of item for operation.  Type of item is specified by
+    field, and is currently one of these values:
+      SEC_UID       -  item is a uid
+      SEC_FILENAME  -  item is a filename
+      SEC_OBJECT    -  item is an object
+ 
+    Returns 1 for success or 0 for failure (due to lack of access).
+    All objects on the stack must be approved for SEC_MANAGE to call
+    this.
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+    
+SEE_ALSO
+    sec_remove(A), sec_clear(A), sec_query(A), sec_lock(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

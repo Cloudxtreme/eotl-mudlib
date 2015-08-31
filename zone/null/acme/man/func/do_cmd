@@ -1,0 +1,19 @@
+NAME
+    do_cmd - executed a command
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCmd;
+    #include AcmeCmdInc
+
+    status do_cmd( string verb, string arg );
+    
+DESCRIPTION
+    Executes a command.  verb is the verb used to execute the
+    command, arg is the command-line arguments passed to the command.
+ 
+SEE_ALSO
+    cmd_help(A), cmd_usage(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

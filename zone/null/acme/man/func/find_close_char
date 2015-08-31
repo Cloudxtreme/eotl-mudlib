@@ -1,0 +1,36 @@
+NAME
+    find_close_char - finds closing brace/paren/bracket/quote/etc.
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArgs;
+    #include AcmeArgsInc
+
+    varargs int find_close_char( string str, int start, status quiet, 
+                                 string open, string close );
+ 
+DESCRIPTION
+    Find the closing brace/parenthesis/bracket/quote that mathces
+    specified open.  start is the location to the open character 
+    from which to start searching.  If quiet is set, error messages 
+    will be supressed.  open is a string of OPEN characters (defaults 
+    to "\"([{").  close is a respective string of CLOSE characters 
+    (defaults to "\")]}").  Return values are as follows:
+ 
+      ret >  0  :  The position of the matching char in str.
+      ret == 0  :  Error: str[start] was not an OPEN char.
+      ret <  0  :  Error: Failed to match open char at str[-ret - 1]
+ 
+    open and close must be the same length, and be in the correct
+    order so that open[i] matches close[i].    
+ 
+EXAMPLE
+    find_close_char("find {my} close char", 5) -> 8
+    find_close_char("find {my close char", 5, 1) -> -6
+    find_close_char("find my close char") -> 0
+ 
+SEE_ALSO
+    explode_nested(A)
+ 
+LAST MODIFIED
+    980102 Devo

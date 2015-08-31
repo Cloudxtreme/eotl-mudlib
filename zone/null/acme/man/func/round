@@ -1,0 +1,22 @@
+NAME
+    round - rounds floating point numbers
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+ 
+    float round( float num, int place );
+ 
+DESCRIPTION
+    Returns num rounded to 10^place decimal places.
+ 
+EXAMPLE
+    round( 3.42581, -2 )  ->  3.43
+    round( 238310.24, 3 )  ->  238000
+ 
+SEE_ALSO
+    to_int(E), to_float(E), operators(C)
+ 
+LAST MODIFIED                               
+    980128 Devo

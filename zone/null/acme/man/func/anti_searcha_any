@@ -1,0 +1,28 @@
+NAME
+    anti_searcha_any - searches an array for non-match in a set
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    varargs anti_searcha_any( mixed *arr, mixed *el, int start, int inc );
+ 
+DESCRIPTION
+    This will return the position of the first element in arr that
+    doesn't match any element in el.  Both start and step are optional.  
+    If start is specified, the searcha will begin at the position in the 
+    array specified by start.  If inc is specified, the search will be
+    done in steps of inc.  Returns -1 if all elements match the elements 
+    in el.
+ 
+EXAMPLE
+    anti_searcha_any( ({ 1, 2, 3 }), ({ 1, 2 }) )  ->  3
+    anti_searcha_any( ({ 1, 3, 3 }), ({ 2, 3 }) )  ->  2
+    anti_searcha_any( ({ 1, 3, 3 }), ({ 1, 3 }) )  ->  -1
+ 
+SEE_ALSO
+    searcha(E), searcha_any(A), anti_searcha(A)
+ 
+LAST MODIFIED
+    980102 Devo

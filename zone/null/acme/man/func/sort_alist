@@ -1,0 +1,27 @@
+NAME
+    sort_alist - sorts an alist respective to the values of the keys
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+ 
+    mixed *sort_alist( mixed *arr, string func, object ob );
+    mixed *sort_alist( mixed *arr, closure cl );
+ 
+DESCRIPTION
+    This sorts all the arrays contained in an alist, respective to the
+    values of the keys, or arr[0].  arr must be an alist, which is to
+    say it must be an array of at least two dimentions, where every
+    array in the second level is the same size.  Everything else works
+    just like sort_array().
+ 
+EXAMPLE
+    sort_alist( ({ ({ 2, 3, 1 }), ({ "aleron", "devo", "zamboni" }) }), #'> ) 
+      returns ({ ({ 1, 2, 3 }), ({ "zamboni", "aleron", "devo" }) })
+ 
+SEE_ALSO
+    sort_array(E), order_alist(E)
+ 
+LAST MODIFIED
+    980123 Devo

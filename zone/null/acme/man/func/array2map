@@ -1,0 +1,23 @@
+NAME
+    array2map - transforms a 1-D array into a mapping
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeConversion;
+    #include AcmeConversionInc
+
+    mapping array2map( mixed *arr );
+ 
+DESCRIPTION
+    Returns a mapping where the first array element maps to the second,
+    third to the fourth, and so on.  If the array has an odd number of
+    memebers, the last element is ignored.
+ 
+EXAMPLE
+    array2map( ({ a, b, c, d }) ) -> ([ a : b, c : d ])
+ 
+SEE_ALSO
+    array2D2map()
+ 
+LAST MODIFIED
+    Devo 980102

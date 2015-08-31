@@ -1,0 +1,20 @@
+NAME
+    all_shadows - returns a list of shadowing objects
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeShadow;
+    #include AcmeShadowInc
+
+    object *all_shadows( object ob );
+ 
+DESCRIPTION
+    Returns an array of all objects shadowing ob, ordered with
+    shadow closest to object first (ie. was the first one shadowing,
+    has the lowest precedence).
+ 
+SEE_ALSO
+    shadow(E), query_shadowing(E), find_shadows(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

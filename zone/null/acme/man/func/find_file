@@ -1,0 +1,23 @@
+NAME
+    find_file - finds a file in a specified path
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    string find_file( string file, string *path );
+ 
+DESCRIPTION
+    Searches the path for a particular file.  Returns the full path
+    of the first file found.
+ 
+EXAMPLE
+    find_file( "workroom.c", ({ "/zone/", "/usr/devo/", "/obj/race" }) ->
+      "/usr/devo/workroom.c"
+ 
+SEE_ALSO
+    expand_path(A)
+ 
+LAST MODIFIED
+    980102

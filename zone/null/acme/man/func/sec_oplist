@@ -1,0 +1,21 @@
+NAME
+    sec_oplist - list all operations
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    public mixed *sec_oplist();
+    
+DESCRIPTION
+    Returns a list of defined operations.
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+ 
+SEE_ALSO
+    sec_add(A), sec_remove(A), sec_clear(A), sec_query(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

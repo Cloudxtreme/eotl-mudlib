@@ -1,0 +1,22 @@
+NAME
+    from_template - check to see if an object is from a given program
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAncestry;
+    #include AcmeAncestryInc
+
+    status from_template( object ob, string program );
+ 
+DESCRIPTION
+    Returns true if object ob is using the program described by
+    string program.
+ 
+EXAMPLE
+    from_template(FINDO("/obj/thing/thing#12345"), "/obj/thing/thing") -> 1
+ 
+SEE_ALSO
+    file_name(E), program_name(SE), munge_filename(A)
+ 
+LAST MODIFIED
+    980102 Devo

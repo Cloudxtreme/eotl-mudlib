@@ -1,0 +1,52 @@
+Code:                                   Primary Contributor/Owner:
+------------------------------          ------------------------------
+Packages:
+---------
+opie/*                                  Zamboni
+tadji/*                                 Zamboni
+daemon/*                                Morgaine
+
+Include Files:
+--------------
+inc/closures.h                          Iffy (original)
+
+Libary Packages:
+--------------- 
+AcmeAction                              Zamboni
+AcmeAlloc                               Aleron
+AcmeAncestry                            Zamboni
+AcmeArgs                                Zamboni
+AcmeArray                               Zamboni
+AcmeBW                                  Zamboni
+AcmeBreadth                             Aleron
+AcmeCallSecurity                        Zamboni
+AcmeCmd                                 Zamboni
+AcmeCrypt                               Aleron
+AcmeConversion                          Aleron
+AcmeCVar                                Aleron
+AcmeError                               Aleron
+AcmeFile                                Zamboni
+AcmeFindTarget                          Aleron, Zamboni
+AcmeForceLoad                           Zamboni
+AcmeFunction                            Zamboni
+AcmeGetData                             Aleron
+AcmeGetOpts                             Zamboni
+AcmeGraph                               Aleron
+AcmeKQML                                Zamboni
+AcmeMan                                 Zamboni
+AcmeMath                                Morgaine
+AcmeMenu                                Aleron
+AcmeMethod				Aleron
+AcmeMisc                                Zamboni
+AcmeOutput                              Aleron
+AcmeOSpec                               Zamboni
+AcmeQueue				Aleron
+AcmeRoom                                Zamboni
+AcmeShadow                              Zamboni
+AcmeStack				Aleron
+AcmeStat                                Devo
+AcmeStrings                             Zamboni
+AcmeStruct                              Aleron
+AcmeUser                                Zamboni
+AcmeVarSpace                            Zamboni
+

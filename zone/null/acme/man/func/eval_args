@@ -1,0 +1,25 @@
+NAME
+    eval_args - replace arguments of a special format with what
+                they reference
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArgs;
+    #include AcmeArgsInc
+
+    mixed *eval_args( string *args );
+ 
+DESCRIPTION
+    [ospec] becomes a single object named by the ospec
+    {ospec} becomes an array of objects named by the ospec
+ 
+EXAMPLE
+    eval_args( ({ "me" }) ) -> ({ "me" })
+    eval_args( ({ "[me]" }) ) -> ({ secure/wizard/body#288 })
+    eval_args( ({ "{me}" }) ) -> ({ ({ secure/wizard/body#288 }) })
+ 
+SEE_ALSO
+    opie(A), opie1(A)
+ 
+LAST MODIFIED
+    980102 Devo

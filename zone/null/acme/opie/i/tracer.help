@@ -1,0 +1,28 @@
+  An item is a list separated by ':'. An item in that list can be:
+
+    Explicit objects:
+
+  here     This room.
+  me       You.
+  @name    Name of a player or monster.
+  *name    Name of player only. Can be invisible.
+  $var     Contents of a variable. ($$ will give last object used)
+  $num     Player number 'num'.
+  users    Array of all players
+  name     Filename of an object.
+
+    These specifications depend on what we have so far.
+    If this is the first thing in the list, the 'current object'
+    Is set to be your ENV.
+
+  all      Everything contained within the current object.
+  #num     Object number 'num' in current object.
+  id       Name of an item contained in current object.
+  +dir     Room through exit 'dir' from current object.
+  ^        Environment of the current object.
+  -        Shadow of the current object
+  <num     Filter out anything whose level is not < num.
+  >num     Filter out anything whose level is not > num.
+  !=       Remove all duplicates from a list of objects.
+  !=xxx    Remove xxx from a list of objects.
+  #'foo    A simple closure applied to each object in the list.

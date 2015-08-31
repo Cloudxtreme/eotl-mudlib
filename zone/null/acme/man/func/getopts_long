@@ -1,0 +1,77 @@
+NAME
+    getopts_long - parse options from an array of arguments, including
+                   long options 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeGetOpts;
+    #include AcmeGetOptsInc
+
+    mixed *getopts_long( string *args, string validopts, mapping longopts );
+ 
+DESCRIPTION
+    Searches args for valid options, as described by validopts and
+    longopts.  
+ 
+    validopts is a list of valid options, or 0 to accept any option.  
+    For example, "ab-c:d" means that -a, -b, -c, and -d are valid;  
+    -b and -c take a single parameter, -b may be used more than once 
+    and the parameter(s) will be stored in an array, and the other 
+    options (-a and -d) take no parameters.  The characters ':', ' ', 
+    and '-' may not be used as options.  
+ 
+    longopts is a mapping of valid long options, where the indices are 
+    strings representing the option and the indices are flags describing 
+    what type of option they are.  For example, 
+       ([ "foo" : 0, "bar" : 1, "bog" : -1 ]) 
+    would mean   that --foo, --bar, and --bog were valid long options, 
+    that --bar and --bog took a single parameter, --bog may be used more 
+    than once and each parameter will be stored in an array, and --foo 
+    takes no parameters.  
+ 
+    Returns an array in the form:
+       ({ string *other_args, mapping options, string badopts })
+ 
+      other_args - A subset of args with all options and their 
+                   parameters removed.
+ 
+      options    - A mapping of options used.  The options characters
+                   (e.g. 'a', not "a") are the indices.  options['a']
+                   is the parameter of -a if "a:" in validopts, an
+                   array containing all parameters if "a-" in validopts,
+                   or 0 if -a doesn't take a parameter.  Similarly,
+                   options["foo"] is the parameter of --foo.
+ 
+      badopts    - An array containing all the options which were 
+                   invalid (not in validopts) or which were supposed
+                   to take a parameter but couldn't because no args
+                   were left to consume.  Note that this is different
+                   than in getopts().
+ 
+    An arg of "--" can be used to explicitly mark the end of options.
+    The "--" arg will be consumed, and any args after this will be
+    left alone.  Args of "-" will be silently consumed.
+ 
+EXAMPLE
+    getopts( ({ "--aaa", "--bbb", "this", "--ccc", "is", "--ccc", 
+                "a", "--ddd", "test" }),
+              "", 
+              ([ "aaa" : 0, "bbb" : 1, "ccc" : -1 ]) ) 
+ 
+    returns:
+ 
+      ({
+         ({ "test" }),
+         ([
+            "aaa" : 0,
+            "bbb" : "this",
+            "ccc" : ({ "is", "a" })
+         ]),
+         ({ "ddd" })
+      })
+    
+SEE_ALSO
+    getopts(A), explode_args(A)
+ 
+LAST MODIFIED
+    980102 Devo

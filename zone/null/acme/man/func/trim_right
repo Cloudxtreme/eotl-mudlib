@@ -1,0 +1,22 @@
+NAME
+    trim_right - removes some trailing characters
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    string trim_right( string str, int chr );
+ 
+DESCRIPTION
+    Removes all instances of chr from the end of str and returns
+    that string.  Useful for getting rid of trailing spaces.
+ 
+EXAMPLE
+    trim_right("this is a test.    ", ' ')  ->  "this is a test."
+ 
+SEE_ALSO
+    trim_left(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

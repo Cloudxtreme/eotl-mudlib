@@ -1,0 +1,18 @@
+NAME
+    vset - set a variable
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeVarSpace;
+    #include AcmeVarSpaceInc
+
+    void vset( mixed key, mixed value, mixed space_key );
+    
+DESCRIPTION
+    Gives a variable key a value in space_key's variable space.
+ 
+SEE_ALSO
+    vquery(A), vspaces(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

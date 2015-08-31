@@ -1,0 +1,20 @@
+NAME
+    sec_caller_stack - list objects involved in current operation
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    static object *sec_caller_stack();
+    
+DESCRIPTION
+    Returns a list of objects involved in the current invocation. 
+    These are the objects which would be checked in sec_check_command().
+    This function is meant for debugging your security holes.
+ 
+SEE_ALSO
+    previous_object(E), caller_stack_depth(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,18 @@
+NAME
+    wizards - filter out non-wizards from list or users()
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    varargs object *wizards( object *ulist );
+ 
+DESCRIPTION
+    Filters out any non-wizard from ulist, which defaults to users().
+ 
+SEE_ALSO
+    users(E), mortals(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

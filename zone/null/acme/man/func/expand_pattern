@@ -1,0 +1,29 @@
+NAME
+    expand_pattern - finds files on disk that match a shell pattern
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    string *expand_pattern(string pattern, object who);
+ 
+DESCRIPTION
+    First passes 'pattern' through expand_path( pattern, who ).  Then 
+    searches the disk for files that match the given pattern.  Resolves
+    wildcards '*' and '?' on each level of the directory tree.  Returns
+    an array of all file names found that match 'pattern'.  The current
+    object must have read access to any file found.
+ 
+EXAMPLES
+    expand_pattern( "/secure/master*" ) ->
+      ({ "/secure/master.c", "/secure/master.backup" })
+    expand_pattern( "/secure/??????.c" ) ->
+      ({ "/secure/master.c", "/secure/access.c" })
+    expand_pattern( "/o*/a*" ) ->
+      ({ "/obj/armor", "/open/art", "/open/apps" })
+    expand_pattern( "/o*/b*/.quotes" ) ->
+      ({ "/open/bogleg/.quotes" })
+ 
+LAST MODIFIED
+    990701 Devo

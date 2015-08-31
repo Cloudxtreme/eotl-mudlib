@@ -1,0 +1,18 @@
+NAME
+    enqueue - enter an element into the queue
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeQueue;
+    #include AcmeQueueInc
+
+    void enqueue( mixed elem, QueueHdl hdl );
+ 
+DESCRIPTION
+    Enters elem into the queue described by handle hdl.
+ 
+SEE_ALSO
+    new(A), empty(A), dequeue(A), front(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

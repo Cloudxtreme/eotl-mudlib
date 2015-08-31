@@ -1,0 +1,20 @@
+NAME
+    cmd_usage - return usage for a command
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCmd;
+    #include AcmeCmdInc
+
+    string *cmd_usage( string func );
+    
+DESCRIPTION
+    Returns a list of possible usages for the command executed by
+    function func.  Entries in this list should not include the
+    name of the command, as verbs can be changed.
+ 
+SEE_ALSO
+    cmd_help(A), do_cmd(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

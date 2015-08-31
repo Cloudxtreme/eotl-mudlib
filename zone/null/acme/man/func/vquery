@@ -1,0 +1,18 @@
+NAME
+    vquery - test a variable
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeVarSpace;
+    #include AcmeVarSpaceInc
+
+    varargs mixed query( mixed key, mixed space_key );
+    
+DESCRIPTION
+    Returns the value of a variable key in space_key's varspace.
+ 
+SEE_ALSO
+    vset(A), vspaces(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

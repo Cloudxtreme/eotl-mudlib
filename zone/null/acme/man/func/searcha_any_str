@@ -1,0 +1,28 @@
+NAME
+    searcha_any_str - searches a string for a match of a set of chars
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs int searcha_any_str( string str, string elem, int pos, int step );
+ 
+DESCRIPTION
+    This will return the position of the first element in str that
+    matches any charcter in elem.  Both start and step are optional.  
+    If start is specified, the searcha will begin at the position in the 
+    string specified by start.  If inc is specified, the search will be
+    done in steps of inc.  Returns -1 if no elements match the elements
+    in elem.
+ 
+EXAMPLE
+    searcha_any_str("test", "es")  ->  1
+    searcha_any_str("tts", "es")  ->  2
+    searcha_any_str("test", "a")  ->  -1
+ 
+SEE_ALSO
+    searcha_any(A), is_escaped(A), searcha_str_unescaped(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

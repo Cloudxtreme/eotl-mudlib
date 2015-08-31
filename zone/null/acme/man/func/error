@@ -1,0 +1,31 @@
+NAME
+    error - sends error messages to a player
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeError;
+    #include AcmeErrorInc
+
+    mixed error( int severity, string msg, mixed ret );
+ 
+DESCRIPTION
+    This is a standardized way of sending error messages to a
+    player.  severity designates how severe the error is, and is 
+    currently one of these values: 
+      ERR_USAGE
+      ERR_NOTE
+      ERR_WARNING
+      ERR_ERROR
+    The return value is the value of ret.
+ 
+EXAMPLE
+   return error(ERR_ERROR, "Oh no!", 1);
+ 
+   will output a message that looks like:
+ 
+      "Error: Oh no!"
+ 
+   and return a value of 2.
+ 
+LAST MODIFIED
+    980102 Devo

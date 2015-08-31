@@ -1,0 +1,99 @@
+************************************************************************
+
+  This document details the interface specification for Acme command
+  modules.  
+
+************************************************************************
+
+  Good examples of AcmeCommands can be found in
+  /zone/null/acme/tadji/cmds/
+
+  AcmeCmdInc and AcmeCmd contain things useful for making commands.
+
+  The following functions must be defined:
+
+    status do_cmd ( string name, string arg )
+    string cmd_help ( string func )
+    string *cmd_usage ( string func )
+    string cmd_desc ( string func )
+
+  The following are optional:
+
+    status cmd_private ()
+
+/*------------------------------- do_cmd -------------------------------*/
+/*
+    Description:
+      Execute a command
+    Parameters:
+      name      - The name used to execute the command
+      arg       - The arguments given to the command
+    Returns:
+      True if the command claims this action.  See add_action(E) for
+      more details.
+    Notes:
+      Don't depend on any particular command name, since the user can
+      define any name to use with this command.  The name is passed
+      only to be used for messages to the user.
+*/
+status do_cmd ( string name, string arg )
+
+
+/*------------------------------- cmd_help -------------------------------*/
+/*
+    Description:
+      Return the help text for a command
+    Parameters:
+      name      - The name of the function the command uses
+    Returns:
+      The help text.  It need not have any newlines in it.
+    Notes:
+      None.
+*/
+string cmd_help ( string funcname )
+
+/*------------------------------- cmd_usage -------------------------------*/
+/*
+    Description:
+      Return the usage strings for a command
+    Parameters:
+      name      - The name of the function the command uses
+    Returns:
+      An array of usage strings.  The strings should not contain the
+      name of the command, nor any newlines.
+    Notes:
+      None.
+*/
+string *cmd_usage ( string funcname )
+
+
+/*------------------------------- cmd_desc --------------------------------*/
+/*
+    Description:
+      Return a short, one line description of the command
+    Parameters:
+      string func - the function name of the command.
+    Returns:
+      a string.  Should not contain any newlines, nor be longer than 80
+      characters (40 would be best.)
+    Notes:
+      This function is called by the tadji help command, and by tcmds.
+      If it is not included, help will simply not print any short
+      description, and tcmds will report "no desc available."
+*/
+string cmd_desc ( string funcname )
+
+/*------------------------------- cmd_private ----------------------------*/
+/*
+    Description:
+      Returns non-nil if tcmds should not register this command in its
+      database.
+    Parameters:
+      none.
+    Returns:
+      true if the command is private, false if it's not.
+    Notes:
+      As tcmds only registers those commands with whose function is
+      do_cmd (as per the acme protocol standard), no funcname is passed.
+*/
+status cmd_private ()

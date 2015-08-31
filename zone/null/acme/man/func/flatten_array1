@@ -1,0 +1,22 @@
+NAME
+    flatten_array1 - flattens an array by one level
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *flatten_array1( mixed *arr );
+ 
+DESCRIPTION
+    Flattens an array by one level.
+ 
+EXAMPLE
+    flatten_array1( ({ ({ 1, 2 }), 3, ({ 4, ({ 5 }) }) }) ) ->
+      ({ 1, 2, 3, 4, ({ 5 }) })
+ 
+SEE_ALSO
+    flatten_array(A)
+ 
+LAST MODIFIED
+    980102 Devo

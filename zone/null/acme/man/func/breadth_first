@@ -1,0 +1,38 @@
+NAME
+    breadth_first - breadth-first search and traversal of trees and graphs
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeBreadth;
+    #include AcmeBreadthInc
+
+    varargs mixed breadth_first( mixed rootnode, int maxdepth,
+                                 mixed next, mixed method, mixed seen );
+
+DESCRIPTION
+    Perform a breadth first traversal of a tree or graph, and apply
+    an optional method to each node, up to maxdepth.  The user must
+    specify a "next" method (either a function or a closure) that will
+    return an array of the next nodes in the tree or graph.  The optional
+    "method" method will be applied to each node as the traversal encounters
+    it, and the "seen" method is a custom method to determine if you've
+    already encountered a node (the default handling of should work for
+    just about everything, so chances are, you won't have to mess with this).
+    A more in-depth explanation is given in the function header comment in
+    breadth.c.
+
+EXAMPLE
+    Assume that I want a tool that lists all the rooms around me up to
+    radius 3 in breadth-first order.  Calling list() in breadth.example1.c
+    with a parameter of 3 will do that.
+
+    Assume that I want to find the shortest path from where I am to
+    some player or monster somewhere within 5 rooms of me.  Calling
+    find() in breadth.example2.c with the name of the monster as the
+    parameter will do that.
+
+SEE_ALSO
+    AcmeQueue, AcmeMethod, breadth.example1.c, breadth.example2.c
+
+LAST MODIFIED
+    Aleron 970423

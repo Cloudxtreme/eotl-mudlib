@@ -1,0 +1,24 @@
+NAME
+    find_shadows - finds a shadow on an object
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeShadow;
+    #include AcmeShadowInc
+
+    object *find_shadows( object host, string progname );
+ 
+DESCRIPTION
+    If you expect someone to have a shadow with a particular 
+    program_name, use this to find all instances of it which are
+    shadowing that object.
+ 
+EXAMPLE
+    find_shadows( THISP, "/usr/zippo/bw/bwshad" ) -> 
+      usr/zippo/bw/bwshad#12456
+ 
+SEE_ALSO
+    shadow(E), query_shadowing(E), all_shadows(A)
+ 
+LAST MODIFIED                               
+    980102

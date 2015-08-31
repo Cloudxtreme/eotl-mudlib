@@ -1,0 +1,24 @@
+NAME
+    match_quote - finds an enquote
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs int match_quote( string str, int start, string quote_chars );
+ 
+DESCRIPTION
+    Returns the index of the last character in the possible quoted
+    string.  If start is supplied, searching will being from that
+    element.  If quote_chars is supplied, that string will respresent
+    valid quote characters (defaults to "\"'").
+ 
+EXAMPLE
+    match_quote( "this \"is a\" test.", 5 )  ->  10
+ 
+SEE_ALSO
+    explode_unescaped(A), find_close_char(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

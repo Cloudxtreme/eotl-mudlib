@@ -1,0 +1,24 @@
+NAME
+    find_nonws - gives the index of first non-space
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs int find_nonws( string str, int start );
+ 
+DESCRIPTION
+    Returns the index of the first non-whitespace character in str,
+    starting from position start.  This yeilds the same result as
+    AcmeArray->anti_searcha( str, ' ', start ), but is faster.
+ 
+EXAMPLE
+    find_nonws("this is a test") -> 0
+    find_nonws("     is a test") -> 5
+ 
+SEE_ALSO
+    anti_searcha(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

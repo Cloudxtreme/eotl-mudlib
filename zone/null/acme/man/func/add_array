@@ -1,0 +1,23 @@
+NAME
+    add_array - adds two arrays together
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *add_array( mixed *arr1, mixed *arr2 );
+ 
+DESCRIPTION
+    Adds two arrays together.  Don't ask me why this is in here.
+ 
+EXAMPLE
+   add_array( ({ 1, 2 }), ({ 3, 4 }) ) -> ({ 1, 2, 3, 4 })
+   add_array( 0, ({ 3, 4 }) ) -> ({ 3, 4 }) 
+   add_array( ({ 1, 2 }), 0 ) -> 0
+ 
+SEE_ALSO
+   intersect_array(A), exclude_array(A)
+ 
+LAST MODIFIED
+    980102 Devo

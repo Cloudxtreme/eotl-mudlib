@@ -1,0 +1,18 @@
+NAME
+    newqueue - create a new queue
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeQueue;
+    #include AcmeQueueInc
+
+    QueueHdl newqueue();
+    
+DESCRIPTION
+    Creates a new queue and returns a handle to the new queue.
+ 
+SEE_ALSO
+    emptyqueue(A), enqueue(A), dequeue(A), front(A)
+ 
+LAST MODIFIED                               
+     980403 Aleron

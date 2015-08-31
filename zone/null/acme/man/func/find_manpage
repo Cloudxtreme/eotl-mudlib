@@ -1,0 +1,24 @@
+NAME
+    find_manpage - returns the file of a manpage in env(MANPATH)
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMan;
+    #include AcmeManInc
+
+    varargs string find_manpage( string name, string defaultPath );
+ 
+DESCRIPTION
+    Finds the absolute path of a manpage described by name.  The
+    optional argument defaultPath is the search path to use if 
+    the MANPATH var is not set.  Returns the filename, or 0 if a
+    manpage couldn't be located.
+ 
+EXAMPLE
+    find_manpage( "find_object", "/doc/efun" ) -> "/doc/efun/find_object"
+ 
+SEE_ALSO
+    find_file(A)
+ 
+LAST MODIFIED
+    980102

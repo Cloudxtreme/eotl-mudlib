@@ -1,0 +1,43 @@
+Here's a priority list for documentation:
+
+Non-Library Packages and Systems:
+
+    Opie            Object Specification Routing System.  Allows tools
+                    to use powerful object reference expansion while
+                    giving the user the ability to specify a preferred
+                    system.  This is used all over the mud.
+
+    ClosureServer   An object which will bind function references and
+                    lambda expressions in a harmless environment so
+                    that objects can evaluate arbitrary untrusted
+                    expressions without putting themselves at risk.
+
+
+Libraries
+
+  Core Routines
+      String          String handling
+      File            Files handling
+      Array           Array handling
+      Shadow          Shadow handling
+
+  User Interfaces
+      Menu            A package to create a standardized menuing system.
+      GetData         A standardized set of methods to get input from a user
+      Args            Argument parsing
+      GetOpts         Routines for handling command line options
+
+  More complex things
+      CallSecurity    A basic extensible security system 
+      Error           Error reporting
+      ForceLoad       Force objects to be loaded
+      CVar            Chooses among various weighted options
+      Graph           Graph algorithms package
+      VarSpace        A two-tiered mapping ( A 2-D VariableCode )
+
+The order of those libraries within each category is arbitrary.  Feel
+free to reorder them.  The order of the categories had a little thought
+behind it.
+
+ -Zam  960228
+

@@ -1,0 +1,28 @@
+NAME
+    array2D2map - transforms a 2-D array into a mapping
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeConversion;
+    #include AcmeConversionInc
+
+    mapping array2D2map( mixed *arr );
+ 
+DESCRIPTION
+    Returns a mapping where the first bi-tuple element of the first array
+    element maps to the second bi-tuple element, the first bi-tuple of the
+    second element maps to the second bi-tuple of the second element, and
+    so on.
+ 
+EXAMPLE
+    array2D2map( ({ ({ a, b }), ({ c, d }) }) ) -> ([ a : b, c : d ])
+ 
+BUGS
+    This will currently break if the array passed in isn't of a
+    ({ ({ a1, a2 }), ({ b1, b2 }),... }) structure
+ 
+SEE_ALSO
+    array2map()
+ 
+LAST MODIFIED
+    Devo 980102

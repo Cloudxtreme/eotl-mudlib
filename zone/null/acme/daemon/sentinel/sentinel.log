@@ -1,0 +1,6 @@
+960429	Aleron
+    Moved the sentinel onto AcmeCallSecurity and added a few more security
+    features.
+970128	Aleron
+    Added no_clean_up() so Devo's clean_up won't kill off the sentinel.
+

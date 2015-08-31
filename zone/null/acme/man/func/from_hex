@@ -1,0 +1,28 @@
+NAME
+    from_hex - convert a string of hex digits to a decimal int
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+
+    varargs int from_hex( string str, int &done );
+ 
+DESCRIPTION
+    Returns an integer value represented by a string in hex.  done
+    may be passed by reference, and will be set to one of the 
+    following values:
+      -2 : number was longer than 8 digits (function returns the
+           integer value for the first 8 digits still)
+      -1 : didn't finish it all
+       0 : converted whole string
+       1 : didn't do any of it
+ 
+EXAMPLE
+    from_hex("0x10")  ->  16
+ 
+SEE_ALSO
+    to_int(E), from_octal(A), from_binary(A), to_hex(A)
+ 
+LAST MODIFIED
+    980102 Devo

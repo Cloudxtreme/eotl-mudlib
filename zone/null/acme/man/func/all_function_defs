@@ -1,0 +1,21 @@
+NAME
+    all_function_defs - checks shadows and inheritance for 
+                        existance of a function
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFunction;
+    #include AcmeFunctionInc
+
+    string *all_function_defs( object ob, string func );
+ 
+DESCRIPTION
+    Returns all files which declare the function func which might get
+    invoked when trying to call func in ob.  This takes shadows and
+    inheritance into account.
+ 
+SEE_ALSO
+    function_exists(E), top_function_def(A)
+ 
+LAST MODIFIED
+    980102

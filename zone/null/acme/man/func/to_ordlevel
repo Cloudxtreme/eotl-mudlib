@@ -1,0 +1,20 @@
+NAME
+    to_ordlevel - covert level names to an OrdLevel
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    int to_ordlevel( mixed arg );
+ 
+DESCRIPTION
+    Converts an argument to an OrdLevel.  Argument can be the name
+    of a level (ie. "wizard"), an OrdLevel (ie. 3), or a quoted
+    OrdLevel (ie. "3").
+ 
+EXAMPLE
+    to_ordlevel(Wizard)  ->  WizardLevel
+ 
+LAST MODIFIED                               
+    980102 Devo

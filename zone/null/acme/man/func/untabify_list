@@ -1,0 +1,19 @@
+NAME
+   untabify_list - untabifies a list or a string with newlines
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs mixed untabify_list( mixed ptr, int tabwidth );
+ 
+DESCRIPTION
+    Removes tabs in a list.  The list ptr can either be an array
+    of strings, or a string with newlines in it.
+ 
+SEE_ALSO
+    untabify(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

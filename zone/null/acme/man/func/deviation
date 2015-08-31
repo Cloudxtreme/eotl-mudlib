@@ -1,0 +1,22 @@
+NAME
+    deviation - map the deviations of sample values
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    mapping deviation( float *sample );
+ 
+DESCRIPTION
+    Returns a mapping of all the values in sample mapped to their
+    deviation from the mean.
+ 
+EXAMPLE
+    rel_freq( ({ 1, 2, 3 }) -> ([ 1 : 1, 2 : 0, 3 : 1 ])
+ 
+SEE_ALSO
+    standard_deviation(A), mean(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

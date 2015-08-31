@@ -1,0 +1,27 @@
+NAME
+    get_ansi - returns the length of an ansi-escape sequence
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAnsi;
+    #include AcmeAnsiInc
+
+    varargs int get_ansi( string str, int start );
+ 
+DESCRIPTION
+    Returns the length of an ansi escape sequence in str.  Optional
+    argument start is the location where the ansi escape sequence
+    begins in str.
+ 
+EXAMPLE
+    get_ansi( ESC "[31m" ) -> 4
+    get_ansi( "abc" ) -> 0
+    get_ansi( ESC "[31mabc" ) -> 4
+    get_ansi( "abc" ESC "[31m" ) -> 0
+    get_ansi( "abc" ESC "31m", 3 ) -> 4
+ 
+SEE_ALSO
+    strlen(E), ansi_strlen(A)
+ 
+LAST MODIFIED
+    980102 Devo

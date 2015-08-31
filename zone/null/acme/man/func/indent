@@ -1,0 +1,23 @@
+NAME
+    indent - indents a string or array of strings
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    mixed indent( mixed str, int n );
+ 
+DESCRIPTION
+    Indents a string str n spaces.  str can be a single string or an
+    array of strings to indent.  The indented string or array will
+    be returned.
+ 
+EXAMPLE
+    indent( "test is\na test.", 5 )  ->  "     this is\n     a test."
+ 
+SEE_ALSO
+    sprintf(E), prepend_array(A), center(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

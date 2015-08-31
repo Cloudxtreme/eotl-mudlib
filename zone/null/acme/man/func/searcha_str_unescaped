@@ -1,0 +1,28 @@
+NAME
+    searcha_str_unescaped - searches a string ignoring escaped chars
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs int searcha_str_unescaped( string str, int elem, int pos, 
+                                       int step );
+ 
+DESCRIPTION
+    This will return the position of the first element in str that
+    matches charcter elem and is not escaped.  Both start and step are 
+    optional.  If start is specified, the searcha will begin at the 
+    position in the string specified by start.  If inc is specified, 
+    the search will be done in steps of inc.  Returns -1 if no elements 
+    match the elements in elem.
+    
+EXAMPLE
+    searcha_str_unescaped( "test", 't' )  ->  0
+    searcha_str_unescaped( "\\test", 't' )  ->  3
+ 
+SEE_ALSO
+    searcha(E), searcha_any_str(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

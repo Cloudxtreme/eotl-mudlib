@@ -1,0 +1,338 @@
+#include <acme.h>
+ 
+#include AcmeCommandInc
+#include AcmeArgsInc
+#include AcmeGetOptsInc
+
+private inherit AcmeArgs;
+private inherit AcmeGetOpts;
+ 
+#define SAVE_FILE     AcmeEtcDir "tcmds"
+#define DELAY         3600
+ 
+static  closure nsort, fsort, dsort, msort, filter, *map, clean_up, add_cmd;
+static  closure premap;
+        mapping tcmds;
+ 
+static  void    clean_up_tcmds();
+ 
+nomask string *cmd_usage( string func )
+{
+    return( ({ "-ynfdc [-u <uid>] [-e <euid>] [-s <sort>] [-N <regex>] "
+        "[-F <regex>] [-D <regex>] [<regex>]" }) );
+}
+ 
+nomask string cmd_help( string func )
+{
+    return( "This command generates a comprehensive list of all the Acme "
+        "protocol compatible tadji commands.  It constructs this list "
+        "based on the commands used by those querying it; this means that, "
+        "upon execution of the command, all the commands you use will "
+        "be automatically assimilated into the database.  A few exceptions "
+        "exist: most notably, if the lfun cmd_private() returns non-nil "
+        "in a command you use, it will not be added to the database, nor "
+        "will it be should it fail to load or the file not exist.  Options "
+        "to manipulate the output of this function include:\n"
+        "    -y - only list functions that you do not currently use.\n"
+        "    -n - list the name of the command (due to the variable nature\n"
+        "         of a command's name, this value is approximated from the\n"
+        "         filename.)\n"
+        "    -f - list the filename of the command.\n"
+        "    -d - list a short description of the command.\n"
+        "    -u - list tadji commands with this uid.\n"
+        "    -e - list tadji commands with this euid.\n"
+        "    -s - sort the list either by name, file, desc, or modtime.\n"
+        "         These keywords may be shortened, and name is default.\n"
+        "    -N - apply a regular expression to the names of the commands.\n"
+        "    -F - apply a regular expression to the commands' filenames.\n"
+        "    -D - apply a regular expression to the command descriptions.\n"
+        "    -c - clean up the tcmds array before listing.  This option\n"
+        "         will not list anything unless -n, -d or -f are specified.\n"
+        "An optional regular expression may be further supplemented; if it "
+        "is, it will be applied to all three of command fields (name, file, "
+        "and description.)  All fields are listed by default." );
+}
+ 
+nomask string cmd_desc( string func )
+{
+    return( "list all tadji commands" );
+}
+ 
+nomask void create()
+{
+    seteuid( getuid() );
+    catch( restore_object( SAVE_FILE ) );
+    if( !mappingp( tcmds ) )
+        tcmds = ([ ]);
+    
+    nsort = lambda( ({ 'a, 'b }),
+      ({ #'>,
+        ({ #'[, 'a, 0 }),
+        ({ #'[, 'b, 0 })
+      }) );
+    fsort = lambda( ({ 'a, 'b }),
+      ({ #'>,
+        ({ #'[, 'a, 1 }),
+        ({ #'[, 'b, 1 })
+      }) );
+    dsort = lambda( ({ 'a, 'b }),
+      ({ #'>,
+        ({ #'[, 'a, 2 }),
+        ({ #'[, 'b, 2 })
+      }) );
+    msort = lambda( ({ 'a, 'b }),
+      ({ #'<,
+        ({ #'[, ({ #'get_dir, ({ #'[, 'a, 3 }), 4 }), 0 }),
+        ({ #'[, ({ #'get_dir, ({ #'[, 'b, 3 }), 4 }), 0 })
+      }) );
+ 
+    filter = lambda( ({ 'x, 'u, 'e, 'n, 'f, 'd, 'r, 'i, 'c, 'y }),
+      ({ #'&&,
+        ({ #'=,
+          ({ #'[, 'x, 0 }),
+          ({ #'[..<], ({ #'[<, ({ #'explode, ({ #'[, 'x, 3 }), "/" }), 1 }),
+            0, 3 }),
+          ({ #'[, 'x, 1 }),
+          ({ #'compress_path, ({ #'[, 'x, 3 }) }),
+          ({ #'[, 'x, 4 }),
+          ({ #'>, ({ #'member, 'c, ({ #'[, 'x, 3 }) }), -1 }),
+          't,
+          ({ #'||,
+            ({ #'!, 'y }),
+            ({ #'!, ({ #'[, 'x, 4 }) })
+          })
+        }), 
+        ({ #'>, ({ #'file_size, ({ #'[, 'x, 3 }) }), -1 }),
+        ({ #'!, ({ #'catch, ({ #'=, ({ #'[, 'x, 2 }), ({ #'call_other, 
+          ({ #'[, 'x, 3 }), "cmd_desc", "do_cmd" }) }) }) }),
+        ({ #'=,
+          ({ #'[, 'x, 2 }),
+          ({ #'||, ({ #'[, 'x, 2 }), "no desc available" })
+        }),
+        ({ #',,
+          ({ #'catch, ({ #'=, 'p, ({ #'call_other, ({ #'[, 'x, 3 }), 
+            "cmd_private" }) }) }),
+          ({ #'!, 'p })
+        }),
+        ({ #'?,
+          ({ #'stringp, 'u }),
+          ({ #'==, 
+            ({ #'getuid, ({ #'find_object, ({ #'[, 'x, 3 }) }) }),
+            'u
+          }),
+          TRUE
+        }),
+        ({ #'?,
+          ({ #'stringp, 'e }),
+          ({ #'==, 
+            ({ #'geteuid, ({ #'find_object, ({ #'[, 'x, 3 }) }) }),
+            'e
+          }),
+          TRUE
+        }),
+        ({ #'?,
+          ({ #'stringp, 'n }),
+          ({ #'sizeof, ({ #'regexp, ({ #'({, ({ #'[, 'x, 0 }) }), 'n }) }),
+          TRUE
+        }),
+        ({ #'?,
+          ({ #'stringp, 'f }),
+          ({ #'sizeof, ({ #'regexp, ({ #'({, ({ #'[, 'x, 1 }) }), 'f }) }),
+          TRUE
+        }),
+        ({ #'?,
+          ({ #'stringp, 'd }),
+          ({ #'sizeof, ({ #'regexp, ({ #'({, ({ #'[, 'x, 2 }) }), 'd }) }),
+          TRUE
+        }),
+        ({ #'?,
+          ({ #'stringp, 'r }),
+          ({ #'sizeof, ({ #'regexp, ({ #'[..], 'x, 0, 2 }), 'r }) }),
+          TRUE
+        }),
+        ({ #',,
+          ({ #'?,
+            ({ #'>, ({ #'=, 'l, ({ #'strlen, ({ #'[, 'x, 1 }) }) }), 'i }),
+            ({ #'=, 'i, 'l }),
+          }), 
+          TRUE
+        })
+      }) );
+ 
+    map = ({
+      0,
+      lambda( ({ 'x, 'l, 'w }),                  /* -n */
+        ({ #'sprintf,
+          "  [%c] %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          'w,
+          ({ #'[, 'x, 0 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -f */
+        ({ #'sprintf,
+          "  [%c] %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          'w,
+          ({ #'[, 'x, 1 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -nf */
+        ({ #'sprintf,
+          "  [%c] %-:10s | %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          ({ #'[, 'x, 0 }),
+          ({ #'-, 'w, 13 }),
+          ({ #'[, 'x, 1 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -d */
+        ({ #'sprintf,
+          "  [%c] %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          'w,
+          ({ #'[, 'x, 2 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -nd */
+        ({ #'sprintf,
+          "  [%c] %-:10s | %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          ({ #'[, 'x, 0 }),
+          ({ #'-, 'w, 13 }),
+          ({ #'[, 'x, 2 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -fd */
+        ({ #'sprintf,
+          "  [%c] %-:*s | %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          'l,
+          ({ #'[, 'x, 1 }),
+          ({ #'-, 'w, ({ #'+, 'l, 3 }) }),
+          ({ #'[, 'x, 2 })
+        }) ),
+      lambda( ({ 'x, 'l, 'w }),                  /* -nfd */
+        ({ #'sprintf,
+          "  [%c] %-:10s | %-:*s | %-:*s",
+          ({ #'?, ({ #'[, 'x, 4 }), 'x', ' ' }),
+          ({ #'[, 'x, 0 }),
+          'l,
+          ({ #'[, 'x, 1 }),
+          ({ #'-, 'w, ({ #'+, 'l, 16 }) }),
+          ({ #'[, 'x, 2 })
+        }) ) });
+ 
+    clean_up = lambda( ({ 'c }),
+      ({ #'&&,
+        ({ #'>, ({ #'file_size, 'c }), -1 }),
+        ({ #'!, ({ #'catch, ({ #'=, 'p, 
+          ({ #'call_other, 'c, "cmd_private" }) }) }) }),
+        ({ #'!, 'p }),
+        ({ #'>, ({ #'member, ({ #'functionlist, 'c }), "do_cmd" }), -1 })
+      }) );
+ 
+    add_cmd = lambda( ({ 'c, 't, 'd }),
+      ({ #',,
+        ({ #'=, 'x, ({ #'call_other, 'd, "query_command", 'c }) }),
+        ({ #'&&,
+          ({ #'!, ({ #'member, 't, ({ #'[, 'x, 1 }) }) }),
+          ({ #'==, ({ #'[, 'x, 3 }), 1 }),
+          ({ #'==, ({ #'[, 'x, 2 }), "do_cmd" }),
+          ({ #'funcall, clean_up, ({ #'[, 'x, 1 }) }),
+          ({ #'+=, 't, ({ #'([, ({ ({ #'[, 'x, 1 }) }) }) }),
+        }), 
+        ({ #'[, 'x, 1 })
+      }) );
+
+    premap = lambda( ({ 'x }),
+      ({ #'({, 0, 0, 0, 'x, 0 }) );
+ 
+    clean_up_tcmds();
+}
+ 
+nomask int do_cmd( string verb, string arg )
+{
+    mixed largs, cmds, clist;
+    string regex, linebreak;
+    object device;
+    int maxlen, flags, width;
+    closure sort;
+    
+    if( !objectp( device = previous_object() ) )
+        return( write( verb + ": no device!\n" ), 1 );
+ 
+    largs = getopts( explode_args( arg ), "ynfdcu:e:s:N:F:D:" );
+    if( sizeof( largs[ 0 ] ) )
+        regex = implode( largs[ 0 ], " " );
+    if( strlen( largs[ 2 ] ) )
+        FailUsage( verb );
+    flags = ( member( largs[ 1 ], 'n' ) ? 0x01 : 0x00 ) |
+        ( member( largs[ 1 ], 'f' ) ? 0x02 : 0x00 ) |
+        ( member( largs[ 1 ], 'd' ) ? 0x04 : 0x00 );
+    if( member( largs[ 1 ], 'c' ) )
+    {
+        clean_up_tcmds();
+        write( verb + ": tcmds cleaned up.\n" );
+        if( !flags )
+            return( 1 );
+    }
+    flags = flags || 0x07;
+    if( largs[ 1 ][ 's' ] )
+    {
+        switch( lower_case( largs[ 1 ][ 's' ] )[ 0 ] )
+        {
+        case 'n': sort = nsort; break;
+        case 'f': sort = fsort; break;
+        case 'd': sort = dsort; break;
+        case 'm': sort = msort; break;
+        default:
+            write( verb + ": invalid sort criteria.\n" );
+            return( 1 );
+        }
+    }
+    else sort = nsort;
+
+    if( !pointerp( cmds = device->query_commands() ) )
+        return( write( verb + ": commands unavailable!\n" ), 1 );
+    cmds = map_array( cmds, add_cmd, &tcmds, device );
+    
+    clist = map_array( m_indices( tcmds ), premap );
+    clist = filter_array( clist, filter, largs[ 1 ][ 'u' ], largs[ 1 ][ 'e' ],
+        largs[ 1 ][ 'N' ], largs[ 1 ][ 'F' ], largs[ 1 ][ 'D' ], regex,
+        &maxlen, cmds, member( largs[ 1 ], 'y' ) );
+    if( !sizeof( clist ) )
+        return( write( verb + ": no match!\n" ), 1 );
+    clist = sort_array( clist, sort );
+    clist = map_array( clist, map[ flags ], maxlen, ( width = 
+        ( THISP->query_page_width() || 80 ) ) - 8 );
+ 
+    clist = ({
+      sprintf( "total listed: %d/%d [%d%%]", sizeof( clist ), sizeof( tcmds ),
+          ( sizeof( clist ) * 100 ) / sizeof( tcmds ) ),
+      linebreak = sprintf( "%'-':*s", width - 2, "" ) }) + clist + ({
+      linebreak,
+      "done."
+    });
+ 
+    THISP->more_string( clist );
+    return( 1 );
+}
+ 
+static void clean_up_tcmds()
+{
+    if( !mappingp( tcmds ) )
+        tcmds = ([ ]);
+    if( !sizeof( tcmds ) )
+        return;
+    tcmds = filter_mapping( tcmds, clean_up );
+    save_object( SAVE_FILE );
+ 
+    while( remove_call_out( "clean_up_tcmds" ) > -1 );
+    call_out( "clean_up_tcmds", DELAY );
+}
+
+void debug()
+{
+    int i, sz;
+
+    printf( "nsort: %O\nfsort: %O\ndsort: %O\nfilter: %O\nclean_up: %O\n"
+        "add_cmd: %O\npremap: %O\n", nsort, fsort, dsort, filter, clean_up, add_cmd, premap );
+    for( i = 0, sz = sizeof( map ); i < sz; i++ )
+        printf( "map[ %d ]: %O\n", i, map[ i ] );
+}

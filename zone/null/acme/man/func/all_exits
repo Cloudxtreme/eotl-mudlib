@@ -1,0 +1,19 @@
+NAME
+    all_exits - returns all destinations of all exits
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeRoom;
+    #include AcmeRoomInc
+
+    string *all_exits( object room );
+ 
+DESCRIPTION
+    Returns an array of all the desinations of all the exits in room.
+ 
+SEE_ALSO
+    visible_directions(A), visible_exits(A), invisible_directions(A), 
+    invisible_exits(A), all_directions(A), get_exit(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,30 @@
+NAME
+    get_files - recursively get all the files in a directory
+ 
+SYNOPSIS
+    #include <acme.h>
+    inherit AcmeFile;
+    #include AcmeFileInc
+ 
+    string *get_files( string path );
+ 
+DESCRIPTION
+    This function takes an absolute path as an argument and returns
+    an array of all the files containe in path and path's 
+    subdirectories, not including the directories themselves.  This 
+    array is sorted breadth-first, and returns a list of absolute 
+    paths.  If you want a depth-first list of the directory tree, 
+    just alphabetize the array.
+ 
+NOTES
+    Don't use this function on huge directories.  All you'll do is
+    lag the mud and probably eval out before you get a return value.
+    The function is pretty fast considering what it does, but use
+    some common sense.  Anything more than a single /usr or cabal
+    dir is probably too much.
+ 
+SEE_ALSO
+    get_dir(E), get_dirs(A) 
+ 
+LAST MODIFIED                               
+    980109 Devo

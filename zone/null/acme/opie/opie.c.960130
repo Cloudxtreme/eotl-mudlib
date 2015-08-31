@@ -1,0 +1,129 @@
+/*
+** OPIE -- Object Parsing Interface Engine
+**
+** by Zamboni@EOTL  950626
+**
+*/
+
+#include "opie.h"
+
+#define Default_Engine opieAcmeSpec
+
+create()
+{
+  seteuid(getuid());
+}
+
+
+/*
+** Return filename of parse engine to use.
+*/
+string choose_engine()
+{
+  string engine;
+  
+  /* Check the user's preference */
+  if(THISP->_IsVariableSet(opieVar)
+     && (engine = THISP->_ExpandVariable(opieVar)))
+  {
+    if(engine == "0")
+      printf(
+  "The %s environment variable needs a parameter.\n"
+  "Try: \n"
+  "  setv %s <filename>\n"
+  "where <filename> is the name of the parsing engine you want to use.\n",
+	     opieVar, opieVar);
+    else
+      return engine;
+  }
+
+  /* else, Check the tool's default */
+  if(engine = previous_object()->query(opieVar))
+    return engine;
+
+  /* Maybe it doesn't use query() */
+  if(engine = previous_object()->query_opie())
+    return engine;
+
+  /* else, Use the global default */
+  return Default_Engine;
+}
+
+
+/*
+** This is the main function that everything calls.
+*/
+object *
+opie(string arg)
+{
+  string engine;
+
+  if(!(engine = choose_engine()))
+    return 0;
+
+  return call_other(engine, opieFunc, arg, previous_object());
+}
+
+/*
+** Use this if you want just a single object
+*/
+object
+opie1(string arg)
+{
+  object *obs;
+  string engine;
+
+  if(!(engine = choose_engine()))
+    return 0;
+
+  obs = call_other(engine, opieFunc, arg, previous_object());
+  return (pointerp(obs) && sizeof(obs)) ? obs[0] : 0;
+}
+
+/*
+** Return values can be either a single object
+** or an array of objects.
+*/
+string
+help()
+{
+  string engine, help;
+
+  engine = choose_engine();
+  if(!engine)
+    return 0;
+
+  help = call_other(engine, opieHelpFunc);
+  if(!help)
+    return "No help available.\n";
+
+  if((searcha(help, ' ') > -1) || (searcha(help, '\n') > -1))
+    return help;
+  
+  if(file_size(help) > 0)
+    return read_file(help);
+
+  return help;
+}
+
+/*
+** For setting variables
+*/
+status
+set(mixed key, mixed value)
+{
+  string engine;
+
+  engine = choose_engine();
+  if(!engine)
+    return 0;
+
+  call_other(engine, opieSetFunc, key, value);
+  return 1;
+}
+
+status
+query_prevent_shadow()
+{
+  return 1;
+}

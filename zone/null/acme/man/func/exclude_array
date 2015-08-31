@@ -1,0 +1,22 @@
+NAME
+    exclude_array - array subtraction
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *exclude_array( mixed *arr1, mixed *arr2 );
+ 
+DESCRIPTION
+    Removes from arr1 any values found in arr2.
+    Don't ask me why this is here.
+ 
+EXAMPLE
+    exclude_array( ({ 1, 2, 3 }), ({ 2, 3 }) ) -> ({ 1 })
+ 
+SEE_ALSO
+    add_array(A), intersect_array(A)
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,29 @@
+NAME
+    get_dirs - get all the subdirectories of a directory
+ 
+SYNOPSIS
+    #include <acme.h>
+    inherit AcmeFile;
+    #include AcmeFileInc
+ 
+    string *get_dirs( string path );
+ 
+DESCRIPTION
+    This function takes an absolute path as an argument and returns
+    an array of all the subdirectories in path, including path.
+    This array is sorted breadth-first, and returns a list of
+    absolute paths.  If you want a depth-first list of the 
+    directory tree, just alphabetize the array.
+ 
+NOTES
+    Don't use this function on huge directories.  All you'll do is
+    lag the mud and probably eval out before you get a return value.
+    The function is pretty fast considering what it does, but use
+    some common sense.  Anything more than a single /usr or cabal
+    dir is probably too much.
+ 
+SEE_ALSO
+    get_dir(E), get_files(A) 
+ 
+LAST MODIFIED                               
+    980109 Devo

@@ -1,0 +1,58 @@
+Tadji Setup
+~~~~~~~~~~~
+
+This document will guide you through the steps
+which are necessary to begin using Acme's Tadji.
+
+1.  You need to clone the tadji.  You may want to
+    put this in your .logon if you want to use it
+    everytime you log on:
+    
+    clone /zone/null/acme/tadji/tool.c
+    
+2.  The tool comes with two "built in" commands:
+    help and tadji.  In order to make use of your
+    tadji, you will probably want to configure it
+    with other commands.  The tadji can be
+    configured manually by using the following
+    form of the tadji command:
+    
+    tadji config <config line>
+    
+    For example, you might want to add all of
+    Zippo's BW commands to your tadji.  Simply
+    type:
+    
+    tadji config BW /usr/zippo/bw/pub/*.c
+    
+    You might also want to add Zamboni's tadji
+    commands:
+    
+    tadji config ADD /usr/zamboni/cmds/*.c
+    
+3.  The tadji can also be configured from a
+    configuration file.  By default, it looks
+    for the file called ~/.tadji.  This file
+    simply contains a configuration command on
+    each line as in the following example:
+    
+    ADD /usr/zamboni/cmds/*.c
+    BW /usr/zippo/bw/pub/*.c
+    BW /usr/esquire/bw/pub/_sitelist.c
+    
+    You can can configure your tadji from another
+    file by using the tadji command:
+    
+    tadji reset [file]
+    
+    If you want to change the default config file
+    for you tadji, simply:
+    
+    setv tadji <file>
+    
+    This file has only covered basic steps to
+    configuring and using the tadji.  If you
+    want more information about how to configure
+    your tadji, see tadji_config.
+    
+    Created:  December 26, 1997 by Esquire

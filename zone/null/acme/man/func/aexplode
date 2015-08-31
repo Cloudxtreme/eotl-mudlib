@@ -1,0 +1,29 @@
+NAME
+    aexplode - works the way the manpage for explode says it should
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs string *aexplode( string str, string del );
+ 
+DESCRIPTION
+    Separate str into an array of strings by delimiter del.
+    This is just like efun::explode(), except that 
+    implode( aexplode( str, delim ), delim ) will always
+    return str (see examples below).
+ 
+EXAMPLE
+    aexplode( " a b c ", " " )  ->  ({ "", "a", "b", "c", "" })
+    aexplode( "abc", "abc" )  ->  ({ "", "" })
+    aexplode( "abc", "xyz" )  -> ({ "abc" })
+    aexplode( "", "" )  ->  ({ })
+    aexplode( "abc", "" )  ->  ({ "a", "b", "c" })
+    
+SEE_ALSO
+    explode(E), implode(E), explode_args(A), explode_nested(A),
+    explode_unescaped(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

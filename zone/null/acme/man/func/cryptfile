@@ -1,0 +1,41 @@
+NAME
+    cryptfile - encrypts or decrypts files
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCrypt;
+    #include AcmeCryptInc
+
+    status cryptfile( string infile, string outfile, string key, int type );
+
+DESCRIPTION
+    cryptfile() opens and reads the infile, encrypts or decrypts depending
+    on the type (using the key) and then writes out to the outfile.  The
+    actual crypting is done with crypt().
+
+    Valid type values are:
+      ENCRYPT
+      DECRYPT
+
+
+EXAMPLE
+      cryptfile( "/usr/aleron/foo.txt", "/usr/aleron/foo.enc", "Zam!SUX3",
+          ENCRYPT );
+
+   Will open /usr/aleron/foo.txt encrypt it using "Zam!SUX3" as a key and
+   then write it out to "/usr/aleron/foo.enc".  The infile or outfile can
+   actually be in a relative format, so we could just as easily been:
+
+      cryptfile( "~/foo.txt", "~/foo.enc", "Zam!SUX3", ENCRYPT );
+
+   Conversely, if we then did a:
+
+      cryptfile( "~/foo.enc", "~/foo2.txt", "Zam!SUX3", DECRYPT );
+
+   foo.txt and foo2.txt would be equivalent.
+
+SEE_ALSO
+    crypt(A)
+
+LAST MODIFIED
+    Aleron 960328

@@ -1,0 +1,22 @@
+NAME
+    first_quartile - calculate the first_quartile of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float first_quartile( float *sample );
+ 
+DESCRIPTION
+    Returns the first quartile in a sample.  This is actually just
+    an alias for the 25th percentile.
+ 
+EXAMPLE
+    first_quartile( ({ 1, 2, 3, 4, 5 }) ) -> 2
+ 
+SEE_ALSO
+    median(A), percentile(A), third_quartile(A), iqr(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

@@ -1,0 +1,21 @@
+NAME
+    sum - adds all the values in a sample together
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float sum( float *sample );
+ 
+DESCRIPTION
+    Returns the sum of all the values in sample.
+ 
+EXAMPLE
+    sum( ({ 1, 2, 3 }) ) -> 6
+ 
+SEE_ALSO
+    mean(A), median(A), mode(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

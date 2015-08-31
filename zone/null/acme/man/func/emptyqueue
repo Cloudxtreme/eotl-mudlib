@@ -1,0 +1,18 @@
+NAME
+    emptyqueue - test if a queue is empty
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeQueue;
+    #include AcmeQueueInc
+
+    status emptyqueue( QueueHdl hdl );
+ 
+DESCRIPTION
+    Returns whether or not the queue described by handle hdl is empty.
+ 
+SEE_ALSO
+    newqueue(A), enqueue(A), dequeue(A), front(A)
+ 
+LAST MODIFIED                               
+    980403 Aleron

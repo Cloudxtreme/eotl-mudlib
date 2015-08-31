@@ -1,0 +1,23 @@
+NAME
+    ansi_strlen - returns the length of a string without ansi
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAnsi;
+    #include AcmeAnsiInc
+
+    int ansi_strlen( string str );
+ 
+DESCRIPTION
+    Returns the length of a string with all ansi escape sequences removed.
+ 
+EXAMPLE
+    ansi_strlen( "abc" ) -> 3
+    ansi_strlen( RED "abc" ) -> 3
+    ansi_strlen( RED "abc" NORM ) -> 3
+ 
+SEE_ALSO
+    strlen(E), get_ansi(A), remove_ansi(A)
+ 
+LAST MODIFIED
+    980102 Devo

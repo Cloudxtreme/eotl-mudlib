@@ -1,0 +1,18 @@
+NAME
+    has_action - checks to see if an action exists
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    status has_action( object who, string verb );
+    
+DESCRIPTION
+    Returns true if who has action verb.
+ 
+SEE_ALSO
+    query_actions(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

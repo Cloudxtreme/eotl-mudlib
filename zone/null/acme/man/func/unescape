@@ -1,0 +1,23 @@
+NAME
+    unescape - unescapes everything in a string
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    string unescape( string str );
+ 
+DESCRIPTION
+    Unescapes all characters in str by one level and returns the 
+    new string.
+ 
+EXAMPLE
+    unescape( "foo\\ bar" )  ->  "foo bar"
+    unescape( "foo\\\\\\ bar" )  ->  "foo\ bar"
+ 
+SEE_ALSO
+    searcha_str_unescaped(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,395 @@
+950712	Aleron & Zamboni
+    Cabal created.  Initial directory structure set.  Draft of the manifesto
+    written.
+
+950718  Zamboni
+    Moved Opie into Acme space.
+
+950726 Zamboni
+    Moved ospec into Acme space.
+      lib/ospec.c, etc/ospec.help
+    Made preliminary inc/acme.h
+
+950731 Zamboni
+    Moved in entire personal function library.
+/zone/null/acme/lib:
+Total 26
+   1 acme.h        3 array.c       8 ospec.c     1 string.c 
+   3 action.c      2 bw.c          1 room.c      2 varspace.c 
+   1 ancestry.c    3 function.c    1 shadow.c 
+
+   Also had minor effects on inc/acme.h and added inc/action.h
+
+   Most of the code has been tested, but isn't well documented.
+
+950802 Zamboni
+    Added misc.c to lib/  (ommitted through oversight)
+    Also added it to inc/acme.h
+
+950804	Aleron
+    Added most of residential's lib functions.  Updated inc/acme.h
+Total 40
+   1 acme.h        2 bw.c             3 function.c          1 shadow.c 
+   3 action.c      4 crypt.c          1 misc.c              1 string.c 
+   2 alloc.c       3 cvar.c           8 ospec.c             2 varspace.c 
+   1 ancestry.c    1 error.c          1 parse_filename.c 
+   3 array.c       2 find_target.c    1 room.c 
+
+950810  Zamboni
+    Pulled some more things out of ospec.c, moved my stuff out of
+    find_target and into force_load.  Created user.c and file.c.
+    Somebody stop me.  ;)
+    Also added a bunch of new spiffy filespec handling to ospec.
+    Added new things to acme.h, despite it's impending overhaul.
+    There are still some issues to be handled with varspace & ospec
+    regarding create() not being called on load when it's loaded for
+    inheritance reasons.  I have some ideas, but not for tonight.
+
+950816	Aleron
+    Coverted all my lib functions over to Acme's Approved Methods :)  Updated
+    acme.h
+
+950816  Zamboni
+    Ditto, ya bastard.  :)
+    Lots of new .h files, fixed the inherits/includes in most (all?) my 
+    lib files that have them.
+    Added AcmeClosuresInc (inc/closures.h) -- slightly altered version 
+    of what Iffy gave us.
+
+950817	Aleron
+    Moved home server into acme/home.  now to do the home rooms...
+
+950818  Zamboni
+    Tadji now exists in acme/tadji.  I'm very happy with it.  A couple
+    things still need to be worked out, but it's pretty slick. 
+
+950825  Zamboni
+    Added AcmeArgs - stuff for dealing with arguments nicely.
+    Also added a bunch of supporting functions to AcmeStrings and
+    AcmeArray.  Docs to follow Real Soon.
+
+950827	Aleron
+    Added flatten_array() to AcmeArray.  Updated AcmeArrayInc as well.
+
+950828	Aleron
+    Added struct.c lib file.  Has a make_assignptrs() func in it that'll
+    generate a flat array of closures that can assign data into
+    the input array.  Evil Voodoo.
+
+950829	Aleron
+    Added getdata.c lib file.  Now you can get in a standardized manner
+    (and even pass in entire arrays of data to get).  More evil voodoo! :)
+    Now that I've gotten all the support stuff done, it's back to working
+    on HomeCode
+
+951008	Aleron
+    Readded flatten_array() to array.c.  We definitely need source control :)
+
+951129	Morgaine
+    Wrote a closure_eval_server.c and put it in daemon/.  #def'ed it in
+    inc/closures.h
+
+951204	Aleron
+    Moved the closureserver defs into acme.h.
+
+951207	Aleron
+    Added graph.c lib file.  Currently, it only has a function to check
+    graph connectivity.  Added graph.h to inc and editted acme.h.
+
+960104  Zamboni
+    Added pronouns to ospec.
+
+960109  Zamboni
+    Wrote etc/AcmeLib.README
+
+960111  Zamboni
+    Some bugfixes and speedups in ospec.c
+    Changed all libraries to use private inheritance.
+    Changed all libraries to use <acme.h> instead of "acme.h"
+
+960122 Morgaine
+    Added AcmeMath and AcmeMathInc, including from_hex(), from_octal(),
+    and a macro definition of pow() in the include.
+    I added untabify(), untabify_list(), expand_unescape() and 
+    expand_variables() to AcmeStrings.
+
+960124 Zamboni
+    Cleaned up VarSpace a bit.  It was a little too well tailored to
+    ospec (which was the only thing using it until now), but now it's 
+    more general and cleaner.  I also fixed ospec to match the new
+    interface.
+
+960127 Zamboni
+    Added AcmeCallSecurity - a package for making some basic checks
+    of what objects caused a function call for use in security systems.
+    It's an imperfect approximation of what THISP really intended to do.
+
+960130 Zamboni
+    Added some caching to Opie so it doesn't have to resolve filenames
+    into objects, or function names into function pointers over and over.
+
+960202 Zamboni
+    Added find_file to AcmeFile and created AcmeMan
+    Tweaked expand_path in AcmeFile
+
+960205 Zamboni
+    Added AcmeGetOpts - routines for parsing command line options.
+
+960216 Aleron
+    Added AcmeConversion - routines to deal with conversions that the mudlib
+    doesn't handle.
+
+960229 Zamboni
+    OSpec assumes neuter gender for nonliving objects
+
+960229 Zamboni
+    Added mortals() and wizards() to AcmeUser
+
+960305 Zamboni
+    Added a '==ob' and 'u'-as-filter to OSpec.  Nothing too exciting.
+
+960314 Zamboni
+    In AcmeArgs, replaced match_enclosure() with find_close_char().
+
+960314b Morgaine
+    Added remove_ansi() to AcmeStrings and the IsAlpha() macro to
+    AcmeStringsInc, mainly for remove_ansi() support.
+
+960319 Zamboni
+    Added array_eq() and array_equal() to AcmeArray.
+
+960319 Zamboni
+    Added nesting capability to AcmeOSpec.
+
+960321 Aleron
+    Created AcmeSentinel and put it in daemon/sentinel/*.
+
+960322 Zamboni
+    Added resolve_filespec() and find_targets() to AcmeFindTarget.
+
+960325 Aleron
+    Added indent() and center() to AcmeStrings.
+
+960325 Zamboni
+    Added priority argument to AcmeOSpec and Opie.
+
+960326 Zamboni
+    Added #include AcmeFindTargetInc  to  AcmeCommandInc
+    (re?)added trim_left() and trim_right() to AcmeStrings.
+    Fixed minor bug in AcmeArgs->find_close_char().  It failed on ("").
+
+960327 Aleron
+    Added man/func.  From now on, we'll put all function man pages in there,
+    and all package man pages in man/pkg.  I inagurated the func directory
+    with a man/func/get_data :)
+
+960328 Zamboni
+    AcmeGetOpts: removed getopts_str() and inheritance of AcmeArgs.
+    Added getopts_long().
+
+960328 Aleron
+    Created man/func docs for all lib functions that I own :)
+   1 array2D2map             1 cryptfile               1 indent
+   1 array2map               1 error                   1 make_assignptrs
+   1 calloc                  2 exit_menu               2 menu_choice
+   1 center                  1 flatten_array           1 old_choose_variant
+   3 check_connectivity      4 get_data                2 output
+   1 choose_variant          2 get_data.example        2 prev_menu
+   1 crypt                   1 ialloc                  2 print_menu
+
+960401 Zamboni
+    Added #define SEC_MANAGE   "security management" 
+    to AcmeCallsecInc
+
+960401 Zamboni
+    In AcmeStrings, changed base_string from a private global var 
+    to a #define.  Also documented some functions.
+
+960401 Aleron
+    Added AcmeStack and AcmeQueue.  AcmeStack has new(), empty(), push(),
+    pop(), and top().  AcmeQueue has new(), emtpy(), enqueue(), dequeue(),
+    and front().
+
+960402 Zamboni
+    Added the tadji command `tsec`.  It revealed a hole in the tadji's
+    security system caused by AcmeVarSpace (inherited by AcmeCallSecurity,
+    inherited by the tadji) interacting poorly with VariableCode 
+    (inherited by ObjectCode, inherited by the tadji).  I fixed it by
+    adding vset and vquery to AcmeVarSpace and changing AcmeCallSecurity
+    to use those.  Pretty gross, but it all works now.  Unfortunately, that 
+    isn't a general solution.  CallSecurity can be made to quietly fail
+    when integrated with other packages.  I don't know any way to fix it.
+
+960403 Aleron
+    Broke out the method-handling code in AcmeGetData and made it a package
+    in its own right (AcmeMethod).  Modified GetData to use it.
+
+960403 Zamboni
+    Moved Opie documentation and examples to man/pkg.
+    Copied/extracted documentation from CallSecurity to man/pkg.
+    Changed all efun calls in CallSecurity to efun::<whatever> to 
+    avoid the possibility of overloading.
+
+960404 Morgaine
+    Zamboni, program_name() is a simul_efun, so efun::program_name() in
+    AcmeCallSecurity keeps it from loading.  I fixed it.
+
+960425 Zamboni
+    Created AcmeKQML for no good reason.
+
+960426 Zamboni
+    Added AcmeKQML->pack() for worse reasons.
+
+960514 Zamboni
+    Created AcmeHashServer (daemon/hash.c).
+
+960516 Zamboni
+    Changed hash algorithm in the hash server to be 32 random bits.
+
+960808 Zamboni
+    Installed new version of AcmeOspec.  It's a big rewrite, based on 
+    a completely different parsing strategy.  It's much easier to
+    inherit and configure for personal preferences.  I don't know how the
+    speed compares.
+
+960813 Zamboni
+    Added sorting capabilities to AcmeOspec.
+
+960814 Zamboni
+    Fixed AcmeStrings->searcha_str_unescaped().  It was relying on
+    index/searcha to do some things, which is faster, but index/searcha
+    doesn't support step size for some reason, so now it just does it
+    all itself.
+
+    Also fixed bug in same function and in searcha_any() which would have
+    caused an infinite loop when a negative stepsize was used.  (duh)
+
+960814 Zamboni
+    Added support in AcmeOSpect for function arguments in lfuns for 
+    mapping, filtering, and sorting.
+
+960823 Aleron
+    Rewrote AcmeOutput to be cleaner.  (what can I say?  it was really old
+    code)
+
+960905 Aleron
+    Wrote aexplode() to work the way the real explode() should, and added it
+    to the AcmeStrings package.
+
+960920 Zamboni
+    Switched CallSecurity over to the new locking system.  Changed
+    documentation, headers, library, the tadji, the sentinel, and several
+    other minor things.
+
+
+970114 Zamboni
+    Removed use of pad() from AcmeStrings.
+
+970120 Zamboni
+    Changed index() to searcha() in AcmeStrings, AcmeKQML, AcmeOSpec, 
+    AcmeGraph, and AcmeAction.
+
+970315 Zamboni
+    Put Everything in AcmeLib (/lib/acme) and AcmeInc (/inc/acme)
+    under FCS.
+
+970318 Zamboni
+    Added 'brief' flag to AcmeMisc->format_objects() and print_objects()
+
+970422 Aleron
+    Added ACME_METHOD_ERROR to AcmeMethod, and changed run_method() so that
+    it'll return the error if an error occurs while running the method, and
+    otherwise, it'll just return whatever the method returns.
+
+970422 Aleron
+    Added AcmeBreadth to do breadth first searches and traversals on trees
+    and graphs.
+
+970423 Aleron
+    Added function docs AcmeBreadth package, breadth_first func, and examples.
+
+970520 Morgaine
+    I made some of the defines of the previous AcmeMenu library functions that
+    can be overloaded to give a menu generated thereby a different feel than
+    default.
+
+970813 Zamboni
+    Fixed two small bugs in tadji/cmds/tsec.c
+    Added tadji/cmds/tsec.README
+    Added AcmeVarspace->vspace()
+    Added AcmeCallSec->sec_oplist()
+    Added `tsec list operations` to tadji/cmds/tsec.c
+    Changed AcmeFile->file_exists() to use conform to published interface
+    in MASTEROBJECT (rather than using ACCESSOBJECT).
+    Removed the "all" security category from the tadji.  (The maintanance
+    gain was minimal, and the speed and security complexity overhead
+    was nontrivial.)
+    Put tadji/tadji.c and tadji/tool.c under FCS.
+
+970923 Zamboni
+    Added the mapfile feature to AcmeOSpec.
+
+971124 Zamboni
+    Added initialize_ok() to tadji/tadji.c (moving the test out of create()
+    so subclasses could override it).
+
+971208 Devo
+    Added multiple-use option stuff to AcmeGetOpts.
+
+971218 Devo
+    Added "l" transformation to ospec.c.
+
+971231 Devo
+    Added anti_searcha_any() to array.c.
+
+971231 Devo
+    Added to_int_range() to array.c.
+
+980105 Zamboni
+    Fixed bug in $MANPATH handling in AcmeMan.
+
+980109 Devo
+    Added get_dirs() and get_files() to file.c.
+    Added munge_dirname() to strings.c.
+    Added typecast_array(), sum_array(), mean_array(), median_array(),
+      mode_array() to array.c.
+    Added not_random() to misc.c.
+    Added find_inherit() to find_target.c.
+
+980120 Devo
+    Removed not_random() from misc.c and added random_array() to array.c
+
+980120 Zamboni
+    Tweaked random_array() a bit to make it marginally faster.
+
+980120 Devo
+    Added unique_array_slow() to array.c
+
+980123 Devo
+    Added sort_alist() to array.c.
+
+980124 Devo
+   Added round() to math.c.
+
+980123 Devo
+    Added AcmeStat and AcmeStatInc, a statistics package.  Removed
+    mean_array(), sum_array(), mode_array(), and median_array()
+    because they are now in the AcmeStat package.
+
+980318 Aleron
+    Broke homecode back out of the AcmeDirs and back into the (reinstated)
+    Residential cabal.  Practicing to be a manager (if last year we
+    centralized, this year we decentralize...and vice versa).
+
+980403 Aleron
+    Changed AcmeMenu to use AcmeStack (instead of the hokey ad hoc way it was
+    doing before).  Also changed AcmeMenu to handle previous menus properly
+    now.  Finally, noticed that the man pages for new, new1, empty and empty1,
+    were incorrect, and so updated them to newqueue, newstack, emptyqueue, and
+    emptystack, respectively.
+
+980428
+    Added factorial() and factorial_vector() to AcmeMath.
+980528
+    Fixed a bug in tadji/tool.c that gave config access to any
+    object with query access, through pointer manipulation.

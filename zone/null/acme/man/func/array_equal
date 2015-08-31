@@ -1,0 +1,24 @@
+NAME
+    array_equal - compare arrays recursively
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    status array_equal( mixed *a1, mixed *a2 );
+ 
+DESCRIPTION
+    Returns true if a1[n] == a2[n] for all n.  This is recursive.
+    If a1 and a2 contain different arrays, mappings, etc... which
+    contain the same values, this will still return 1.  
+ 
+EXAMPLE
+    array_equal( ({ 1, 2, 3 }), ({ 1, 2, 3 }) )  ->  1
+    array_equal( ({ ({ 1 }) }), ({ ({ 1 }) }) )  ->  1
+ 
+SEE_ALSO
+    array_eq
+ 
+LAST MODIFIED
+    980102 Devo

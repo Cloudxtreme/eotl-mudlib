@@ -1,0 +1,21 @@
+NAME
+    mean - calculate the average value of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float mean( float *sample );
+ 
+DESCRIPTION
+    Returns the average of all the values in sample.
+ 
+EXAMPLE
+    mean( ({ 1, 2, 3 }) ) -> 2
+ 
+SEE_ALSO
+    sum(A), median(A), mode(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

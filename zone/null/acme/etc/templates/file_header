@@ -1,0 +1,12 @@
+/*
+    NAME
+        foo.c - FOO library package
+    DESCRIPTION
+        A package to deal with foo.
+        foo()   - does something when this and that happens
+        bar()   - blah blah blah
+    NOTES
+        None.
+    LAST MODIFIED
+       Aleron 8/4/95
+*/

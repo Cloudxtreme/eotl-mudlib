@@ -1,0 +1,52 @@
+
+             How to get the most out of the Acme Library
+             -------------------------------------------
+
+Every Acme Library Package consists of two parts: a library file and a
+header file.  The package components use a consistent naming scheme to
+make your life easier.  Package "foo" will have AcmeFoo (the library
+file) and AcmeFooInc (the header file).  All the names are defined in
+the standard Acme header file (acme.h) along with some other handy
+macros.  You should always refer to these package components by these
+names, and never by their real file names.  That way if they ever
+move, your code would not be affected.  There is a copy of acme.h in
+your include path, so you don't need to worry about where it is.
+Example:
+
+#include <acme.h>
+
+
+The best way to use a package is to include the standard Acme header
+file, then inherit all the library files for the packages you need,
+then include all the headers for those packages.  Here's an example:
+
+#include <acme.h>
+
+static inherit AcmeArray;
+static inherit AcmeFile;
+inherit AcmeVarSpace;
+
+#include AcmeArrayInc
+#include AcmeFileInc
+#include AcmeVarSpaceInc
+
+
+You don't need to worry about anything the packages require or depend
+on.  If they need anything, they'll take care of it themselves.
+
+Note that in this example, two of the packages were statically
+inherited.  That means that other objects can't call the functions you
+get from those packages.  Unless you need to make those functions
+accessible to other objects, it's better to make them static.  This
+makes a much cleaner interface for your object.
+
+Also note that if you put *any* inherit statements after the include
+directives, you won't be getting the full benefit of the header files.
+In addition to defining helpful macros, Acme header files contain
+function prototypes for all non-private functions in the package. 
+That means that if you include the headers properly, the compiler can
+catch some common types of errors and make your life easier. 
+Unfortunately, if you accidentally do have any inherit statements
+after your include directives, the function prototypes will silently
+be ignored.  Everything else will work fine.
+

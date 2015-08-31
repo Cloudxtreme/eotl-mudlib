@@ -1,0 +1,28 @@
+NAME
+    explode_nested - separated string into substrings by some 
+                     unescaped, unnested delimiter
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArgs;
+    #include AcmeArgsInc
+
+    string *explode_nested( string str, string delim, status quiet, 
+                            string open, string close );
+ 
+DESCRIPTION
+    Separate str into substrings.  Returns an array of the strings
+    separated by delim.  Similar to explode_unescaped(), but 
+    delimiters that are nested inside of things will be ingored.
+    See find_close_char(A) for an explaination of nesting.
+ 
+EXAMPLE
+    explode_nested("this:is(a:new):test", ":") -> 
+      ({ "this", "is(a:new)", "test" })
+ 
+SEE_ALSO
+   explode(E), regexplode(E), explode_args(A), explode_unescaped(A),
+   find_close_char(A)
+   
+LAST MODIFIED
+    980102

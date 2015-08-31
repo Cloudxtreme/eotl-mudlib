@@ -1,0 +1,23 @@
+NAME
+    top_function_def - finds the first declaration of a function in
+                       an object
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFunction;
+    #include AcmeFunctionInc
+
+    string top_function_def( object ob, string func );
+ 
+DESCRIPTION
+    Returns the file which declares the function func which would
+    get invoked first when trying to call func in ob.  This takes
+    shadows and inheritance into account.  This is faster than
+    all_function_defs(), so use this if you really only want the
+    first declaration.
+ 
+SEE_ALSO
+    function_exists(E), all_function_defs(A)
+ 
+LAST MODIFIED
+    980102

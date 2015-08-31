@@ -1,0 +1,124 @@
+NAME
+    get_data - gets data from a user to a method
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeGetData;
+    #include AcmeGetDataInc
+
+    void get_data( mixed type, mixed prompt, mixed method, mixed extra );
+
+DESCRIPTION
+    A standard method for prompting the user for input and then getting the
+    input from the user to a callback method (in THISO).  Think of this
+    like input_to() on steroids.
+
+    Current type parameters supported are:
+      GD_INT            - an integer
+      GD_FLOAT          - a float
+      GD_STRING         - a single line string
+      GD_TEXT           - a multi-line string
+    or, an array of these values.
+
+    Likewise, the prompt parameter can be a single prompt or an array of
+    prompts.  However if the prompts are in an array, the structure of the
+    prompt array must be in the same structure that the types array is in.
+
+    The method can be either a string function name or a closure.  If it
+    is a closure, then then input is apply'ed to it.
+
+    get_data() will then call the method with the captured input in the
+    same structure that the parameters and prompts were in, and the extra
+    parameter.
+
+EXAMPLE
+
+      get_data( GD_STRING, "Enter name: ", "foo" );
+
+    Is equivalent to:
+
+      printf( "Enter name: " );
+      input_to( "foo" );
+
+    However, let's say you're trying to make a function that configures
+    an object.  You could do something like this:
+
+      configure_object1( mixed data, object ob )
+      {
+        ob->set( "id"   ,   data[0] );
+        ob->set( "short",   data[1] );
+        ob->set( "long" ,   data[3] );
+        ob->set( "value",   data[4] );
+        printf( "BING!  The object is configured!\n" );
+      }
+
+      {  // EXAMPLE CODE BLOCK 1
+        ...
+        get_data( ({ GD_STRING, GD_STRING, GD_TEXT, GD_INT }),
+          ({ "Name of object: ",               // corresponds to GD_STRING
+             "Short description of object: ",  // "     "      " GD_STRING
+             "Long description of object:",    // "     "      " GD_TEXT
+             "Value of object: "               // "     "      " GD_INT
+          }),
+          "configure_object1",
+          ob
+        );
+        ...
+      }
+
+    Or, alternatively, if you could have:
+
+      configure_object2( string nm, string sh, string lg, int val, object ob )
+      { 
+        ob->set( "id"   ,   nm  );
+        ob->set( "short",   sh  );
+        ob->set( "long" ,   lg  );
+        ob->set( "value",   val );
+      }
+
+      {  // EXAMPLE CODE BLOCK 2
+        ...
+        get_data( ({ GD_STRING, GD_STRING, GD_TEXT, GD_INT }),
+          ({ "Name of object: ",
+             "Short description of object: ",
+             "Long description of object:",
+             "Value of object: "
+          }),
+          #'configure_object2,     // so now we're using the closure
+          ob
+        );
+        ...
+      }
+
+    If the either of the above example code blocks were ever run, the
+    results would looks something like what text in the get_data.example
+    man file would look like.
+
+    Lastly, since you can have an arbitarily nested structure, you could do
+    outlandish things like:
+
+      {
+        ...
+        get_data(
+          ({ GD_STRING,
+            ({ GD_STRING, GD_INT }),
+            ({ ({ GD_TEXT }) }),
+            GD_INT
+          }),                // types structure
+          ({ "StringA: ",
+           ({ "StringB: ", "StringBVal: " }),
+            ({ ({ "TextA:" }) }),
+            "IntA: "
+          }),                // prompts structure
+          "my_funky_function"
+        );
+        ...
+      }
+
+    ...if it works best for your data structures or whatnot.
+
+SEE_ALSO
+    input_to(), EDITOR->get_text()
+
+LAST MODIFIED
+    Aleron 960327

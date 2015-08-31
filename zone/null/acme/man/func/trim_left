@@ -1,0 +1,22 @@
+NAME
+    trim_left - removes some leading characters
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    string trim_left( string str, int chr );
+ 
+DESCRIPTION
+    Removes all instances of chr from the beginning of str and 
+    returns that string.  Useful for getting rid of leading spaces.
+ 
+EXAMPLE
+    trim_left("   this is a test.", ' ')  ->  "this is a test."
+ 
+SEE_ALSO
+    trim_right(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

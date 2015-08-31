@@ -1,0 +1,22 @@
+NAME
+    median - calculate the median value of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float median( float *sample );
+ 
+DESCRIPTION
+    Returns the median value in a sample.  This is actually just
+    an alias for the 50th percentile.
+ 
+EXAMPLE
+    median( ({ 1, 2, 3 }) ) -> 2
+ 
+SEE_ALSO
+    mean(A), median(A), mode(A), percentile(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

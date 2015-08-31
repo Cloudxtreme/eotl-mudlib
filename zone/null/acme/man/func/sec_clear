@@ -1,0 +1,23 @@
+NAME
+    sec_clear - remove approval of all objects for an operation
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    public status sec_clear( mixed operation );
+    
+DESCRIPTION
+    Clears and initializes the access lists for an operation.  Returns 
+    1 for success or 0 for failure (due to lack of access).  All 
+    objects on the stack must be approved for SEC_MANAGE to call this.
+ 
+    See AcmeCallSecurity package documentation for a discussion on
+    valid operations.
+ 
+SEE_ALSO
+    sec_add(A), sec_remove(A), sec_query(A), sec_lock(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

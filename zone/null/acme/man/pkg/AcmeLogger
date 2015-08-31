@@ -1,0 +1,215 @@
+==[ AcmeLoggerFactory and AcmeLogger Documentation ]=========================
+
+1. OVERVIEW
+
+  Logging is in everything. Since we can't start and stop the MUD from
+  executing code whenever we want like you can in a debugger, the only way to
+  know what's going on inside your objects is to put in debug and trace
+  logging. We also log errors and other significant events so we may inspect
+  them later should an issue arise. AcmeLoggerFactory attempts to solve some
+  of the problems common to all the different kinds of logging.
+
+  It will allow you to log at different "levels" and easily turn logging for
+  specific levels off and on as needed. It will log to files automatically
+  using your permissions to do the logging, or to players' consoles which you
+  can target using Acme and BW object specs. The API also provides for a
+  variety of formatting options for your log message, allowing easy
+  incorporation of values like line number and program name.
+
+  It's a little different than some of the past logging solutions, in which
+  objects do the actual logging on their own behalf. The Acme solution uses
+  child logger objects to do the logging. There is also a single factory 
+  object which maintains a pool of active loggers, minimizing overhead of 
+  creating a new logger object everytime a logging event occurs. It also does 
+  its own clean up, destroying orphaned or idle loggers that are no longer 
+  needed.
+
+
+2a. USAGE - Getting a Logger
+
+  The basic idiom for getting a logger is very simple:
+
+    #include <acme.h>
+    object logger = AcmeLoggerFactory->get_logger(THISO);
+
+  In 99% of situations, you can just cut and paste that exact code into your
+  own objects and move on to the next step. To discover some of the special
+  features of the lib, though, let's take a look under the hood. The
+  get_logger() function actually takes 3 possible arguments, only the first
+  of which is required:
+
+    varargs object get_logger(mixed category, object rel, int reconfig);
+
+  That first argument is the "category" of the logger, and it can be
+  expressed as a string or an object. It could be any string, but some
+  special magic happens when you use hierarchical strings of the format
+  "supercat.category.subcat"; subcategories can inherit configuration
+  properties from their supercategories. When you use an object as a
+  category, it is automatically converted into the proper format (e.g.
+  "usr.devo.workroom"). By basic the logger category on THISO's program name,
+  THISO being the object doing the logging, we can easily target specific
+  objects for configuration changes or configure loggers for entire groups
+  of objects by targeting their parent categories.
+
+  The second argument, "rel", determine where the factory will look for this
+  logger's configuration. If omitted, it defaults to the previous object
+  calling get_logger(). Based on the program load name of the rel object,
+  the factory will start at that object's directory and step back out the
+  directory tree looking for a file called ".logger.properties" in each
+  parent directory until it reads in a complete configuration for the
+  specified category. The euid of 'rel' object also determines the euid that
+  will be assigned to the resulting logger object. If a complete
+  configuration for the category could not be read, reasonble defaults will
+  be applied.
+
+  The configuration file(s) aren't necessarily re-read every time you request
+  a logger. When calling get_logger(), if a logger already exists for the
+  category and euid, it will be returned to you. If it doesn't, the
+  configuration will be read and a new one will be created and returned. If
+  you make a change to the configuration and want to force a refresh, the
+  third argument 'reconfig' can be set to a non-zero value to do just so.
+  However, this will only re-parse the configuration files and return a brand
+  new logger for that category/euid. While subsequent calls to get_logger()
+  will also now return the new object, any objects holding on references to
+  the old logger will continue to use the old logger's configuration. This is
+  why it's generally a good idea to avoid declaring global-scope loggers in
+  your objects; and use locals that will be freed after you're done with them
+  (not to mention globals will never be cleaned up!).
+
+
+2b. USAGE - Logging a Message
+
+  Once you have a logger object, you will want to log some stuff with it.
+  There are six different log levels to choose from, in order:
+
+    logger->fatal(msg, args, ...)
+    logger->error(msg, args, ...)
+    logger->warn(msg, args, ...)
+    logger->info(msg, args, ...)
+    logger->debug(msg, args, ...)
+    logger->trace(msg, args, ...)
+
+  All six functions take the same arguments as printf(), with a format string
+  as the first argument and optional args that follow. It is highly
+  recommended that you make use of format specifiers and avoid costly string
+  addition. If logging is turned off for a lower level, any string addition
+  done as part of that log message still gets performed, even though nothing
+  will actually be logged! By using format specifiers instead, the cost of
+  performing the logger call is negligable if the actual logging is disabled.
+
+  Which log level to choose for your message is somewhat subjective, but here
+  is a brief guide that may help:
+
+    FATAL: The code experienced an failure so severe, not only was user
+           experience affected but it has entirely ceased!
+    ERROR: The code experienced a significant problem, affecting the user
+           experience in some way.
+     WARN: The code failed in some way, but user experience was not affected.
+           This may also be appropriate for recoverable errors that
+           eventually succeeded after the initial attempt.
+     INFO: Used for informational messages about what the code is doing while
+           running successfully. Includes higher-level information used to
+           support operating the code.
+    DEBUG: Like INFO, used for informational messages about how the code is
+           running. Unlike INFO, may include lower-level information used by
+           developers to debug the code.
+    TRACE: Fine-grained messages used to trace program state as it executes.
+           Should only be turned on in a development environment.
+
+
+3a. CONFIGURATION - Overview
+
+  Where the AcmeLoggerFactory really shines is in that it externalizes the
+  specifics of how/what/where things get logged from the code doing the
+  logging into configuration files. This allows you to easily tweak the log
+  output of an object or group of objects without ever needing to touch the
+  code.
+
+  Starting with the load name of the 'rel' object passed to get_logger(),
+  the factory will search each parent directory up to the root for a file
+  called ".logger.properties". A typical configuration file may look
+  something like this:
+
+    logger.output=f:log/eternal.log
+    logger.format=%d %p %l - %m
+    logger.level=ERROR
+    logger.library.level=DEBUG
+
+  Every directive is of the format:
+
+    logger.<category>.<prop>=<value>
+
+  The <category> component must match the category passed to get_logger()
+  for the directive to be applied, and the path is relative to directory
+  where the .logger.properties file is defined. When no category is specified
+  as in the first three lines of the example above, it matches any category
+  descended from the top-level directory where the configuration is defined.
+
+  If you pretend the example was created for /zone/null/eternal/, we can see
+  someone has configured an error file for the entire cabal, but has
+  overridden the configuration for the library to include DEBUG logging for
+  the library. Since the config is located in /zone/null/eternal/, the
+  compete category id of "zone.null.eternal.library" is implied.
+
+
+3b. CONFIGURATION - Directives
+
+  There are three different properties that may be configured for every
+  category: output, format, and level.
+
+  Output Directive:
+  The value of the output prop is a comma-separated list of output specifiers
+  of the format <spec>:<target>. There are three possible values for spec:
+
+    'f' - append log message to file; target is filename
+    'a' - echo log message to player(s); target is any valid Acme OSpec
+    'b' - echo log message to player(s); target is any valid BW OSpec
+
+  Example: logger.output=f:/log/error.log,a:me,a:devo
+           Every message is logged to /log/error.log, and echoed to THISP and
+           the player named Devo.
+
+  Format Directive:
+  The value of the format prop can be any old string, but it may include
+  format specifiers which will replaced with some useful data about the event
+  being logged. The available specifiers are fairly limited now but may be
+  easily extended later. The format specifiers are:
+
+    %c{x} - the category of the logger, (or optionally the last x components
+            of the category)
+    %C{x} - the program name of the caller, (or optionally the last x
+            components of the name)
+    %d{x} - the current time, as expressed by strftime(x) using x as the
+            format string
+       %l - the location string (formatted like log4j's %l right now but
+            should be tweaked)
+       %L - the line number
+       %m - the message being logged
+       %n - a newline
+       %p - the priority of the logging event
+       %r - milliseconds in the current second
+       %% - the percent sign
+
+  Example: %d %p %l - %m (the default format string)
+           calling:
+           cc AcmeLoggerFactory->get_logger(THISO)->warn("it's a trick, get an %s", "axe");
+           produces:
+           2014-07-26 17:15:52,908725 WARN  usr/devo/tmp/cc->cc(usr/devo/tmp/cc.c:7) - it's a trick, get an axe
+
+
+  Level Directive:
+  This simply sets the minimum log level that should be logged for a
+  category. During regular playing hours, you may want to set it to WARN to
+  only capture problematic messages. However during development, you may wish
+  to set it to DEBUG to reveal hints about what your code is doing. This is
+  where giving every object its own category comes in really handy; if you
+  know an object is causing trouble but aren't around to witness it, you can
+  add some debug logging to tell you what's happening and flip the log level
+  in the config for that object. After you've found the problem, flip the
+  log level back and just keep the logging in the code in case you ever need
+  to inspect it again.
+
+       -------------------------------------------------------
+
+Created 10 August 2015 by Devo
+

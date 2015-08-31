@@ -1,0 +1,19 @@
+NAME
+    top - return the top of a stack without popping it
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStack;
+    #include AcmeStackInc
+
+    mixed top( StackHdl hdl );
+ 
+DESCRIPTION
+    Returns the top of the stack described by handle hdl without
+    popping it or STACK_EMPTY of the stack is empty.
+ 
+SEE_ALSO
+    new(A), empty(A), push(A), pop(A), top(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

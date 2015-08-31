@@ -1,0 +1,35 @@
+NAME
+    find_targets - find object[s] according to some priorities
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    varargs object *find_targets(string spec, string priorities, 
+                                 status quite, object *prev);
+ 
+DESCRIPTION
+    Finds some objects described by spec and a set of seek priorities.
+    Error messages will be supressed if quiet is true.  prev is not
+    used for anything, but is there so that anything that overrides
+    this function can choose to use it.  The follow are valid 
+    priorities as defined in FindTargetInc:
+ 
+      FT_FindPlayer :  A player object.
+      FT_FindLiving :  A living object.
+      FT_FindObject :  An absolute pathname.
+      FT_File       :  A filespec.
+      FT_InvItem    :  A item in THISP.
+      FT_EnvItem    :  A item in ENV(THISP).
+ 
+EXAMPLE
+    find_targets( "weapon", FT_InvItem FT_EnvItem ) -> 
+      ({ /obj/weapon/weapon#24567 })
+ 
+SEE_ALSO
+    find_target(A), find_object(E), find_objects(E), present(E), 
+    find_player(SE), find_living(SE)
+ 
+LAST MODIFIED
+    980102

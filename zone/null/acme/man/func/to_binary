@@ -1,0 +1,21 @@
+NAME
+    to_binary - convert a decimal int to a string of binary digits
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+
+    string to_binary( int num );
+ 
+DESCRIPTION
+    Returns string in binary representing an integer value.
+ 
+EXAMPLE
+    to_binary(2) -> "10"
+ 
+SEE_ALSO
+    to_string(E), from_binary(A), to_hex(A), to_octal(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

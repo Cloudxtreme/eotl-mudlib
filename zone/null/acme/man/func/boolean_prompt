@@ -1,0 +1,59 @@
+NAME
+    boolean_prompt - ask a question and get yes or no input from user
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeBooleanPrompt;
+    #include AcmeBooleanPromptInc
+
+    varargs void boolean_prompt( string question, mixed yesmethod,
+                                 mixed nomethod, mixed quitmethod,
+                                 int default );
+ 
+DESCRIPTION
+    Prints question to this_player(), then prompts for input.  The
+    method associated with the player's answer will then be executed.
+    Method variables can be in any of the following formats:
+      string method             :  call_other( "foo", THISO )
+      closure method            :  funcall( method )
+      ({ method, extra, ... })  :  method is called as specified above,
+                                   and the remaining elements in the 
+                                   array are passed as arguments.
+    The last argument, default, can be DEFAULT_YES, DEFAULT_NO,
+    or DEFAULT_QUIT, and the associated method will be executed by
+    default.
+ 
+    It is important that you make the methods return true; if they 
+    dont, boolean_prompt assumes they failed and reprints the prompt.
+ 
+EXAMPLE
+    void delete_files( string *files )
+    {
+        boolean_prompt( "You are about to delete " + sizeof( files ) + 
+            "files.\nContinue?", ({ "_delete_files", files }),
+            "ack_no", 0, DEFAULT_NO );
+    }
+ 
+    int ack_no()
+    {
+        write( "Fine, be that way.\n" );
+        return( 1 );
+    }
+ 
+    int _delete_files( string *files )
+    {   
+        map_array( files, #'rm );
+        write( "Finis.\n" );
+        return( 1 );
+    }
+   
+    Which might output:
+  
+    You are about to delete 4 files.
+    Continue? (yn) [n] y
+    Finis.
+ 
+SEE_ALSO
+ 
+LAST MODIFIED
+    980102 Devo

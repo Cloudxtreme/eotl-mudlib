@@ -1,0 +1,24 @@
+NAME
+    level_range - filter a list of players by level
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    object *level_range( object *ulist, int min, int max );
+ 
+DESCRIPTION
+    A user-object filter that works on level.  Filters out 
+    GetOrdLevel(ulist[i]) < min  or GetOrdLevel(ulist[i]) > max 
+    for all in ulist.
+ 
+EXAMPLE
+    level_range( users(), OrdLevel(Guest), OrdLevel(Janitor) )
+      would return alist of all wizards online.
+ 
+SEE_ALSO
+    level_range_fast(A), wizards(A), mortals(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,23 @@
+NAME
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed checked_item_reverse( mixed *arr, int i );
+ 
+DESCRIPTION
+    Same as arr[<(i+1)], but won't give an error on illegal indices.
+ 
+EXAMPLE
+    checked_item_reverse( ({ 1, 2, 3 }), 1 )  ->  2
+    checked_item_reverse( ({ 1, 2, 3 }), -1 )  ->  0
+    checked_item_reverse( ({ 1, 2, 3 }), 4 )  ->  0
+    checked_item_reverse( 4, 2 ) -> 0
+ 
+SEE_ALSO
+    checked_range(A), checked_item(A)
+ 
+LAST MODIFIED
+    980102 Devo

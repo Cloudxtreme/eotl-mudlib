@@ -1,0 +1,123 @@
+NAME
+    parse_format
+
+SYNOPSIS
+    #include <acme.h>
+    private inherit AcmeFormatStrings;
+    #include AcmeFormatStringsInc
+
+    closure parse_format(string format, mapping infomap, symbol *args);
+
+DESCRIPTION
+    AcmeFormatStrings is a library for converting a string with one or more 
+    format specifiers into a closure which may be called to return a 
+    formatted string with the format specifiers replaced by the result of a 
+    specified lambda closure.
+
+    A format specifier in a format string takes the form of either "%c" or 
+    "%c{arg}" where c is any case-sensitive alphabetic character, and arg is 
+    an optional arg used to customize the output of the formatted string. If 
+    the specifier doesn't include an arg (e.g. "%c"), a default arg value may 
+    be specified instead.
+
+    How specifiers are replaced is controlled by the 'infomap' argument, a 
+    mapping which takes the following form:
+
+      ([ int char : ({ mixed default_arg_value,
+                       string sprintf_format,
+                       ({ ({ sprintf_arg1_lambda }), 
+                          ({ sprintf_arg2 lambda }), 
+                          ({ ... }) 
+                       })
+                    })
+      ])
+
+    The key char is the ASCII ordinal of the character that should be 
+    replaced, in the example above this would be 'c'. The values of the 
+    infomap are three element arrays. The first element is a default value to 
+    use for the specifier arg if none is provided in the format string (i.e. 
+    make "%c" default to "%c{foo}". The second element is a valid sprintf() 
+    format string which will be used for the final output. The third element 
+    is an array of partial lambda definitions, the results of which will be 
+    passed as extra arguments to sprintf(). Thus, for every format specifier 
+    in the sprintf_format, there should be an sprintf_arg lambda.
+
+    In each lambda associated with char, the char's argument "{arg}" may be 
+    accessed with the symbol 'arg. You may also pass extra arguments for the 
+    closures to use at runtime, which must be specified by the third argument 
+    to parse_format(), args. This is simply an array of symbols that may be 
+    referenced inside your lambdas, just like the first argument to the 
+    lambda() efun. The values themselves must still be passed to the 
+    formatter closure when it is invoked at runtime.
+
+    Important: due to the way lambda closures are compiled, and to avoid a 
+    possible collision with the 'arg symbol automatically implemented to 
+    support the specifier argument, the extra symbols passed in the *args 
+    array must be double-quoted when used inside the constituent lambda 
+    closures. However they must only be single quoted when passed to 
+    parse_format().
+
+    The result of parse_format() is a lambda closure which takes the 
+    specified arguments and returns a formatted string according to infomap.
+
+EXAMPLE
+
+    closure formatter = parse_format(
+      "%n %t{the untitled}%r.",
+      ([ 'n' : ({ 0,
+                  "%s",
+                  ({ ({ #'call_other, ''who, "query_name" }) }),
+               }),
+         't' : ({ "",
+                  "%s",
+                  ({ ({ #'||, 
+                        ({ #'call_other, ''who, "query_title" }),
+                        'arg
+                  }) })
+               }),
+         'r' : ({ " is resting",
+                  "%s",
+                ({ ({ #'?,
+                      ({ #'call_other, ''who, "query_resting" }),
+                      'arg,
+                      ""
+                }) })
+              })
+      ]),
+      ({ 'who })
+    );
+    write(funcall(formatter, FINDP("devo")));
+
+    When Devo is resting, this code will print the string "Devo the Barkeep 
+    is resting." Let's break down what's going on here. The format string is 
+    has three format specifiers: %n, %t, and %r. The infomap contains there 
+    members with keys 'n', 't' and 'r'. The first one, '%n', is not intended 
+    to take an argument and is just replaced with a player's name. The next 
+    one, '%t' has been passed an argument of "the untitled" which has been 
+    assigned to the symbol 'arg. This is just special magic that happens 
+    automatically, and arguments given to a format specifier is always passed 
+    as a string (though the default value may be mixed, or often 0 in 
+    situations where no arg is supported. The last one, '%r', takes an 
+    argument but has not been passed one, so its 'arg symbol has been 
+    assigned the default, declared to be the string " is resting"; the rest 
+    of the closure returns the value of 'arg when a player's is resting, 
+    otherwise the empty string.
+
+    In all three members, the sprintf format string is the same, a simple 
+    "%s". Consequentially, the lambda array which follows has only one 
+    member, a closure that returns a string. If the sprintf format string 
+    were "%s%d", the following array would be expected to have 2 members, 
+    one which returned a string and the other an int. The last argument to 
+    parse_format() binds additional arguments to the resulting formatter 
+    closure to symbols which can be used in the constituent lambdas. The 
+    example only declares one symbol, 'who, to which the first passed 
+    argument will be assigned. Notice how, when 'who is used in the 
+    #'call_other calls, it is double quoted. This is a product of the way 
+    lambda closures are compiled and is outside the scope of this manpage.
+
+SEE_ALSO
+    sprintf(E), lambda(E), funcall(E)
+
+LAST MODIFIED
+   20150813 Devo
+

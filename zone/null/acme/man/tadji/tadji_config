@@ -1,0 +1,169 @@
+************************************************************************
+************************************************************************
+
+  This document explains the format for the simple tadji configuration
+  syntax, and how you get a configuration into the tool.  Also see
+  config.example .  For information on writing AcmeCommands, see
+  acme/etc/AcmeCommand.doc.
+
+************************************************************************
+
+  The easiest way to have a personal configuration is to keep it in a
+  file.  The tadji will look for a config file when it's created.  By
+  default, it looks for ~/.tadji but you can change that by setting
+  your "tadji" environment variable to name some other file.
+
+  Once you have your tadji, you can change your configuration either
+  by giving it more config lines manually, or by resetting the
+  configuration from a file.  There are a few ways of doing this with
+  the standard "tadji" command, but I expect that people will write
+  better configuration management systems than I've provided.
+
+************************************************************************
+
+
+ SUMMARY
+
+  Here's a simplified overview of some of the more useful configuration
+  commands.
+
+  ACME file[s]     # Adds some Acme commands
+  BW file[s]       # Adds some BW commands
+  CONCEPT file[s]  # Adds some Concept commands
+  RM command       # Removes a command
+  RENAME from to   # Renames a command
+  PACKAGE file     # Include another config file.
+
+************************************************************************
+
+
+ CONFIGURATION SYNTAX
+
+  This is long and full of details.
+
+  All filenames are parsed relative to the directory the current
+  config file is in if you are using a file.  That means you can do
+  stuff like:
+
+ADD commands/*.c
+PACKAGE part2.p
+
+  All filespecs can name multiple files with the expected results
+  except where otherwise noted.
+
+
+  ************************************************************************
+
+  Hash marks start a comment.  They, and the rest of the line, are
+  ignored.  They can appear on the same line as a directive.
+
+# This is a comment.
+        // So is this.
+
+  Everything else is a directive.  Directives must be all uppercase. 
+  Arguments can be separated by any number of spaces.  Any extra
+  arguments to a directive will be silently ignored.
+
+  ************************************************************************
+
+ADD filespec [name_pattern [func_pattern [style]]]
+
+  Adds one command for each file matched by <filespec>.
+  The defaults are set for Acme commands.  
+
+  The name of the command is determined by <name_pattern>.  If doesn't
+  <name_pattern> contain a "%s" then it is assumed to be a literal
+  name and will be used as the name of the command.  Since the tadji
+  only allows one command per name, this is only useful for single
+  commands.  To work on multiple commands, you need to supply a real
+  pattern.  The pattern is interpreted like this:
+
+    sscanf(filename, name_pattern, command_name)
+
+  So if you had a file named "cmd_foo.c" and a name_pattern of
+  "cmd_%s.c", then the command would be named "foo".
+
+  The func_pattern is similar, but works in reverse.  It can be a
+  literal function name, or can be a pattern.  If it's a pattern, it
+  gets applied like this:
+
+    function_name = sprintf(func_pattern, command_name)
+
+  So if you had a command named "foo" and a func_pattern of
+  "do_the_%s_command", then the function named "do_the_foo_command_"
+  would be called.
+
+  The last argument, <style>, indicates the calling conventions used
+  by the command.  These are the options and what they mean:
+
+      Style      Command call
+      -----      ------------------
+      acme       func(name, arg)
+      bw         func(THISP, arg)
+      concept    func()
+      none       func()
+
+  Other objects can use this information.  For example, the help
+  command also uses the style attribute to determine how to get the
+  usage and help strings from the commands.
+
+
+  There are some shortcut directives for specifying certain popular
+  patterns:
+
+BW filespec
+  The same as ADD filespec _%s.c cmd_%s bw
+  
+CONCEPT filespec
+COMMAND filespec
+  These are the same as ADD filespec %s.c do_%s concept
+
+ACME filespec
+  This is the same as ADD filespec %s.c do_cmd acme
+  Of course, it's also the same as ADD filespec  
+
+
+  ************************************************************************
+
+RM name
+  Removes the command named <name>
+
+  ************************************************************************
+
+RENAME oldname newname
+  Renames the command named <oldname> to be <newname>
+
+  ************************************************************************
+
+PACKAGE file
+  Includes another config file.  You can't specify more than one file
+  at a time yet, but I plan to fix that eventually.  If you do give a
+  filespec, it will just use the first file it matches.
+
+
+
+************************************************************************
+
+
+  Just to keep things simple and to use less memory, and because I
+  don't think the flexibility would be that useful, the name and
+  calling style of the help function is not individually configurable.
+  You can figure them out from the style.  Flame me if you think you
+  need this flexibility in order to perform vital bodily functions.
+
+  The help functions are:
+      Acme:    string  cmd_help(name)   # returns the help string
+               string *cmd_usage(name)  # returns the usages
+      BW:      void help()              # writes the help
+      Concept: _cmd_help()              # return the help string
+               _cmd_usage()             # returns the usage
+      None:    (none)
+
+  In fact, the help system will not be included in this device,
+  because it can be implemented easily in a command.  This also allows
+  for customized help commands.  (If you don't like my format, make
+  your own.)
+
+
+************************************************************************
+************************************************************************

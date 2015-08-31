@@ -1,0 +1,23 @@
+NAME
+    color_code - colors LPC or C code
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeColoredCode;
+    #include AcmeColoredCodeInc
+
+    varargs string color_code( string code, mixed c_cols, int cont, 
+                               int language );
+ 
+DESCRIPTION
+    Takes code and applies colors as defined by the c_cols array.
+    This is an array of strings representing the colors in 
+    AcmeColoredCodeInc.  The newly colored code is returned.
+ 
+    If cont is set, it implies that the beginning of code is in the 
+    middle of color scheme (ie. a comment).  language can be currently
+    be set to LANGUAGE_LPC or LANGUAGE_C.
+ 
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,29 @@
+NAME
+    level_range_fast - faster level_range with side effects
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    object *level_range_fast( object *ulist, int min, int max );
+ 
+DESCRIPTION
+    A user-object filter that works on level.  Filters out 
+    GetOrdLevel(ulist[i]) < min  or GetOrdLevel(ulist[i]) > max 
+    for all in ulist.
+ 
+    Unlike level_range(), this routine screws with the passed
+    array rather than just returning a newly constructed version.
+    It's probably faster, especailly for lists in which few members
+    are kept.
+ 
+EXAMPLE
+    level_range( users(), OrdLevel(Guest), OrdLevel(Janitor) )
+      would return alist of all wizards online.
+ 
+SEE_ALSO
+    level_range(A), wizards(A), mortals(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

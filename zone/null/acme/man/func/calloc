@@ -1,0 +1,22 @@
+NAME
+    calloc - allocates and initializes an array to 0
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAlloc;
+    #include AcmeAllocInc
+
+    mixed *calloc( int size );
+ 
+DESCRIPTION
+    Returns an array of size elements, with all values initalized to 0.
+ 
+EXAMPLE
+    ialloc( 5 )  ->  ({ 0, 0, 0, 0, 0 })
+    ialloc( 3 )  ->  ({ 0, 0, 0 })
+ 
+SEE_ALSO
+    alloc(E), ialloc(A)
+ 
+LAST MODIFIED
+    980102 Devo

@@ -1,0 +1,20 @@
+NAME
+    sec_lock - lock sytem, turning on security
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCallSecurity;
+    #include AcmeCallSecurityInc
+
+    public void sec_lock();
+    
+DESCRIPTION
+    Activates the AcmeCallSecurity security system.  Until this is
+    called, the security system doesn't do anything.  This function
+    is not access controlled.
+ 
+SEE_ALSO
+    sec_add(A), sec_remove(A), sec_clear(A), sec_query(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

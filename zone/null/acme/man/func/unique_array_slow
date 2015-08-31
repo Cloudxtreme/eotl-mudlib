@@ -1,0 +1,29 @@
+NAME
+    unique_array_slow - returns a copy of the array with no duplicates
+                        in the same order as the original array
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+ 
+    mixed *unique_array_slow( mixed *arr, int keep_last );
+ 
+DESCRIPTION
+    Returns a copy of the array without any duplicate values.  Unlike
+    unique_array(), the values in the returned array will be in the
+    same order in which they were found in the original array.  If
+    keep_last is true, then the last occurance of each value will be
+    kept in order, otherwise the first occurance will be kept.  This
+    function is much slower than unique_array(), and should only be
+    used in cases where order is important.
+ 
+EXAMPLE
+    unique_array( ({ 1, 2, 3, 4, 2 }) ) -> ({ 1, 2, 3, 4 })
+    unique_array( ({ 1, 2, 3, 4, 2 }), 1 ) -> ({ 1, 3, 4, 2 })
+ 
+SEE_ALSO
+    unique_array(A) 
+ 
+LAST MODIFIED
+    980120 Devo

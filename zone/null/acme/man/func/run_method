@@ -1,0 +1,23 @@
+NAME
+    run_method - runs a method (func or cl)
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMethod;
+    #include AcmeMethodInc
+
+    varargs mixed run_method( mixed method, mixed in, mixed extra );
+ 
+DESCRIPTION
+    Runs a function or a closure described by method, with input 
+    in, and an optional parameter extra.  Returns whatever the
+    method returned, or ACME_METHOD_ERR if the method errors.
+ 
+EXAMPLE
+    run_method( #'sprintf, "%c", 'A' ) -> "A"
+ 
+SEE_ALSO
+    call_other(E), apply(E)
+ 
+LAST MODIFIED                               
+    970102 Devo

@@ -1,0 +1,71 @@
+NAME
+    check_connectivity - checks the connectivity of a graph
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeGraph;
+    #include AcmeGraphInc
+
+    status check_connectivity ( mixed graph, mixed getneighbors, mixed node );
+
+DESCRIPTION
+    Given a graph, a method to get the neighbors of a node from the graph
+    structure, and a node to remove from the graph, it returns whether or
+    not the graph is connected.
+
+    The graph can be some random structure based off an array or a mapping.
+    The getneighbors method can be either a string function name or a
+    closure and it should return an array of integer indices if the graph
+    is based off an array, or an array of keys.  Lastly, node is either an
+    int if the graph is based off an array, a key if the graph is based off
+    a mapping, or GRAPH_ALL to indicate that the entire graph should be
+    checked for connectivity.
+
+EXAMPLE
+    Let's say you have a graph modelled like this:
+
+      mapping graph;
+      graph = ([ 1:({ 2, 3, 4 }), 2:({ 1 }), 3:({ 1, 4 }), 4:({ 1, 3 }) ]);
+
+    Indicating something like this:
+
+       (2)      (3)         Node 1 has 2,3 and 4 as neighbors,
+          \    /   \        2 has only 1 as a neighbor,
+           \  /     \       3 has 1 and 4 as neighbors,
+            (1)------(4)    and 4 has 1 and 3 as neighbors.
+
+    And you had a function getneighbors() which would return an array of
+    neighbors:
+
+      mixed getneighbors( mapping current_node )
+      {
+          return current_node;  // the graph we've made is the simplest case
+      }
+   
+    If you did a:
+
+      check_connectivity( graph, "getneighbors", 2 );
+
+    it would return TRUE since if you yank 2 out of your graph,
+    it'd look like:
+
+                (3)
+               /   \       which is still obviously connected.
+              /     \
+           (1)-------(4)
+
+    If on the other hand, you did a:
+
+      check_connectivity( graph, "getneighbors", 1 );
+
+    it would return FALSE since if you yank 1 out of your graph,
+    it'd look like:
+      
+
+       (2)      (3)
+                   \       which is disconnected since node 2 is
+                    \      floating out there by its lonesome.
+                     (4)
+
+LAST MODIFIED
+    Aleron 960328

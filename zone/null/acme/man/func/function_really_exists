@@ -1,0 +1,21 @@
+NAME
+    function_really_exists - checks to see if a function is explicitely
+                             defined in an object
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFunction;
+    #include AcmeFunctionInc
+
+    status function_really_exists( string ob_file, string func );
+ 
+DESCRIPTION
+    Returns true if func is explicitely defined in ob_file (as
+    opposed to something ob_file inherits).
+ 
+SEE_ALSO
+    function_exists(E), exists_function(A), all_function_defs(A),
+    top_function_def(A)
+ 
+LAST MODIFIED
+    980102

@@ -1,0 +1,21 @@
+NAME
+    basename - extracts the base filename from a full path
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFile;
+    #include AcmeFileInc
+
+    string basename(string file);
+ 
+DESCRIPTION
+    Returns the presumed base filename from file.
+ 
+EXAMPLE
+    basename("/usr/devo/workroom.c") -> "workroom.c"
+ 
+SEE_ALSO
+    expand_path(A), dirname(A)
+ 
+LAST MODIFIED
+    980102 Devo

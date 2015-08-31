@@ -1,0 +1,36 @@
+NAME
+    crypt - encrypts or decrypts strings
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeCrypt;
+    #include AcmeCryptInc
+
+    string crypt( string s, string key, int type );
+
+DESCRIPTION
+    Given a source string, a key, and a type, crypt returns an encrypted
+    or decrypted string (based on the type) using a brain-dead Caesar
+    crypt.
+
+    Valid type values are:
+      ENCRYPT
+      DECRYPT
+
+EXAMPLE
+      cryptedstr = crypt( "Hi there Mike!", "my!#Key124", ENCRYPT );
+
+    Will encrypt the string "Hi there Mike" using the key "my!#Key124",
+    and will return µ‚A≥ ÎR÷‰D
+  
+    Conversely, if we take the resulting string,
+
+      newstr = crypt( cryptedstr, "my!#Key124", DECRYPT );
+
+    newstr will be "Hi there Mike!"
+
+SEE_ALSO
+    cryptfile(A)
+
+LAST MODIFIED
+    Aleron 960328

@@ -1,0 +1,55 @@
+AcmeHashServer
+
+      This daemon serves two functions: Creates nearly unique one-way
+      hashes, and can be used as a trusted intermediary for
+      zero-knowledge proofs.
+
+      HASHING
+
+        A hash function takes some input and outputs a fixed length
+        "hash".  A one way function is a function that is relatively
+        hard to compute the inverse of.  A one way hash function is
+        both of these -- a hash function that is hard to compute the
+        reverse of.  That means that while it's not hard to compute
+        what the hash of a particular input would be, it is very hard
+        to figure out what the input was from the hash, even when you
+        know how the hash was computed.  This is useful for many
+        security applications.  An additional useful feature of this
+        hash is that it is hard to deliberately get a particular hash
+        value.  A feature of most hash functions which this server
+        lacks is determinism.  The hash values given by this server
+        are not guaranteed to be the same for different instances of
+        the server.  In fact, they will almost certainly be different.
+
+
+      PROVING
+
+        This particular daemon also serves a related purpose of secret
+        proving.  There are several ways to prove that you know a
+        secret without divulging it.  The easiest to implement in this
+        environment is a trusted server.  You tell your secret to the
+        server, and the server will vouch that you know some secret
+        without telling anyone else what it is.  In this way, two
+        objects can prove to eachother that they both know some secret
+        by having the server tell the other what the hash of their
+        secret is.  If they match, they must be the same secret.  The
+        drawbacks of this scheme are that you must trust the server
+        not to cheat and not to be compromisable.  The advantage is
+        not having to do much computation.
+
+      API 
+
+        hash    - Returns the hash of some value.
+        prove   - Proves to some other object that you know some secret.
+
+    NOTES
+
+      The server is vulnerable to denial of service attacks through
+      destruction.  The hash is based on random(), which is not a good
+      source of randomness.  It should be good enough for mud use
+      though.
+
+    LAST MODIFIED
+
+      Zamboni 960515
+

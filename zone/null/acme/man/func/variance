@@ -1,0 +1,21 @@
+NAME
+    variance - calculate the variance of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float variance( float *sample );
+ 
+DESCRIPTION
+    Returns the variance of a sample.
+ 
+EXAMPLE
+    variance( ({ 1, 2, 3, 4, 5 }) ) -> 2.5
+ 
+SEE_ALSO
+    deviation(A), standard_deviation(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

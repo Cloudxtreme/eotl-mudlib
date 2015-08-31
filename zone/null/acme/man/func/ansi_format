@@ -1,0 +1,23 @@
+NAME
+    ansi_format - formats strings with ansi in them
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAnsi;
+    #include AcmeAnsiInc
+
+    varargs string ansi_format( string str, int width, mixed prefix );
+ 
+DESCRIPTION
+    Takes a string and formats it such that it fits within width 
+    columns, by pushing words to the next line and such.  When
+    making comparisons between the line length and width, ansi
+    escape sequences will not be counted in determining the length
+    of the line.  If optional prefix is provided, then it will wrap 
+    text around str.  
+ 
+SEE_ALSO
+    format(SE), ansi_strlen(A)
+ 
+LAST MODIFIED
+    980102 Devo

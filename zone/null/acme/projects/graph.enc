@@ -1,0 +1,34 @@
+
+Enhancement to check_connectivity:
+  o Remove recursion using AcmeStack
+
+
+void
+push( mixed elem, StackHdl stack )   // overloaded push()
+{
+   seen[ elem ] = 1;
+   ::push( elem, stack );
+}
+
+status
+check_connectivity( graph, get_neighbor, node )
+{
+   stack = new();
+   start = fiddle( node );  // fiddle to get starting point
+   push( start, stack );
+   while ( !emtpy( stack ) )
+   {
+      max = sizeof ( neighbors = get_neighbors( top( stack ) ) );
+      for ( i=0; i < max && seen[ neighbor[i] ]; ++i );
+
+      if ( i == max )      // we've seen all our neighbors
+         pop( stack );
+      else
+         push( neighbor[i], stack );
+   }
+
+   for ( i=0; i < sizeof( seen ); ++i )
+      if ( seen[i] == 0 )
+         return 0;
+   return 1;
+}

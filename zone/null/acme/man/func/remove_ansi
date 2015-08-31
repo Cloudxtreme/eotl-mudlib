@@ -1,0 +1,24 @@
+NAME
+    remove_ansi - removes ansi from a string
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAnsi;
+    #include AcmeAnsiInc
+
+    string remove_ansi( string str );
+ 
+DESCRIPTION
+    Removes all ansi escape sequences from a string, and returns the
+    new string.
+ 
+EXAMPLE
+    remove_ansi( "abc" ) -> "abc"
+    remove_ansi( RED "abc" ) -> "abc"
+    remove_ansi( RED "abc" NORM ) -> "abc"
+    
+SEE_ALSO
+    extract_ansi(A)
+ 
+LAST MODIFIED
+    980102 Devo

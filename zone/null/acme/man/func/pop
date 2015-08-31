@@ -1,0 +1,19 @@
+NAME
+    pop - pop an element from the top of a stack
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStack;
+    #include AcmeStackInc
+
+    mixed pop( StackHdl hdl );
+ 
+DESCRIPTION
+    Pops elem off of the stack described by handle hdl, and returns
+    the element removed, or STACK_EMPTY if the stack is empty.
+ 
+SEE_ALSO
+    new(A), empty(A), push(A), top(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

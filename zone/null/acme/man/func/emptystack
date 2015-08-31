@@ -1,0 +1,18 @@
+NAME
+    emptystack - test a stack for emptiness
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStack;
+    #include AcmeStackInc
+
+    status emptystack( StackHdl hdl );
+ 
+DESCRIPTION
+    Returns whether or not the stack described by handle hdl is empty.
+ 
+SEE_ALSO
+    newstack(A), push(A), pop(A), top(A)
+ 
+LAST MODIFIED                               
+   980403 Aleron

@@ -1,0 +1,19 @@
+NAME
+    get_actions_regexp - filter actions based on regexp
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeAction;
+    #include AcmeActionInc
+
+    varargs mixed get_actions_regexp( object who, string pat, object *from );
+ 
+DESCRIPTION
+    Returns all the actions given to who by optional object from, that
+    match regexp pat.
+ 
+SEE_ALSO
+    query_actions(E), get_actions_literal(A), get_all_actions(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

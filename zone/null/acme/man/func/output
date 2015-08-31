@@ -1,0 +1,64 @@
+NAME
+   output - sends output to different locations
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeOutput;
+    #include AcmeOutputInc
+
+    varargs void output( string s, string o, string tob, string t,
+                         string tenv, status silent );
+ 
+DESCRIPTION
+    Prints different messages to different places in the spirit of
+    feelings.  If silent is set, only s will be output.
+ 
+      s - message to send to self
+      o - message to send to others (self's environment)
+      tob - target object, if any
+      t - message to send to target
+      tenv - message to send to target's environment
+ 
+EXAMPLE
+    Let's say you're making a toy that simulates a lightning strike on
+    someone.
+ 
+      zap( object targ )
+      {
+        string myame;
+        string tname;
+ 
+        myname = capitalize( THISP->query_name() );
+        tname  = capitalize( targ->query_name() );
+ 
+        output( sprintf( "You FRY %s's butt into the dirt!", tname ),
+          sprintf( "%s hurls a lightning bolt at %s!", myname, tname ),
+          targ,
+          "C R A C K!\nA lighting bolt zooms out of the sky and fries you!",
+          sprintf( "C R A C K!\nA lighting bolt zooms out of the sky and "
+            "fries %s!", tname )
+        );
+      }
+ 
+      Say Aleron was in a room with Morgaine, Zamboni was in a room with
+      Locus, and Aleron used this zap on Zamboni.
+ 
+      Aleron would see:
+        "You FRY Zamboni's butt into the dirt!"
+ 
+      Morgaine would see:
+        "Aleron hurls a lightning bolt at Zamboni!"
+ 
+      Zamboni would see:
+        "C R A C K!
+         A lightning bolt zooms out of the sky and fries you!"
+ 
+      and, Locus would see:
+        "C R A C K!
+         A lightning bolt zooms out of the sky and fries Zamboni!"
+ 
+SEE_ALSO
+   say(E), write(E), tell_object(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

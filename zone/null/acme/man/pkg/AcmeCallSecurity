@@ -1,0 +1,133 @@
+                           AcmeCallSecurity
+
+      Using either the "static" or "private" keywords, you can make
+      functions uncallable by other objects.  Sometimes you want to
+      allow some objects to call a function while keeping it
+      uncallable by others.  This is a nontrivial problem on the mud.
+
+      This package is for controlling access to functions in a
+      flexible, but secure way.  It maintains lists of approved things
+      for various operations.  I (Zamboni) believe it to be
+      technically secure within its limited scope, but like many other
+      security tools, it can be made completely worthless through
+      improper use.
+
+      Configuration:
+          For a given operation you can approve anything with a
+          certain uid, anything that was loaded or cloned from a
+          particular file, or specific objects.  (You can also remove
+          such approval later.)
+
+          The object starts out with the security system turned off. 
+          It is activated by calling sec_lock().  Only an object
+          approved for the SEC_MANAGE operation is allowed to do that.
+          By default, nothing is approved for this (or any other)
+          operation.  Once the system is on, only objects which have
+          been approved for SEC_MANAGE can use the public access
+          functions (sec_add, sec_remove, sec_clear, sec_query).  
+          Once activated, the security can't be turned off.
+
+          Be extremely cautious when deciding what to approve for the
+          SEC_MANAGE operations.  Any object approved for this has
+          complete control over the entire security system.  If it's
+          security is compromised, it can be used to compromise the
+          security of your object.  The security of your object is
+          only as strong as the _weakest_ security of everything
+          approved for SEC_MANAGE.  Similarly, the security of any
+          particular operation is only as secure as the weakest of the
+          objects approved for its use. 
+
+          IMPORTANT: Don't forget to turn the system on
+                     by calling sec_lock()!
+
+      Use:
+          You can verify that a particular object is approved for a
+          particular operation (sec_is_member).  You can also verify
+          that the current command is not being forced (see
+          remote_command(E)), and that all objects on the call stack
+          plus the current interactive object (see
+          this_interactive(E)) are all approved for a particular
+          operation (or for at least one of a set of operations).  
+
+          The latter, done with sec_check_command, is the main way
+          that the security system is used, once configured.  It is my
+          belief that if all those things check out ok, then the
+          operation is as secure as the weakest security of the
+          objects you have chosen to approve.  
+
+          That would be the case even without this package, but this
+          system gives you a convenient way to approve limited sets of
+          objects.  In the past, programmers typically would end up
+          either trusting nothing, everything, or perhaps one or two
+          specific objects.  This system lets you keep strong security
+          without having to shut the doors of an otherwise open system.
+
+                        ----------------------
+                                 API
+
+      These functions are publicly callable, but are access controlled.
+      They can only be called when everything in the call stack, plus
+      this_interactive() are all approved for the SEC_MANAGE
+      operation, and efun::remote_command() returns 0.
+
+        sec_add    - Approve an object, file, or uid
+                     for a particular operation
+
+        sec_remove - Remove approval of an object, file, or uid
+                     for a particular operation
+
+        sec_clear  - Remove approval of all objects, files, and uids 
+                     for a particular operation
+
+        sec_query  - Return list of all objects, files, or uids
+                     approved for a particular operation
+
+        sec_lock   - Lock the system, turning on security.  It starts
+                     out unlocked.  The object has no security at all
+                     until this is done.
+
+      These functions are static, and therefore can not be called by
+      other objects.  They perform no security checks.  
+
+        sec_check_command - Verify that all relevant objects leading
+                            up to this function call are approved for
+                            a particular operation, or any of a list
+                            of operations.  
+
+        sec_is_member     - Check if an object is approved for some
+                            operation.
+
+        sec_caller_stack  - Returns the list of objects in the caller 
+                            stack + THISI.  Useful for debugging.
+
+    NOTES
+
+        This package must be inherited, not used though call_other. 
+        It's possible to ruin the security by overloading functions
+        defined in this package, directly or through multiple
+        inheritance.
+
+        Operations can be of any type except arrays.  
+
+        Filenames used with SEC_FILENAME will be munged into the form
+        "/foo/bar" and not "/foo/bar.c", since this is how
+        program_name() returns them.  You can pass in filenames in
+        either form, but be aware of the munging if you are looking
+        for things with sec_query().
+
+    EXAMPLES
+
+        There are several applications which use this system.  None
+        are primarily intended to be examples, but may be helpful
+        anyway.  In roughly increasing order of complexity:
+
+        /usr/zamboni/cmds/cc.c
+        /usr/zamboni/daemon/zd_server.c
+        /zone/null/acme/tadji/cmds/tsec.c
+        /zone/null/acme/tadji/tool.c
+
+    SEE ALSO
+
+        previous_object(E), command(E), remote_command(E), init(L),
+        this_player(E), this_interactive(E), call_out(E), add_action(E)
+

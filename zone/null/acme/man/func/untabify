@@ -1,0 +1,25 @@
+NAME
+   untabify - removes tabs in a string
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs string untabify( string str, int tabwidth );
+ 
+DESCRIPTION
+    Removes tabs by a specified tabwidth or the UNIX default of
+    8.  This function is not supposed to take a string with
+    newlines; use untabify_list to do that.  A string with newlines
+    WILL NOT work, simply because it would be gross for this 
+    function to support the short comings of its user.
+ 
+EXAMPLE
+    untabify("foo\tbar", 5)  ->  "foo     bar"
+ 
+SEE_ALSO
+    untabify_list(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

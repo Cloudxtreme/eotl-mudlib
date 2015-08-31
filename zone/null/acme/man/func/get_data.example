@@ -1,0 +1,53 @@
+
+    The person using this would see something like this:
+
+> Name of object:
+
+    And let's say they type "toy"
+
+> Name of object: toy
+> Short description of object:
+
+    And they say it looks like a "strange toy"
+
+> Name of object: toy
+> Short description of object: strange toy
+> Long description of object:
+Enter input, . to end, ~e to edit, ~p to print, ~q to abort.
+______________________________________________________________________
+
+    And they fill out the long description...
+
+> Name of object: toy
+> Short description of object: strange toy
+> Long description of object:
+Enter input, . to end, ~e to edit, ~p to print, ~q to abort.
+______________________________________________________________________
+This is a strange looking toy.  It's got glowing green buttons
+and random doodads festooning its surface.
+
+But it looks cool!
+.
+
+    And finally, let's say the fill the rest out...and it finishes
+
+> Name of object: toy
+> Short description of object: strange toy
+> Long description of object:
+Enter input, . to end, ~e to edit, ~p to print, ~q to abort.
+______________________________________________________________________
+This is a strange looking toy.  It's got glowing green buttons
+and random doodads festooning its surface.
+
+But it looks cool!
+.
+> Value of the object: 100
+
+
+    Object ob will have its "id" set to "toy", its "short" set to
+    "strange toy", its "long",
+    "This is a strange looking toy.  It's got glowing green buttons\n" +
+    "and random doodads festooning its surface.\n" +
+    "But it looks cool!\n"
+     and lastly, its "value" to be 100.
+

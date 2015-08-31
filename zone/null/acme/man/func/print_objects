@@ -1,0 +1,20 @@
+NAME
+    print_objects - prints the output of format_objects()
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMisc;
+    #include AcmeMiscInc
+
+    varargs void print_objects( object *olist, status brief )    ;
+ 
+DESCRIPTION
+    Prints a nicely formatted bulleted list of objects and their
+    short descriptions.  If brief is set, only pathnames will be
+    listed.
+ 
+SEE_ALSO
+    format_objects(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

@@ -1,0 +1,25 @@
+NAME
+    munge_dirname - mangle a directory name into a standard format
+ 
+SYNOPSIS
+    #include <acme.h>
+    inherit AcmeStrings;
+    #include AcmeStringsInc
+ 
+    string munge_dirname( string name );
+ 
+DESCRIPTION
+    Munges a directory name into a standard format.  Takes a filename 
+    that refers to a directory and returns a filename in the form 
+    /foo/bar/ (some things do "/foo/bar", some do "foo/bar/", this 
+    should standardize them).
+ 
+EXAMPLE
+    munge_dirname( "/usr/devo/" )  ->  "/usr/devo/"
+    munge_dirname( "usr/devo/" )  ->  "/usr/devo/"
+ 
+SEE_ALSO
+    munge_filename(A), 
+ 
+LAST MODIFIED                               
+    980109 Devo

@@ -1,0 +1,27 @@
+NAME
+    format_objects - formats a list of objects for humans to read
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMisc;
+    #include AcmeMiscInc
+
+    varargs string format_objects( object *olist, status brief )    ;
+ 
+DESCRIPTION
+    Returns a nicely formatted bulleted list of objects and their
+    short descriptions.  If brief is set, only pathnames will be
+    listed.
+ 
+EXAMPLE
+    Sample output: format_objects( all_inventory(THISP) )
+ 
+     0: /zone/null/toys/legchat/client#119       a LegChat v1.0
+     1: /zone/null/toys/bin/wag#118              wag
+     2: /usr/zippo/bw/bw#115                     beer
+ 
+SEE_ALSO
+    print_objects(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

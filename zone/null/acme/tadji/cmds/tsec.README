@@ -1,0 +1,100 @@
+
+Rookie wrote:
+> I'd like to know more about the command.  searching the code is too
+> much of a hassle and what not, and the help page is vague as all hell.
+
+The vagueness was deliberate, because messing with the command can be
+dangerous if you don't know what you're doing.  Maybe a better
+approach would have been to come up with a clear explanation so people
+could use it.  As far as I know, no one has ever used the tsec
+command.
+
+
+I'll need to back up a little bit and explain AcmeCallSecurity, which
+is best done with an example and the wiz body is a good place to
+start.  The problem is about extending trust.
+
+Let's say we have a function in the wiz body, chdir().  It changes
+that wizards working directory, just like the cd command does.  The
+best way to make sure that other people don't fuck with your directory
+setting is to make the function static and only let you cd with the cd
+command.  That's the safest, but it's not the most useful.  It would
+be handy if you could let your wiztool change your directory for you.
+Then you could write a command that cd'd to the directory containing
+the code of an arbitrary object.  (like `godir sword`, for example)  
+That'd be handy, but it would also open the door to people fucking
+with you.
+
+One step that we used to take was checking THISP.  Now we check
+THISI.  There are still ways around that though.  I can drop something
+in a room and wait for you to walk in, then run the code with the
+proper THISI.  Not good enough.
+
+AcmeCallSecurity provides a way to open access enough to be useful,
+but not enough to let people fuck with you.  It checks THISI, but also
+checks every object on the previous_object stack to make sure it's on
+the list of authorized objects.  It provides a few different ways to
+authorize sets of objects (a particular object, any object cloned from a
+particular file, or anything with a particular uid), and provides a
+way to manage multiple access lists (like one for chdir, one for
+query_pwd, one for set_title, etc), and provides a convenient way to
+check the call stack to see if the current function call is being done
+securely.  Securely means that  no unauthorized objects were involved
+in the invoking of the function, directly or indirectly.  
+
+
+My cc command uses this system to prevent other people from using it. 
+Anyone who uses my cc command can subvert the usr_zamboni uid, so I
+prefer not to give people an easy way in.  I could put lots of checks
+in my cc command code to make sure only me and the tadji were allowed
+to be in the caller stack, or I could use the AcmeCallSecurity package
+and set it up in create().  The real advantage though is taht
+AcmeCallSecurity can be reconfigured at runtime, and those
+reconfigurations can also be protected by the same system.
+
+Back to the body example..  We could set it up so that not only did
+the regular pwd command have access to query_pwd(), but so did
+anything the wizard adds to their list of "things I trust to check my
+directory".  Then they could make new objects that did useful things,
+and they could add them to their list of trusted stuff.  They could
+even be allowed to make better trust config management things than the
+lame crap we provide.  They could add their object to the "things
+trusted to change these lists" list, and then use their own system for
+everything else.
+
+tsec is the command that lets you change those lists in the tadji.
+
+The tadji uses AcmeCallSecurity to protect each of four subsystems. 
+
+1. Command configuration (add, remove, rename), 
+2. Queries (is this command in the tadji?  What does it do?),
+3. Running commands (Do the "lu" command), 
+4. Manging the security lists (including this one).
+
+There's also a category for config+queries+commands, just to make it
+convenient to add stuff to all three.  You can use the tsec command to
+add or remove objects, uids, and program names to any of those lists.
+
+So the whole point was to make it so that people could, for example,
+write a command that would list their tadji commands in a nice way,
+while still not allowing other people's objects to get that same
+stuff.
+
+It's a very basic interface, and I was hoping that someone else would
+write a nicer one.  If they did, they could use it for themselves
+without any official help from me, because they could use tsec to add
+their object to the security management list.  
+
+There are a few objects that are trusted by the tadji by default. 
+It's hardcoded into the tadji.  The "help" command is allowed to make
+queries, the "tsec" command is allowed to modify the security lists,
+and the "tadji" command is allowed to query and change the commands.
+
+As far as I know, AcmeCallSecurity is completely secure.  Not many
+people have messed with it though, so obviously there's no guarantee.
+
+acme/man/pkg/AcmeCallSecurity might also be enlightening, or perhaps
+just as unclear.
+
+-Zamboni
+ 13 Aug 1997

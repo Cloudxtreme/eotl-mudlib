@@ -1,0 +1,22 @@
+NAME
+    standard_deviation - calculate the standard deviation of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float standard_deviation( float *sample );
+ 
+DESCRIPTION
+    Returns the standard deviation of a sample.  This is actually
+    just the square root of the variance.
+ 
+EXAMPLE
+    standard_deviation( ({ 1, 2, 3, 4, 5 }) ) -> 1.58114
+ 
+SEE_ALSO
+    deviation(A), variance(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

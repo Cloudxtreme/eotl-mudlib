@@ -1,0 +1,23 @@
+NAME
+    resolve_filespec - finds some objects referred to by a filespec
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeFindTarget;
+    #include AcmeFindTargetInc
+
+    object *resolve_filespec( string filespec, status quiet );
+ 
+DESCRIPTION
+    Returns an array of objects referred to by a filespec.  If quiet
+    is true, error messages will be supressed (error messages may
+    still be printed if quiet==0 and files can't be found).
+ 
+EXAMPLE
+    
+ 
+SEE_ALSO
+    expand_path(A)
+ 
+LAST MODIFIED
+    980102

@@ -1,0 +1,51 @@
+NAME
+    prev_menu - run a previous menu
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMenu;
+    #include AcmeMenuInc
+
+    varargs status prev_menu( int i );
+
+DESCRIPTION
+    Runs the last i-th menu (or the last one if i isn't set ).
+
+EXAMPLE
+      mixed menu;
+      menu = ({ "Pie Menu",
+                ({ "Apple Pie",     "pie_choice", "apple" }),
+                ({ "Cherry Pie",    "pie_choice", "cherry" }),
+                ({ "Pumpkin Pie",   "pie_choice", "pumpkin" }),
+                ({ "Last Menu",     "pre_menu" }),
+                ({ "Exit Pie Menu", "prev_menu",  "Exiting pie menu." })
+              });
+      print_menu( menu );
+
+    Would output to the user would look like:
+
+==================================================
+
+Pie Menu
+
+1) Apple Pie
+2) Cherry Pie
+3) Pumpkin Pie
+4) Last Menu
+5) Exit Pie Menu
+
+==================================================
+Please enter the number of your choice: 
+
+    And if the user typed "4", the default menu_choice() will basically
+    do the equivalent of:
+
+      prev_menu( 1 );
+    
+    Which would run the menu that was run before this one.
+
+SEE_ALSO
+    menu_choice(A), print_menu(A), exit_menu(A), AcmeMenu
+
+LAST MODIFIED
+    Aleron 960328

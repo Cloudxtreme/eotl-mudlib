@@ -1,0 +1,22 @@
+NAME
+    percentile - calculate a percentile value of a sample 
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStat;
+    #include AcmeStatInc
+ 
+    float percentile( float *sample, float p );
+ 
+DESCRIPTION
+    Returns the value for which p% of the values in sample are less
+    than that value.
+ 
+EXAMPLE
+    iqr( ({ 1, 2, 3, 4, 5 }) ) -> 2
+ 
+SEE_ALSO
+    iqrA), first_quartile(A), third_quartile(A), median(A)
+ 
+LAST MODIFIED                               
+    980502 Devo

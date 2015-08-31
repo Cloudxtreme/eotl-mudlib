@@ -1,0 +1,23 @@
+NAME
+   unquote - removes surrounding quotes
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs string unquote( string str, string quote_chars );
+ 
+DESCRIPTION
+    Removes outer layer of quotes, if there is one.  If quote_chars 
+    is supplied, that string will respresent valid quote characters 
+    (defaults to "\"'").
+ 
+EXAMPLE
+    unquote("\"test\"")  -> "test"
+ 
+SEE_ALSO
+    match_quote(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

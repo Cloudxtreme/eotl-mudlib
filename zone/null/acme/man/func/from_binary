@@ -1,0 +1,28 @@
+NAME
+    from_binary - convert a string of binary digits to a decimal int
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMath;
+    #include AcmeMathInc
+
+    varargs int from_binary( string str, int &done );
+ 
+DESCRIPTION
+    Returns an integer value represented by a string in binary.  
+    done may be passed by reference, and will be set to one of the 
+    following values:
+      -2 : number was longer than 32 digits (function returns the
+           integer value for the first 32 digits still)
+      -1 : didn't finish it all
+       0 : converted whole string
+       1 : didn't do any of it
+ 
+EXAMPLE
+    from_binary("10")  ->  2
+ 
+SEE_ALSO
+   to_int(E), from_hex(A), from_octal(A), to_binary(A)
+ 
+LAST MODIFIED
+    980102 Devo

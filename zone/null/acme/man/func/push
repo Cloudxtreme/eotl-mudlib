@@ -1,0 +1,18 @@
+NAME
+    push - push an element onto a stack
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStack;
+    #include AcmeStackInc
+
+    void push( mixed elem, StackHdl hdl );
+ 
+DESCRIPTION
+    Pushes elem onto the stack described by handle hdl.
+ 
+SEE_ALSO
+    new(A), empty(A), push(A), pop(A), top(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

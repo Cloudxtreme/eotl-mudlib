@@ -1,0 +1,22 @@
+NAME
+    flatten_array - flattens an array entirely
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    mixed *flatten_array( mixed *arr );
+ 
+DESCRIPTION
+    Flattens array entirely, placing objects in order of depth.
+ 
+EXAMPLE
+    flatten_array( ({ ({ 1, 2 }), 3, ({ 4, ({ 5 }) }) }) ) ->
+      ({ 1, 2, 3, 4, 5, })
+ 
+SEE_ALSO
+    flatten_array1(A)
+ 
+LAST MODIFIED
+    980102 Devo

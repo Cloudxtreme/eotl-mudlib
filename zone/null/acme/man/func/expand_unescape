@@ -1,0 +1,38 @@
+NAME
+   expand_unescape - escapes and interprets escaped characters
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    varargs string expand_unescape( string str, string base, int bits );
+ 
+DESCRIPTION
+    Takes a string and runs tests against a set of base characters to
+    expand escaped characters.  The basestring is in the form 
+    "aAbBcC...nN" where "a" is the character to be escaped, and "A" is
+    the character it gets expanded to.  Also built into expand_unescape()
+    is hex and octal conversion.  The hex expansion character is "x", 
+    and the octal expansion will expand if any number from 1 through 7
+    is escaped.  If you use "x" is your base string, you will forfeit
+    hex expansion.  If you use any of "01234567", you will forfeit octal
+    expansion.  base defaults to "a\ab\bt\tn\n".
+ 
+    bits can be used to signal certain action.  The current valid bit
+    settings (which can be |'d together) are:
+      O_EXPAND_BS_LITERAL     - Keeps backspaces.
+      O_NO_EXPAND_HEX         - No hex expansion.
+      O_NO_EXPAND_OCTAL       - No octal expansion.
+ 
+EXAMPLE
+    expand_unescape("\\n")  ->  "\n"
+    expand_unescape("\\A")  ->  "65"              
+    expand_unescape("\\x10")[0]  ->  16
+    expand_unescape("\\010")[0]  ->  8
+ 
+SEE_ALSO
+    sprintf(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

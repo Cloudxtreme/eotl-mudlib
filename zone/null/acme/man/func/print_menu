@@ -1,0 +1,51 @@
+NAME
+    print_menu - outputs the menu
+
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeMenu;
+    #include AcmeMenuInc
+
+    status print_menu( mixed *menu );
+
+DESCRIPTION
+    Formats, outputs a menu listing and then passes the and the choice to
+    menu_choice() to be handled.
+
+    See the menu package man page for more information.
+
+EXAMPLE
+      mixed menu;
+      menu = ({ "Pie Menu",
+                ({ "Apple Pie",     "pie_choice", "apple" }),
+                ({ "Cherry Pie",    "pie_choice", "cherry" }),
+                ({ "Pumpkin Pie",   "pie_choice", "pumpkin" }),
+                ({ "Exit Pie Menu", "exit_menu",  "Exiting pie menu." })
+              });
+      print_menu( menu );
+
+    Would output to the user would look like:
+
+==================================================
+
+Pie Menu
+
+1) Apple Pie
+2) Cherry Pie
+3) Pumpkin Pie
+4) Exit Pie Menu
+
+==================================================
+Please enter the number of your choice: 
+
+    And if the user typed "4", the default menu_choice() will basically
+    do the equivalent of:
+
+      exit_menu( "Exiting pie menu." );
+    
+SEE_ALSO
+    menu_choice(A), exit_menu(A), prev_menu(A), AcmeMenu
+    
+
+LAST MODIFIED
+    Aleron 960328

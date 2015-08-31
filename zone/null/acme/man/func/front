@@ -1,0 +1,19 @@
+NAME
+    front - return the front of the queue without removing it
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeQueue;
+    #include AcmeQueueInc
+
+    mixed front( QueueHdl hdl );
+ 
+DESCRIPTION
+    Returns the front of the queue described by handle hdl without 
+    removing it or QUEUE_EMPTY if the queue is empty.
+ 
+SEE_ALSO
+    new(A), empty(A), enqueue(A), dequeue(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

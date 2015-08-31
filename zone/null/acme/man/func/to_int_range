@@ -1,0 +1,25 @@
+NAME
+    to_int_range - determine integers that match range
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeArray;
+    #include AcmeArrayInc
+
+    int *to_int_range( string range );
+ 
+DESCRIPTION
+    Returns an array of integers specified by range.  Single values
+    are separated by commas, ranges are separated by dashes.
+ 
+EXAMPLE
+    to_int_range("1")  ->  ({ 1 })
+    to_int_range("1,5")  ->  ({ 1, 5 })
+    to_int_range("1-3")  ->  ({ 1, 2, 3 })
+    to_int_range("1-3,5")  ->  ({ 1, 2, 3, 5 })
+ 
+SEE_ALSO
+    to_int(E)
+ 
+LAST MODIFIED
+    980102 Devo

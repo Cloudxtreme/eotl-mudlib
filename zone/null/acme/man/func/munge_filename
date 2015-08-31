@@ -1,0 +1,25 @@
+NAME
+    munge_filename - mangle a filename into a standard "C-style" format
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeStrings;
+    #include AcmeStringsInc
+
+    string munge_filename( string name );
+ 
+DESCRIPTION
+    Munges a filename into a standard "C-style" format.  Takes a
+    filename that refers to a .c file and returns a filename in the
+    form /foo/bar.c (some things do "foo/bar.c", some do "/foo/bar.c",
+    this should standardize them).
+ 
+EXAMPLE
+    munge_filename( "/usr/devo/workroom.c" )  ->  "/usr/devo/workroom.c"
+    munge_filename( "usr/devo/workroom.c" )  ->  "/usr/devo/workroom.c"
+ 
+SEE_ALSO
+    file_name(E)
+ 
+LAST MODIFIED                               
+    980102 Devo

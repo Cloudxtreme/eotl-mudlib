@@ -1,0 +1,18 @@
+NAME
+    mortals - filter out non-mortals from list or users()
+ 
+SYNOPSIS
+    #include <acme.h>
+    static inherit AcmeUser;
+    #include AcmeUserInc
+
+    varargs object *mortals( object *ulist );
+    
+DESCRIPTION
+    Filters out any non-mortal from ulist, which defaults to users().
+ 
+SEE_ALSO
+    users(E), wizards(A)
+ 
+LAST MODIFIED                               
+    980102 Devo

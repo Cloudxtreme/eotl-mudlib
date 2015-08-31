@@ -1,0 +1,7 @@
+#0:0
+base_string "a\ab\bt\tn\n"
+lensort 0
+varfilter 0
+indent_cl 0
+center_cl 0
+ActionDB (["create":(["foo":({({"load",({"/usr/aleron/obj/sentinel/sentinel",}),}),}),]),"disconnect":([]),"death":([]),"logon":([]),"reconnect":([]),"site":([]),"logout":([]),"pkill":([]),"destruct":([]),])
