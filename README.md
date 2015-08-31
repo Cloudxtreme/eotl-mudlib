@@ -1,2 +1,2 @@
-# eotl
-End of the Line LPMud
+# eotl-mudlib
+End of the Line LPMud - mudlib files
