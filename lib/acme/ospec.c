@@ -123,7 +123,7 @@ object *
 spec_rooms( object *prev, string *args, status first )
 {
   if(first)
-    prev = ({ ENV(THISP) });
+    prev = THISP ? ({ ENV(THISP) }) : ({ });
   if(args[1] == "!")
     return force_load_array(flatten_array1(map_array(prev, #'all_exits)));
   return force_load_array(map_array(prev, #'get_exit, args[1]));
@@ -869,7 +869,7 @@ parse_subspec(string ospec, object *prev, string priorities)
   if(!prev)
   {
     first = 1;
-    prev = ({ THISP });
+    prev = THISP ? ({ THISP }) : ({ });
   }
 
   for(i=0; i < size; i++)
